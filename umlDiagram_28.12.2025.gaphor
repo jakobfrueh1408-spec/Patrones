@@ -184,6 +184,7 @@ controlflow {
 <ref refid="bb8d75b1-e3d2-11f0-9f26-d4548bc70d16"/>
 <ref refid="c64447ad-e3d2-11f0-8f21-d4548bc70d16"/>
 <ref refid="33019c64-e3d4-11f0-b689-d4548bc70d16"/>
+<ref refid="3d1e0455-e3d4-11f0-bfb9-d4548bc70d16"/>
 <ref refid="70368c10-e3d8-11f0-aed4-d4548bc70d16"/>
 <ref refid="ac508957-e3e1-11f0-827e-d4548bc70d16"/>
 <ref refid="56d5863a-e3e3-11f0-87d4-d4548bc70d16"/>
@@ -199,15 +200,14 @@ controlflow {
 <ref refid="1107160a-e3fb-11f0-bff5-d4548bc70d16"/>
 <ref refid="1c2ed561-e3fb-11f0-8807-d4548bc70d16"/>
 <ref refid="46acd0d2-e3fb-11f0-9010-d4548bc70d16"/>
+<ref refid="aeb2f86e-e880-11f0-89ac-4cb04ade7fd7"/>
+<ref refid="4b358648-e881-11f0-b6b1-4cb04ade7fd7"/>
+<ref refid="6c995fdf-e881-11f0-95df-4cb04ade7fd7"/>
+<ref refid="6fb783af-e881-11f0-9a2f-4cb04ade7fd7"/>
 <ref refid="09c0e6bb-e280-11f0-95ac-4cb04ade7fd7"/>
 <ref refid="0d9a533f-e280-11f0-acbe-4cb04ade7fd7"/>
 <ref refid="20f19b88-e280-11f0-841b-4cb04ade7fd7"/>
 <ref refid="269776e6-e280-11f0-b154-4cb04ade7fd7"/>
-<ref refid="aeb2f86e-e880-11f0-89ac-4cb04ade7fd7"/>
-<ref refid="4b358648-e881-11f0-b6b1-4cb04ade7fd7"/>
-<ref refid="3d1e0455-e3d4-11f0-bfb9-d4548bc70d16"/>
-<ref refid="6c995fdf-e881-11f0-95df-4cb04ade7fd7"/>
-<ref refid="6fb783af-e881-11f0-9a2f-4cb04ade7fd7"/>
 </reflist>
 </packagedElement>
 </UML:Package>
@@ -782,7 +782,7 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Parameter>
 <UML:Property id="050a5c21-e27b-11f0-b9d9-4cb04ade7fd7">
 <name>
-<val>idNum</val>
+<val>idNumber</val>
 </name>
 <structuredClassifier>
 <ref refid="a7e20bcb-e27a-11f0-bd89-4cb04ade7fd7"/>
@@ -1012,7 +1012,7 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Parameter>
 <UML:Class id="c0ffa29e-e27b-11f0-a99d-4cb04ade7fd7">
 <name>
-<val>WorkSpace</val>
+<val>Model</val>
 </name>
 <ownedAttribute>
 <reflist>
@@ -1082,14 +1082,20 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Property>
 <UML:Class id="3414f047-e27c-11f0-9452-4cb04ade7fd7">
 <isAbstract>
-<val>1</val>
+<val>True</val>
 </isAbstract>
 <name>
-<val>StateIF</val>
+<val>State</val>
 </name>
+<ownedAttribute>
+<reflist>
+<ref refid="c4bfe83d-e8d0-11f0-a952-4cb04ade7fd7"/>
+</reflist>
+</ownedAttribute>
 <ownedOperation>
 <reflist>
 <ref refid="0bbbdd4f-e27d-11f0-90f6-4cb04ade7fd7"/>
+<ref refid="f1d37a5f-e8d0-11f0-a633-4cb04ade7fd7"/>
 </reflist>
 </ownedOperation>
 <owningPackage>
@@ -1106,16 +1112,16 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Class>
 <UML:ClassItem id="34156384-e27c-11f0-9c2b-4cb04ade7fd7">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 946.571903213911, 1620.5437691827287)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 914.6643000802463, 1602.5437691827285)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>109.0</val>
+<val>171.0</val>
 </width>
 <height>
-<val>76.0</val>
+<val>112.0</val>
 </height>
 <diagram>
 <ref refid="9e1fcbc8-e27a-11f0-b97b-4cb04ade7fd7"/>
@@ -1147,7 +1153,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1290.0385908414714, 788.8087972267465)</val>
 </matrix>
 <points>
-<val>[(59.38262036787228, 590.1998679573136), (-289.874290761225, 590.1998679573136), (-289.874290761225, 615.2635296139046), (-289.874290761225, 831.7349719559822)]</val>
+<val>[(59.38262036787228, 590.1998679573136), (-289.874290761225, 590.1998679573136), (-289.874290761225, 615.2635296139046), (-291.29814521862534, 813.734971955982)]</val>
 </points>
 <head-connection>
 <ref refid="c100924e-e27b-11f0-8603-4cb04ade7fd7"/>
@@ -1209,16 +1215,10 @@ existing classes or even new classes with specific responsibilities.</val>
 <name>
 <val>NotSignedIn</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="20147f71-e27e-11f0-a9ad-4cb04ade7fd7"/>
-</reflist>
-</ownedAttribute>
 <ownedOperation>
 <reflist>
 <ref refid="e98f1c4b-e27c-11f0-af9f-4cb04ade7fd7"/>
 <ref refid="0e4ef2e8-e27e-11f0-9cd6-4cb04ade7fd7"/>
-<ref refid="3aa9dc5e-e27e-11f0-bb38-4cb04ade7fd7"/>
 </reflist>
 </ownedOperation>
 <presentation>
@@ -1229,13 +1229,13 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Class>
 <UML:ClassItem id="815fa5eb-e27c-11f0-8463-4cb04ade7fd7">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 899.0719032139109, 1829.9599573821365)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 898.0719032139114, 1829.9599573821367)</val>
 </matrix>
 <top-left>
 <val>(-63.0, -54.0)</val>
 </top-left>
 <width>
-<val>165.0</val>
+<val>166.0</val>
 </width>
 <height>
 <val>130.0</val>
@@ -1251,16 +1251,10 @@ existing classes or even new classes with specific responsibilities.</val>
 <name>
 <val>SignedIn</val>
 </name>
-<ownedAttribute>
-<reflist>
-<ref refid="284580e2-e27e-11f0-90cb-4cb04ade7fd7"/>
-</reflist>
-</ownedAttribute>
 <ownedOperation>
 <reflist>
 <ref refid="e2c2967e-e27c-11f0-88e1-4cb04ade7fd7"/>
 <ref refid="280f78cc-e27d-11f0-8e26-4cb04ade7fd7"/>
-<ref refid="3ee0e819-e27e-11f0-87ec-4cb04ade7fd7"/>
 </reflist>
 </ownedOperation>
 <owningPackage>
@@ -1345,6 +1339,9 @@ existing classes or even new classes with specific responsibilities.</val>
 <class_>
 <ref refid="3414f047-e27c-11f0-9452-4cb04ade7fd7"/>
 </class_>
+<isAbstract>
+<val>False</val>
+</isAbstract>
 <name>
 <val>exit</val>
 </name>
@@ -1363,7 +1360,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1009.1039558275302, 1699.1642842900812)</val>
 </matrix>
 <points>
-<val>[(-8.032052613619214, -2.6205151073524746), (-8.032052613618987, 51.000000000000114), (-82.49999999999994, 51.000000000000114), (-90.53205261361882, 76.79567309205527)]</val>
+<val>[(-8.032052613618916, 15.379484892647525), (-8.032052613618987, 51.000000000000114), (-90.03205261361923, 51.00000000000006), (-91.03205261361836, 76.79567309205527)]</val>
 </points>
 <tail-connection>
 <ref refid="815fa5eb-e27c-11f0-8463-4cb04ade7fd7"/>
@@ -1382,7 +1379,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <ref refid="c0ffa29e-e27b-11f0-a99d-4cb04ade7fd7"/>
 </class_>
 <name>
-<val>WorkSpace</val>
+<val>Model</val>
 </name>
 <visibility>
 <val>private</val>
@@ -1434,7 +1431,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1001.0719032139111, 1701.1642842900812)</val>
 </matrix>
 <points>
-<val>[(-0.9076031336644519, -4.6205151073523325), (0.0, 49.0), (175.82305745303813, 49.0), (159.64810475553554, 74.79567309205504)]</val>
+<val>[(0.9999999999997158, 13.37948489264744), (0.0, 49.0), (159.64810475553557, 48.99999999999994), (159.64810475553554, 74.79567309205504)]</val>
 </points>
 <tail-connection>
 <ref refid="8f6fe0b2-e27c-11f0-bf3b-4cb04ade7fd7"/>
@@ -1448,82 +1445,6 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>register</val>
 </name>
 </UML:Operation>
-<UML:Property id="20147f71-e27e-11f0-a9ad-4cb04ade7fd7">
-<name>
-<val>worskSpace</val>
-</name>
-<structuredClassifier>
-<ref refid="815ef5e1-e27c-11f0-b869-4cb04ade7fd7"/>
-</structuredClassifier>
-<typeValue>
-<val>WorkSpace</val>
-</typeValue>
-<visibility>
-<val>private</val>
-</visibility>
-</UML:Property>
-<UML:Property id="284580e2-e27e-11f0-90cb-4cb04ade7fd7">
-<name>
-<val>workSpace</val>
-</name>
-<structuredClassifier>
-<ref refid="8f6f3916-e27c-11f0-902b-4cb04ade7fd7"/>
-</structuredClassifier>
-<typeValue>
-<val>WorkSpace</val>
-</typeValue>
-<visibility>
-<val>private</val>
-</visibility>
-</UML:Property>
-<UML:Operation id="3aa9dc5e-e27e-11f0-bb38-4cb04ade7fd7">
-<class_>
-<ref refid="815ef5e1-e27c-11f0-b869-4cb04ade7fd7"/>
-</class_>
-<name>
-<val>setWS</val>
-</name>
-<ownedParameter>
-<reflist>
-<ref refid="3aaecb88-e27e-11f0-ae65-4cb04ade7fd7"/>
-</reflist>
-</ownedParameter>
-</UML:Operation>
-<UML:Parameter id="3aaecb88-e27e-11f0-ae65-4cb04ade7fd7">
-<name>
-<val>ws</val>
-</name>
-<ownerFormalParam>
-<ref refid="3aa9dc5e-e27e-11f0-bb38-4cb04ade7fd7"/>
-</ownerFormalParam>
-<typeValue>
-<val>WorkSpace</val>
-</typeValue>
-</UML:Parameter>
-<UML:Operation id="3ee0e819-e27e-11f0-87ec-4cb04ade7fd7">
-<class_>
-<ref refid="8f6f3916-e27c-11f0-902b-4cb04ade7fd7"/>
-</class_>
-<name>
-<val>setWS</val>
-</name>
-<ownedParameter>
-<reflist>
-<ref refid="3ee5e96a-e27e-11f0-9ff1-4cb04ade7fd7"/>
-</reflist>
-</ownedParameter>
-</UML:Operation>
-<UML:Parameter id="3ee5e96a-e27e-11f0-9ff1-4cb04ade7fd7">
-<name>
-<val>ws</val>
-</name>
-<ownerFormalParam>
-<ref refid="3ee0e819-e27e-11f0-87ec-4cb04ade7fd7"/>
-</ownerFormalParam>
-<typeValue>
-<val>WorkSpace</val>
-</typeValue>
-</UML:Parameter>
 <UML:Class id="ad41a6ac-e27e-11f0-a1c1-4cb04ade7fd7">
 <name>
 <val>CalendarPool</val>
@@ -1636,14 +1557,11 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Operation>
 <UML:Parameter id="ec1fa153-e27e-11f0-b72f-4cb04ade7fd7">
 <name>
-<val>calendar</val>
+<val>int index</val>
 </name>
 <ownerFormalParam>
 <ref refid="ec1a3622-e27e-11f0-af39-4cb04ade7fd7"/>
 </ownerFormalParam>
-<typeValue>
-<val>Calendar</val>
-</typeValue>
 </UML:Parameter>
 <UML:Class id="09f7d61b-e27f-11f0-8c14-4cb04ade7fd7">
 <name>
@@ -3003,7 +2921,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <ref refid="c0ffa29e-e27b-11f0-a99d-4cb04ade7fd7"/>
 </structuredClassifier>
 <typeValue>
-<val>WorkSpace</val>
+<val>Model</val>
 </typeValue>
 <visibility>
 <val>private</val>
@@ -3033,7 +2951,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <ref refid="8b978878-e281-11f0-bd5e-4cb04ade7fd7"/>
 </ownerFormalParam>
 <typeValue>
-<val>WorkSpace</val>
+<val>Model</val>
 </typeValue>
 </UML:Parameter>
 <UML:Property id="c413fad5-e281-11f0-86eb-4cb04ade7fd7">
@@ -3808,14 +3726,11 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Operation>
 <UML:Parameter id="735d905b-e36f-11f0-8296-4cb04ade7fd7">
 <name>
-<val>calendar</val>
+<val>int index</val>
 </name>
 <ownerFormalParam>
 <ref refid="735995fb-e36f-11f0-89bc-4cb04ade7fd7"/>
 </ownerFormalParam>
-<typeValue>
-<val>Calendar</val>
-</typeValue>
 </UML:Parameter>
 <UML:Operation id="b1a289f4-e36f-11f0-a1da-4cb04ade7fd7">
 <class_>
@@ -4761,13 +4676,13 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:ClassItem>
 <UML:Property id="c225bf1c-e3e1-11f0-8c5d-d4548bc70d16">
 <name>
-<val>workSpace</val>
+<val>model</val>
 </name>
 <structuredClassifier>
 <ref refid="ac508957-e3e1-11f0-827e-d4548bc70d16"/>
 </structuredClassifier>
 <typeValue>
-<val>workSpace</val>
+<val>Model</val>
 </typeValue>
 <visibility>
 <val>private</val>
@@ -7273,10 +7188,10 @@ F.e login fomr or register form </val>
 <ref refid="6c9a2b55-e881-11f0-9cbb-4cb04ade7fd7"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1920.0631115029128, 1352.1148437145648)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1920.0631115029125, 1356.812669180244)</val>
 </matrix>
 <points>
-<val>[(3.5825531543044917, 0.0), (297.67624762216747, 0.0)]</val>
+<val>[(3.5825531543044917, -4.697825465679216), (297.67624762216747, -4.697825465679216)]</val>
 </points>
 <head-connection>
 <ref refid="c100924e-e27b-11f0-8603-4cb04ade7fd7"/>
@@ -7437,5 +7352,43 @@ F.e login fomr or register form </val>
 <val>private</val>
 </visibility>
 </UML:Property>
+<UML:Property id="c4bfe83d-e8d0-11f0-a952-4cb04ade7fd7">
+<name>
+<val>model</val>
+</name>
+<structuredClassifier>
+<ref refid="3414f047-e27c-11f0-9452-4cb04ade7fd7"/>
+</structuredClassifier>
+<typeValue>
+<val>Model</val>
+</typeValue>
+<visibility>
+<val>private</val>
+</visibility>
+</UML:Property>
+<UML:Operation id="f1d37a5f-e8d0-11f0-a633-4cb04ade7fd7">
+<class_>
+<ref refid="3414f047-e27c-11f0-9452-4cb04ade7fd7"/>
+</class_>
+<name>
+<val>setModel</val>
+</name>
+<ownedParameter>
+<reflist>
+<ref refid="f1db371c-e8d0-11f0-89f0-4cb04ade7fd7"/>
+</reflist>
+</ownedParameter>
+</UML:Operation>
+<UML:Parameter id="f1db371c-e8d0-11f0-89f0-4cb04ade7fd7">
+<name>
+<val>model</val>
+</name>
+<ownerFormalParam>
+<ref refid="f1d37a5f-e8d0-11f0-a633-4cb04ade7fd7"/>
+</ownerFormalParam>
+<typeValue>
+<val>Model</val>
+</typeValue>
+</UML:Parameter>
 </model>
 </gaphor>
