@@ -1,5 +1,5 @@
 package Model;
 
 public interface CloneableEvent {
-    public CloneableEvent clone();
+    public Event clone();
 }
