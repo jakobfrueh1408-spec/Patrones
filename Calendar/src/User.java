@@ -1,6 +1,7 @@
 import java.util.Date;
 
 public class User {
+    //defining attributes of the USer
     private String userName;
     private String password;
     private Date birthDate;
