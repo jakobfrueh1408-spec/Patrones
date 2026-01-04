@@ -1,3 +1,5 @@
+package Model;
+
 public class AutumnCalendarFactory implements CalendarFactory {
     public AutumnCalendarFactory() {}
     public Calendar createShortCalendar(String name){

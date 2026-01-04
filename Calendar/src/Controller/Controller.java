@@ -1,3 +1,7 @@
+package Controller;
+
+import Model.Model;
+import View.*;
 
 public class Controller {
     private Model model;

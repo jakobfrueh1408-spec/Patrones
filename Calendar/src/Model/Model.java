@@ -1,3 +1,6 @@
+package Model;
+
+import Controller.*;
 
 public class Model {
     private UserPool userPool;

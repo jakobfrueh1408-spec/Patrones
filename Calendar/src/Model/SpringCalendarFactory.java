@@ -1,3 +1,5 @@
+package Model;
+
 public class SpringCalendarFactory implements CalendarFactory {
     public SpringCalendarFactory() {}
     public Calendar createShortCalendar(String name){

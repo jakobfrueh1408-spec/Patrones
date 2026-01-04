@@ -1,3 +1,5 @@
+package Model;
+
 public class State {
     protected Model model;
     public State(Model model) {
