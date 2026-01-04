@@ -1,3 +1,5 @@
+package Model;
+
 public class NotSignedIn extends State{
     public NotSignedIn(Model model) {
         super(model);

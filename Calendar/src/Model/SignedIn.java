@@ -1,3 +1,5 @@
+package Model;
+
 public class SignedIn extends State{
     public SignedIn(Model model) {
         super(model);
