@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ZoomedInState extends State {
    
@@ -10,7 +10,7 @@ public class ZoomedInState extends State {
     
     @Override
     public void zoomOut(){
-        model.setState(new ZoomedInState(model));
+        model.setState(new SignedIn(model));
     }
 
     //notSignedInState

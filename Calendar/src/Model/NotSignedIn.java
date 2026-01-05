@@ -7,6 +7,7 @@ public class NotSignedIn extends State{
     public NotSignedIn(Model model) {
         super(model);
     }
+    @Override
     public void signIn(String userName, String password){
         //set the current user in the model
        
@@ -16,8 +17,8 @@ public class NotSignedIn extends State{
             System.out.println("halllo");
             User u = listToTraverse.get(i);
             //if the 
-            
-            if(u.getIdNumber() == u.hash(userName) && u.getPassword() == password) {
+            System.out.println(u.getIdNumber() == u.hash(userName));
+            if(u.getIdNumber().equals(u.hash(userName))  && u.getPassword().equals(password)) {
                 model.setCurrentUser(u);
                 System.out.println("halllo");
                 break; 
@@ -25,11 +26,11 @@ public class NotSignedIn extends State{
         }
         model.setState(new EmptySignedIn(model));
     }
-
-    public void register(String userName,String password,Date birthDate){
-        model.getUserPool().addUser(new User(userName, password, birthDate, new CalendarPool()));
-    }
-
+    @Override
+    public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
+        model.getUserPool().addUser(new User(name, password, birthday,calendarPool));
+        System.out.println("Users in the userpool"+model.getUserPool());
+    } 
     //signedInState
     @Override
     public void signOut(){}

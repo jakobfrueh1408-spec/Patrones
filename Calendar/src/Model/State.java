@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public abstract class State {
     protected Model model;
@@ -14,8 +14,13 @@ public abstract class State {
     }
 
     //notSignedInState
-    public void signIn(String name, String password){} 
-    public void register(String name, String password, Date birthday, CalendarPool calendarPool ){} 
+    public void signIn(String name, String password){
+        
+    } 
+  
+    public void register(String name, String password, Date birthday, CalendarPool calendarPool) {
+      
+    }
 
     //signedInState
     public void signOut(){}
@@ -41,4 +46,7 @@ public abstract class State {
 
     //all States
     public void exit(){}
+
+
+
 } 

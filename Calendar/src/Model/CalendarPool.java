@@ -6,6 +6,9 @@ import java.util.List;
 public class CalendarPool {
     private ArrayList<Calendar> calendars;
 
+    public ArrayList<Calendar> getCalendars() {
+        return calendars;
+    }
     @Override
     public String toString() {
         return "CalendarPool [calendars=" + calendars + "]";

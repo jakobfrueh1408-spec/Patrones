@@ -118,12 +118,26 @@ public class Model {
         System.out.println(model.state);
         model.signIn("Kubo","12345"); 
         System.out.println(model.getCurrentUser());
+        System.out.println(model.state);
         model.addCalendar(1,"Alcala",Season.Autumn);
         model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(0));
-        System.out.println(model.state);
-        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,9,14), Label.sport), 1,14);
+        
+        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 1,2);
         model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
-        System.out.println(model.getCurrentUser().toString());
+       // System.out.println(model.getCurrentUser().toString());
+        model.zoomIn();
+        model.zoomOut();
+        System.out.println(model.getCurrentUser());
+        model.addCalendar(2, "Guadalajara", Season.Spring);
+        System.out.println(model.getCurrentUser().getCalendars().getCalendars().size());
+        model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(1));
+         model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 1,2);
+        model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
+       System.out.println(model.getCurrentUser().toString());
+       model.signOut();
+    System.out.println(model.state);
+        
+        
     }
     //Problem : Each state has completely different functions , no overlap , parent class does not declare a conjunction of common functions  
     // => need for casting everytime we want to call a stat function

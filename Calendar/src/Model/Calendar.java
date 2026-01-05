@@ -46,7 +46,7 @@ public class Calendar {
         events.add(event);
         //retrieve the Date fo our baseEvent but not by reference but by value
         Date baseDate =  event.getDate();
-
+System.out.println(baseDate.toString());
         for (int i = 0; i< boundary; i++ ){
 
                 //clone event , update Date according to i in weeks and add it into the events List

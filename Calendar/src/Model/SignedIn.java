@@ -1,6 +1,6 @@
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class SignedIn extends State{
     public SignedIn(Model model) {
