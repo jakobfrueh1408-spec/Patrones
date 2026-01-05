@@ -10,7 +10,6 @@ public abstract class State {
 
     public void setModel(Model model) {
         this.model = model;
-    
     }
 
     //notSignedInState

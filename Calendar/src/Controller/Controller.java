@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.Model;
+import Model.*;
 import View.*;
 
 public class Controller {
@@ -15,10 +15,13 @@ public class Controller {
         this.model.setController(this);
         this.view = new View(this);
     }
-    public void onLogOutClicked(){
-
+    public void logoutClicked(){
+        model.setState(new NotSignedIn(model));
     }
     public void onExitClicked(){
         System.exit(0);
+    }
+    public void loginClicked(){
+        model.setState(new SignedIn(model));
     }
 }
