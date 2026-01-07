@@ -10,10 +10,7 @@ import java.awt.event.ActionListener;
 public class CalendarFrame extends JFrame {
     private Controller controller;
 
-    private int currentCard = 1;
-
     private CardLayout cardLayout;
-
     private JPanel cardsPanel;
 
     private JPanel mainMenuPanel;
@@ -26,7 +23,6 @@ public class CalendarFrame extends JFrame {
     //you are zoomed in and you can see a day in a detailed way
     private JPanel zoomedInPanel;
     private JPanel zoomedInButtonPanel;
-
 
 
     private JButton exitButton;
@@ -51,13 +47,13 @@ public class CalendarFrame extends JFrame {
         cardsPanel.setLayout(cardLayout);
 
         mainMenuPanel = new JPanel();
-        mainMenuPanel.setBackground(Color.WHITE);
+        mainMenuPanel.setBackground(Color.BLUE);
 
         loggedinPanel = new JPanel();
-        loggedinPanel.setBackground(Color.WHITE);
+        loggedinPanel.setBackground(Color.GREEN);
 
         zoomedInPanel = new JPanel();
-        zoomedInPanel.setBackground(Color.WHITE);
+        zoomedInPanel.setBackground(Color.RED);
 
         exitButton = new JButton("Exit");
         signInButton = new JButton("Sign In");
@@ -76,6 +72,7 @@ public class CalendarFrame extends JFrame {
 
         mainMenuButtonPanel = new JPanel();
         mainMenuButtonPanel.setBackground(Color.GRAY);
+        mainMenuButtonPanel.setLayout(new FlowLayout());
         mainMenuButtonPanel.setBounds(0, 0, this.getWidth(), 50);
         mainMenuButtonPanel.add(signInButton);
         mainMenuButtonPanel.add(registerButton);
@@ -83,6 +80,7 @@ public class CalendarFrame extends JFrame {
 
         loggedInButtonPanel = new JPanel();
         loggedInButtonPanel.setBackground(Color.GRAY);
+        loggedInButtonPanel.setLayout(new FlowLayout());
         loggedInButtonPanel.add(zoomInButton);
         loggedInButtonPanel.add(addCalendarButton);
         loggedInButtonPanel.add(removeCalendarButton);
@@ -91,14 +89,27 @@ public class CalendarFrame extends JFrame {
 
         zoomedInButtonPanel = new JPanel();
         zoomedInButtonPanel.setBackground(Color.GRAY);
+        zoomedInButtonPanel.setLayout(new FlowLayout());
         zoomedInButtonPanel.add(zoomOutButton);
         zoomedInButtonPanel.add(addNoteButton);
         zoomedInButtonPanel.add(removeNoteButton);
         zoomedInButtonPanel.add(addEventButton);
         zoomedInButtonPanel.add(removeEventButton);
 
-        mainMenuPanel.add(mainMenuButtonPanel, BorderLayout.SOUTH);
+        //MAIN MENU
+        //String[] users = controller.getUserNames();
+        String[] users = {"andris", "jakob"};
+        MainMenuView mainmenu = new MainMenuView(users);
+        mainmenu.setPreferredSize(new Dimension(100, 100));
+        mainMenuPanel.setLayout(new BorderLayout());
+        mainMenuPanel.add(mainMenuButtonPanel, BorderLayout.NORTH);
+        mainMenuPanel.add(mainmenu, BorderLayout.CENTER);
+
+        //LOGGED IN
+        CalendarView tmp = new CalendarView(28, 7);
         loggedinPanel.add(loggedInButtonPanel, BorderLayout.SOUTH);
+        loggedinPanel.add(tmp, BorderLayout.NORTH);
+
         zoomedInPanel.add(zoomedInButtonPanel, BorderLayout.SOUTH);
 
         cardsPanel.add(mainMenuPanel);

@@ -24,4 +24,13 @@ public class Controller {
     public void loginClicked(){
         model.setState(new SignedIn(model));
     }
+
+    public String[] getUserNames(){
+        int numOfUsers = model.getUserPool().getUsers().size();
+        String[] result = new String[numOfUsers];
+        for(int i = 0; i < numOfUsers; i++){
+            result[i] = model.getUserPool().getUsers().toString();
+        }
+        return result;
+    }
 }
