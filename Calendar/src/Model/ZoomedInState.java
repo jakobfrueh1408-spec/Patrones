@@ -23,7 +23,7 @@ public class ZoomedInState extends State {
     @Override
     public void signOut(){}
     @Override
-    public void addEvent(Event event){}
+    public void addEvent(Event event, int bounadry){}
     @Override
     public void addNote(Note note){}
     @Override
@@ -31,9 +31,10 @@ public class ZoomedInState extends State {
     @Override 
     public void removeNote(Note note){}
     @Override
-    public void editNote(Note note,String description){}
+    public void modifyEvent(Event event,String description){}
     @Override
-    public void editEvent(Event event,String description){}
+    public void modifyNote(Note note,String description){}
+
     @Override
     public void loadCalendar(Calendar calendar){}
     @Override

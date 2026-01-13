@@ -37,9 +37,7 @@ public class NotSignedIn extends State{
     @Override
     public void zoomIn(){}
     @Override
-    public void addEvent(Event event,int frequency, int boundary){}
-    @Override
-    public void addEvent(Event event){}
+    public void addEvent(Event event, int boundary){}
     @Override
     public void addNote(Note note){}
     @Override
@@ -49,9 +47,9 @@ public class NotSignedIn extends State{
 
     //editing still has some problems (can we only edit the text or also the date and the kind of the event)
     @Override
-    public void editNote(Note note, String description){}
+    public void modifyNote(Note note, String description){}
     @Override
-    public void editEvent(Event event, String description){}
+    public void modifyEvent(Event event, String description){}
     @Override
     public void loadCalendar(Calendar calendar){}
     @Override

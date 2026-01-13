@@ -25,22 +25,13 @@ public class SignedIn extends State{
     }
   
     @Override
-    public void addEvent(Event event){
-        // check if there is a current calendar to be manipulated
-        if(model.getCurrentUser().getCurrentCalendar() == null) {
-            //throw some Exception or something ( until now just return)
-            return; 
-        }
-        model.getCurrentUser().getCurrentCalendar().addEvent(event);
-    }
-    @Override
-    public void addEvent(Event event,int frequency, int boundary){
+    public void addEvent(Event event, int boundary){
             // check if there is a current calendar to be manipulated
         if(model.getCurrentUser().getCurrentCalendar() == null) {
             //throw some Exception or something ( until now just return)
             return; 
         }
-        model.getCurrentUser().getCurrentCalendar().addEvent(event,frequency,boundary);
+        model.getCurrentUser().getCurrentCalendar().addEvent(event,boundary);
     }
     @Override
     public void addNote(Note note){
@@ -60,21 +51,18 @@ public class SignedIn extends State{
         model.getCurrentUser().getCurrentCalendar().removeNote(note);
     }
     @Override
-    public void editNote(Note note, String description){
-        //still evry unsure about that until now only editing texts, we need to overload
+    public void modifyNote(Note note, String description){
+        //still every unsure about that until now only editing texts, we need to overload
         model.getCurrentUser().getCurrentCalendar().modifyNote(note, description);
     
     }
     @Override
-    public void editEvent(Event event, String description){
-        //still evry unsure about that until now only editing texts
+    public void modifyEvent(Event event, String description){
+        //still every unsure about that until now only editing texts
         model.getCurrentUser().getCurrentCalendar().modifyEvent(event, description);
     }
     
-    @Override
-    public void removeCalendar(Calendar calendar){
-        model.getCurrentUser().getCalendars().removeCalendar(calendar);
-    }
+
     @Override
     public void zoomIn(){
         model.setState(new ZoomedInState(model));
@@ -84,6 +72,14 @@ public class SignedIn extends State{
     @Override
     public void loadCalendar(Calendar calendar){
         model.getCurrentUser().setCurrentCalendar(calendar);
+    }
+    @Override
+    public void removeCalendar(Calendar calendar){
+        model.getCurrentUser().getCalendars().removeCalendar(calendar);
+    }
+    @Override
+    public void modifyCalendar(Calendar calendar, String newName ){
+        model.getCurrentUser().getCurrentCalendar().setName(newName);
     }
 
     @Override

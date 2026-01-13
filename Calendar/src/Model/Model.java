@@ -2,15 +2,10 @@ package Model;
 
 import java.util.Date;
 
-import Controller.*;
-
 public class Model {
     private UserPool userPool;
     private User currentUser;
-    private Controller controller;
     private State state;
-
-
     private static Model instance;
     
     private Model() {
@@ -29,15 +24,11 @@ public class Model {
     public UserPool getUserPool() {
         return userPool;
     }
-
     public User getCurrentUser() {
         return currentUser;
     }
     public void setState(State state) {
         this.state = state;
-    }
-    public void setController(Controller controller) {
-        this.controller = controller;
     }
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
@@ -46,16 +37,17 @@ public class Model {
         return state;
     }
 
-
-    // The functions which we can call directly using the model
+    /*********************************************************************************************************************/
+    // The functions which we can call indirectly using the model
 
     //notSignedInState
     public void signIn(String name, String password){
         state.signIn(name, password);
+        state.switchToSignedIn();
     } 
     public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
         state.register(name, password, null, calendarPool);
-    } 
+    }
 
     //signedInState
     public void signOut(){
@@ -64,11 +56,8 @@ public class Model {
     public void zoomIn(){
         state.zoomIn();
     }
-    public void addEvent(Event event,int frequency, int boundary){
-        state.addEvent(event,frequency,boundary);
-    }
-    public void addEvent(Event event){
-        state.addEvent(event);
+    public void addEvent(Event event, int boundary){
+        state.addEvent(event, boundary);
     }
     public void addNote(Note note){
         state.addNote(note);
@@ -79,12 +68,11 @@ public class Model {
     public void removeNote(Note note){
         state.removeNote(note);
     }
-    //editing still has some problems (can we only edit the text or also the date and the kind of the event)
-    public void editNote(Note note, String description){
-        state.editNote(note, description);
+    public void modifyNote(Note note, String title, String description){
+        state.modifyNote(note, description);
     }
-    public void editEvent(Event event, String description){
-        state.editEvent(event, description);
+    public void modifyEvent(Event event, String title, String description){
+        state.modifyEvent(event, description);
     }
     public void loadCalendar(Calendar calendar){
         state.loadCalendar(calendar);
@@ -92,14 +80,11 @@ public class Model {
     public void removeCalendar(Calendar calendar){
         state.removeCalendar(calendar);
     }
+    public void modifyCalendar(Calendar calendar, String title){state.modifyCalendar(calendar, title);}
+
     //both SignedInState and EmptySignedInState
     public void addCalendar(int length, String name, Season season){
         state.addCalendar(length,name,season);
-    }
-
-    //only EmptySignedInState
-    public void switchToSignedIn() {
-        state.switchToSignedIn();
     }
 
     //ZoomedInState
@@ -111,6 +96,8 @@ public class Model {
     public void exit(){
         state.exit();
     }
+
+
     public static void main( String[]args) {
         Model model = new Model(); 
         model.register("Kubo", "12345", new Date(2004,8,14), new CalendarPool());
@@ -122,8 +109,8 @@ public class Model {
         model.addCalendar(1,"Alcala",Season.Autumn);
         model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(0));
         
-        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 1,2);
-        model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
+        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025 - 1900,7,14), Label.sport), 2);
+        model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025 - 1900,11,20)));
        // System.out.println(model.getCurrentUser().toString());
         model.zoomIn();
         model.zoomOut();
@@ -131,15 +118,10 @@ public class Model {
         model.addCalendar(2, "Guadalajara", Season.Spring);
         System.out.println(model.getCurrentUser().getCalendars().getCalendars().size());
         model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(1));
-         model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 1,2);
+         model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 2);
         model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
        System.out.println(model.getCurrentUser().toString());
        model.signOut();
     System.out.println(model.state);
-        
-        
     }
-    //Problem : Each state has completely different functions , no overlap , parent class does not declare a conjunction of common functions  
-    // => need for casting everytime we want to call a stat function
-    // also the day view only for visual purposes ? 
 }
