@@ -1,5 +1,6 @@
 package View;
 import Controller.*;
+import Model.Season;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class CalendarForm extends JFrame {
     private JPanel EmptySignedInPanel;
     private JPanel ZoomedInPanel;
 
+    //Main Menu Panel
     private JButton registerButton;
     private JButton exitFromMainMenuButton;
     private JButton signInButton;
@@ -28,13 +30,18 @@ public class CalendarForm extends JFrame {
     private JLabel registerusernameLabel;
     private JLabel registerpasswordLabel;
 
+    //Empty Signed In Panel
+    private JButton emptyCreateCalendarButton;
+    private JTextField emptyTitleOfCalendar;
+    private JComboBox emptyLengthOfStay;
+    private JComboBox emptyStartOfSemester;
+
+
+    //Signed in Panel
     private JComboBox comboBox1;
     private JButton openButton;
     private JButton logOutButton;
-
-
-
-
+    private JButton logOutButton1;
 
     public CalendarForm(View view) {
         this.view = view;
@@ -53,6 +60,7 @@ public class CalendarForm extends JFrame {
         exitFromMainMenuButton.addActionListener(new CommandActionListener(new ExitCommand(this.view.getController())));
         signInButton.addActionListener(new CommandActionListener(new SignInCommand(this.view.getController())));
         registerButton.addActionListener(new CommandActionListener(new RegisterCommand(this.view.getController())));
+        emptyCreateCalendarButton.addActionListener(new CommandActionListener(new AddCalendarCommand(this.view.getController(), emptyTitleOfCalendar.toString(), 1, emptyStartOfSemester.toString() == "Autumn" ? Season.Autumn : Season.Spring)));
     }
 
     public void refreshState(String stateToGo){
