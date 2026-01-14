@@ -24,7 +24,12 @@ public class NotSignedIn extends State{
                 break; 
             }
         }
-        model.setState(new EmptySignedIn(model));
+        if(model.getCurrentUser() == null) {
+            model.setState(new EmptySignedIn(model));
+        } else {
+            model.setState(new SignedIn(model));
+        }
+
     }
     @Override
     public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
@@ -66,5 +71,8 @@ public class NotSignedIn extends State{
     @Override
     public void exit(){
         model.exit();
+    }
+    public String toString(){
+        return "NotSignedIn";
     }
 }

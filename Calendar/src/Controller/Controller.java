@@ -8,13 +8,8 @@ import java.util.Date;
 public class Controller {
     private Model model;
     private View view;
-    public Controller(Model model, View view) {
+    public Controller(Model model) {
         this.model = model;
-        this.view = view;
-    }
-
-    public Controller() {
-        this.model = Model.getInstance();
         this.view = new View(this);
     }
     public View getView() {
@@ -29,7 +24,10 @@ public class Controller {
         model.signIn(name, password);
     }
     public void onRegisterClicked(){
+        String name = this.getView().getCalendarForm().getRegisterUsername();
+        String password = this.getView().getCalendarForm().getRegisterPassword();
 
+        //model.register(name, password, );
     }
     public void onAddCalendarClicked(String name, int length, Season start){
         model.addCalendar(length, name, start);

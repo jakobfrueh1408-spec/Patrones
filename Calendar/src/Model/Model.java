@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Controller;
+
 import java.util.Date;
 
 public class Model {
@@ -7,10 +9,12 @@ public class Model {
     private User currentUser;
     private State state;
     private static Model instance;
+    private Controller controller;
     
     private Model() {
         userPool = new UserPool();
         currentUser = null;
+        this.controller = new Controller(this);
         state = new NotSignedIn(this);
     }
     public static Model getInstance() {
@@ -29,6 +33,8 @@ public class Model {
     }
     public void setState(State state) {
         this.state = state;
+        this.controller.getView().getCalendarForm().refreshState(state.toString());
+        System.out.println("Current State: " + state.toString());
     }
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
@@ -43,7 +49,7 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password){
         state.signIn(name, password);
-        state.switchToSignedIn();
+        //state.switchToSignedIn();
     } 
     public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
         state.register(name, password, null, calendarPool);
@@ -98,8 +104,9 @@ public class Model {
     }
 
 
-    public static void main( String[]args) {
-        Model model = new Model(); 
+    /*public static void main( String[]args) {
+        //new Model();
+
         model.register("Kubo", "12345", new Date(2004,8,14), new CalendarPool());
         
         System.out.println(model.state);
@@ -111,17 +118,18 @@ public class Model {
         
         model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025 - 1900,7,14), Label.sport), 2);
         model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025 - 1900,11,20)));
-       // System.out.println(model.getCurrentUser().toString());
+        // System.out.println(model.getCurrentUser().toString());
         model.zoomIn();
         model.zoomOut();
         System.out.println(model.getCurrentUser());
         model.addCalendar(2, "Guadalajara", Season.Spring);
         System.out.println(model.getCurrentUser().getCalendars().getCalendars().size());
         model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(1));
-         model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 2);
+        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 2);
         model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
-       System.out.println(model.getCurrentUser().toString());
-       model.signOut();
-    System.out.println(model.state);
-    }
+        System.out.println(model.getCurrentUser().toString());
+        model.signOut();
+        System.out.println(model.state);
+
+    }*/
 }

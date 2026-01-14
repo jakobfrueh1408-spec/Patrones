@@ -5,9 +5,8 @@ public class RegisterCommand extends Command {
         super(controller);
     }
     public void execute() {
-        controller.onExitClicked();
+        controller.onRegisterClicked();
     }
     public void fetchParameters() {
-
     }
 }

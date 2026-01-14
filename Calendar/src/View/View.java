@@ -8,15 +8,15 @@ import java.awt.event.ActionListener;
 
 public class View {
     private Controller controller;
-    private CalendarFrame calendarFrame;
+    private CalendarForm calendarForm;
     public View(Controller controller) {
         this.controller = controller;
-        CalendarFrame calendarFrame = new CalendarFrame(this);
+        calendarForm = new CalendarForm(this);
     }
     public Controller getController() {
         return controller;
     }
-    public CalendarFrame getCalendarFrame() {
-        return calendarFrame;
+    public CalendarForm getCalendarForm() {
+        return this.calendarForm;
     }
 }

@@ -57,4 +57,8 @@ public class EmptySignedIn extends State{
         //TO DO DB
         ;
     }
+
+    public String toString(){
+        return "EmptySignedIn";
+    }
 }
