@@ -25,9 +25,8 @@ public class CalendarPool {
         }
         return calendars.get(index);
     }
-    public void removeCalendar(Calendar calendar) {
-        int indexToRemove = calendars.indexOf(calendar);
-        calendars.remove(indexToRemove);
+    public void removeCalendar(int index) {
+        calendars.remove(index);
     }
     public void modifyCalendar(int index) {
         Calendar tmp = calendars.get(index);

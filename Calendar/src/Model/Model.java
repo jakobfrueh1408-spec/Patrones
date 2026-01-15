@@ -33,8 +33,6 @@ public class Model {
     }
     public void setState(State state) {
         this.state = state;
-        this.controller.getView().getCalendarForm().refreshState(state.toString());
-        System.out.println("Current State: " + state.toString());
     }
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
@@ -49,18 +47,17 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password){
         state.signIn(name, password);
-        //state.switchToSignedIn();
-    } 
-    public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
-        state.register(name, password, null, calendarPool);
+    }
+    public void register(String name, String password, String birthday){
+        state.register(name, password, birthday);
     }
 
     //signedInState
     public void signOut(){
         state.signOut();
     }
-    public void zoomIn(){
-        state.zoomIn();
+    public void zoomIn(int indexToZoomIn){
+        state.zoomIn(indexToZoomIn);
     }
     public void addEvent(Event event, int boundary){
         state.addEvent(event, boundary);
@@ -83,8 +80,8 @@ public class Model {
     public void loadCalendar(Calendar calendar){
         state.loadCalendar(calendar);
     }
-    public void removeCalendar(Calendar calendar){
-        state.removeCalendar(calendar);
+    public void removeCalendar(int indexToRemove){
+        state.removeCalendar(indexToRemove);
     }
     public void modifyCalendar(Calendar calendar, String title){state.modifyCalendar(calendar, title);}
 

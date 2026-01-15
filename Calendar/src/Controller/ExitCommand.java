@@ -7,7 +7,4 @@ public class ExitCommand extends Command {
     public void execute() {
         controller.onExitClicked();
     }
-    public void fetchParameters() {
-
-    }
 }

@@ -17,7 +17,7 @@ public class ZoomedInState extends State {
     @Override
     public void signIn(String name, String password){}
     @Override 
-    public void register(String name, String password,Date birthday, CalendarPool calendarPool ){} 
+    public void register(String name, String password, String  birthday){}
 
     //signedInState
     @Override
@@ -38,9 +38,9 @@ public class ZoomedInState extends State {
     @Override
     public void loadCalendar(Calendar calendar){}
     @Override
-    public void removeCalendar(Calendar calendar){}
+    public void removeCalendar(int indexToRemove){}
     @Override
-    public void zoomIn(){}
+    public void zoomIn(int indexToZoomIn){}
     @Override
     public void addCalendar(int lenght, String name, Season season){}
     @Override

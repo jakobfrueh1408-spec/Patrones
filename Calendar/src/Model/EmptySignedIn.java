@@ -11,7 +11,7 @@ public class EmptySignedIn extends State{
     @Override
     public void signOut(){}
     @Override
-    public void zoomIn(){}
+    public void zoomIn(int indexToZoomIn){}
     @Override
     public void addEvent(Event event, int boundary){}
     @Override
@@ -28,7 +28,7 @@ public class EmptySignedIn extends State{
     public void modifyEvent(Event event, String description){}
     
     @Override
-    public void removeCalendar(Calendar calendar){}
+    public void removeCalendar(int indexToRemove){}
 
 
     @Override

@@ -15,7 +15,4 @@ public class AddCalendarCommand extends Command {
     public void execute() {
         controller.onAddCalendarClicked(this.name, this.length, this.start);
     }
-    public void fetchParameters() {
-
-    }
 }

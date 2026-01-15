@@ -32,15 +32,15 @@ public class NotSignedIn extends State{
 
     }
     @Override
-    public void register(String name, String password, Date birthday, CalendarPool calendarPool ){
-        model.getUserPool().addUser(new User(name, password, birthday,calendarPool));
+    public void register(String name, String password, String birthday){
+        model.getUserPool().addUser(new User(name, password, birthday));
         System.out.println("Users in the userpool"+model.getUserPool());
     } 
     //signedInState
     @Override
     public void signOut(){}
     @Override
-    public void zoomIn(){}
+    public void zoomIn(int indexToZoomIn){}
     @Override
     public void addEvent(Event event, int boundary){}
     @Override
@@ -58,7 +58,7 @@ public class NotSignedIn extends State{
     @Override
     public void loadCalendar(Calendar calendar){}
     @Override
-    public void removeCalendar(Calendar calendar){}
+    public void removeCalendar(int indexToRemove){}
     @Override
     public void addCalendar(int lenght, String name, Season season){}
     

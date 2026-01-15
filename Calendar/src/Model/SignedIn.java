@@ -11,7 +11,7 @@ public class SignedIn extends State{
     @Override
     public void signIn(String name , String password){}
     @Override 
-    public void register(String name, String password, Date birthday, CalendarPool calendarPool){} 
+    public void register(String name, String password, String birthday){}
 
     //signedInState
     @Override
@@ -64,7 +64,7 @@ public class SignedIn extends State{
     
 
     @Override
-    public void zoomIn(){
+    public void zoomIn(int indexToZoomIn){
         model.setState(new ZoomedInState(model));
     }
    
@@ -74,8 +74,8 @@ public class SignedIn extends State{
         model.getCurrentUser().setCurrentCalendar(calendar);
     }
     @Override
-    public void removeCalendar(Calendar calendar){
-        model.getCurrentUser().getCalendars().removeCalendar(calendar);
+    public void removeCalendar(int indexToRemove){
+        model.getCurrentUser().getCalendars().removeCalendar(indexToRemove);
     }
     @Override
     public void modifyCalendar(Calendar calendar, String newName ){

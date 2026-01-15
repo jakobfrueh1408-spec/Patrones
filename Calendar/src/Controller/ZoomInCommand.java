@@ -1,13 +1,12 @@
 package Controller;
 
 public class ZoomInCommand extends Command {
-    public ZoomInCommand(Controller controller) {
+    private int index;
+    public ZoomInCommand(Controller controller, int indexToZoomIn) {
         super(controller);
+        this.index = indexToZoomIn;
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onZoomInClicked(this.index);
     }
 }

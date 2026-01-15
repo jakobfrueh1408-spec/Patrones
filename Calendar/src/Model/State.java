@@ -16,13 +16,11 @@ public abstract class State {
     public void signIn(String name, String password){
         
     } 
-    public void register(String name, String password, Date birthday, CalendarPool calendarPool) {
-      
-    }
+    public void register(String name, String password, String birthday) {}
 
     //signedInState
     public void signOut(){}
-    public void zoomIn(){}
+    public void zoomIn(int indexToZoomIn){}
     public void addEvent(Event event, int boundary){}
     public void removeEvent(Event event){}
     public void modifyEvent(Event event){}
@@ -32,7 +30,7 @@ public abstract class State {
     public void modifyNote(Note note, String description){}
     public void modifyEvent(Event event, String description){}
     public void loadCalendar(Calendar calendar){}
-    public void removeCalendar(Calendar calendar){}
+    public void removeCalendar(int indexToRemove){}
     public void modifyCalendar(Calendar calendar, String newTitle){}
 
     //both SignedInState and EmptySignedInState

@@ -9,18 +9,18 @@ public class User {
     //defining attributes of the USer
     private String userName;
     private String password;
-    private Date birthDate;
+    private String birthDate;
     private String idNumber;
     private Calendar currentCalendar; 
 
     private CalendarPool calendars;
     
-    public User(String userName, String password, Date birthDate, CalendarPool calendars) {
+    public User(String userName, String password, String birthDate) {
         this.userName = userName;
         this.password = password;
         this.birthDate = birthDate;
         this.idNumber = hash(userName);
-        this.calendars = calendars;
+        this.calendars = new  CalendarPool();
     }
     public void createCalendar(int length, String name, Season season) {
         if(length == 1){
@@ -61,7 +61,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
     public String getIdNumber() {

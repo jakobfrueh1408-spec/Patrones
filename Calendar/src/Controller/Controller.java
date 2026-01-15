@@ -1,16 +1,24 @@
 package Controller;
 
 import Model.*;
+import Model.Event;
+import Model.Label;
 import View.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 
 public class Controller {
     private Model model;
     private View view;
+    private JPanel contentPane;
+    private CardLayout cardLayout;
     public Controller(Model model) {
         this.model = model;
         this.view = new View(this);
+        this.cardLayout = view.getCalendarForm().getCardLayout();
+        this.contentPane = view.getCalendarForm().getContentPane();
     }
     public View getView() {
         return view;
@@ -22,27 +30,31 @@ public class Controller {
     }
     public void onSignInClicked(String name, String password){
         model.signIn(name, password);
+        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
+            cardLayout.show(contentPane, "EmptySignedInPanel");
+        } else {
+            cardLayout.show(contentPane, "SignedInPanel");
+        }
     }
-    public void onRegisterClicked(){
-        String name = this.getView().getCalendarForm().getRegisterUsername();
-        String password = this.getView().getCalendarForm().getRegisterPassword();
-
-        //model.register(name, password, );
+    public void onRegisterClicked(String name, String password,  String birthday){
+        model.register(name, password, birthday);
     }
     public void onAddCalendarClicked(String name, int length, Season start){
         model.addCalendar(length, name, start);
     }
-    public void onRemoveCalendarClicked(){
-
+    public void onRemoveCalendarClicked(int indexToRemove){
+        model.removeCalendar(indexToRemove);
     }
     public void onModifyCalendarClicked(){
 
     }
     public void onSignOutClicked(){
-        model.setState(new NotSignedIn(model));
+        model.signOut();
+        cardLayout.show(contentPane, "MainMenuPanel");
     }
-    public void onZoomInClicked(){
-
+    public void onZoomInClicked(int indexToZoomIn){
+        model.zoomIn(indexToZoomIn);
+        cardLayout.show(contentPane, "ZoomedInPanel");
     }
     public void onAddNoteClicked(){
 

@@ -6,5 +6,4 @@ public abstract class Command {
         this.controller = controller;
     }
     public abstract void execute();
-    public abstract void fetchParameters();
 }

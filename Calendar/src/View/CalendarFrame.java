@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/*
 public class CalendarFrame extends JFrame {
     private View view;
 
@@ -151,3 +151,4 @@ public class CalendarFrame extends JFrame {
         getContentPane().add(cardsPanel);
     }
 }
+*/

@@ -32,16 +32,21 @@ public class CalendarForm extends JFrame {
 
     //Empty Signed In Panel
     private JButton emptyCreateCalendarButton;
+    private JButton emptySignOutButton;
     private JTextField emptyTitleOfCalendar;
     private JComboBox emptyLengthOfStay;
     private JComboBox emptyStartOfSemester;
 
 
     //Signed in Panel
-    private JComboBox comboBox1;
-    private JButton openButton;
-    private JButton logOutButton;
-    private JButton logOutButton1;
+    private JComboBox signedinCalendarlist;
+    private JButton signedinZoomInButton;
+    private JButton signedinSignOutButton;
+    private JButton signedinDeleteButton;
+
+    private JLabel birthDay;
+    private JTextField birthDayTextField;
+    private JPanel separator;
 
     public CalendarForm(View view) {
         this.view = view;
@@ -56,35 +61,52 @@ public class CalendarForm extends JFrame {
         contentPane.add(MainMenuPanel, "MainMenuPanel");
         contentPane.add(EmptySignedInPanel, "EmptySignedInPanel");
         contentPane.add(SignedInPanel, "SignedInPanel");
+        contentPane.add(ZoomedInPanel, "ZoomedInPanel");
 
-        exitFromMainMenuButton.addActionListener(new CommandActionListener(new ExitCommand(this.view.getController())));
-        signInButton.addActionListener(new CommandActionListener(new SignInCommand(this.view.getController())));
-        registerButton.addActionListener(new CommandActionListener(new RegisterCommand(this.view.getController())));
-        emptyCreateCalendarButton.addActionListener(new CommandActionListener(new AddCalendarCommand(this.view.getController(), emptyTitleOfCalendar.toString(), 1, emptyStartOfSemester.toString() == "Autumn" ? Season.Autumn : Season.Spring)));
-    }
+        exitFromMainMenuButton.addActionListener(e -> {
+            new ExitCommand(view.getController()).execute();
+        });
+        signInButton.addActionListener(e -> {
+            String username = signintextField.getText();
+            String password = signinpasswordField.getText();
+            new SignInCommand(view.getController(), username, password).execute();
+        });
+        registerButton.addActionListener( e -> {
+            String username = registertextField.getText();
+            String password = registerpasswordField.getText();
+            String birthday = birthDayTextField.getText();
+            new RegisterCommand(view.getController(), username, password,  birthday).execute();
+        });
 
-    public void refreshState(String stateToGo){
-        switch (stateToGo){
-            case "EmptySignedIn":
-            {
-                this.cardLayout.show(contentPane ,"EmptySignedInPanel");
-                break;
-            }
-            case "SignedIn":
-            {
-                this.cardLayout.show(contentPane ,"SignedInPanel");
-                break;
-            }
-            case "ZoomedIn":
-            {
-                this.cardLayout.show(contentPane ,"ZoomedInPanel");
-                break;
-            }
-            default:
-            {
-                this.cardLayout.show(contentPane, "MainMenuPanel");
-            }
-        }
+        emptySignOutButton.addActionListener(e -> {
+            new SignOutCommand(view.getController()).execute();
+        });
+
+        emptyCreateCalendarButton.addActionListener( e -> {
+            String name = emptyTitleOfCalendar.getText();
+            int length =  Integer.parseInt(emptyLengthOfStay.getSelectedItem().toString());
+            String start = emptyStartOfSemester.getSelectedItem().toString();
+            Season season;
+            if(start.equals("Autumn"))
+                season = Season.Autumn;
+            else
+                season = Season.Spring;
+            new AddCalendarCommand(view.getController(), name, length, season).execute();
+        });
+
+        signedinSignOutButton.addActionListener(e -> {
+            new SignOutCommand(view.getController()).execute();
+        });
+
+        signedinDeleteButton.addActionListener(e -> {
+            int index = signedinCalendarlist.getSelectedIndex();
+            new RemoveCalendarCommand(view.getController(), index).execute();
+        });
+
+        signedinZoomInButton.addActionListener(e -> {
+           int index = signedinCalendarlist.getSelectedIndex();
+           new ZoomInCommand(view.getController(), index).execute();
+        });
     }
 
     public String getSigninUsername(){
@@ -98,5 +120,11 @@ public class CalendarForm extends JFrame {
     }
     public String getRegisterPassword(){
         return this.registerpasswordField.getText();
+    }
+    public CardLayout getCardLayout(){
+        return this.cardLayout;
+    }
+    public JPanel getContentPane(){
+        return contentPane;
     }
 }
