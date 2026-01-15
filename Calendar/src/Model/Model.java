@@ -56,8 +56,8 @@ public class Model {
     public void signOut(){
         state.signOut();
     }
-    public void zoomIn(int indexToZoomIn){
-        state.zoomIn(indexToZoomIn);
+    public void zoomIn(int indexToZoomIn, int dayToZoomIn){
+        state.zoomIn(indexToZoomIn, dayToZoomIn);
     }
     public void addEvent(Event event, int boundary){
         state.addEvent(event, boundary);

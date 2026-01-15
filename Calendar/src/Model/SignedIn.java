@@ -64,7 +64,7 @@ public class SignedIn extends State{
     
 
     @Override
-    public void zoomIn(int indexToZoomIn){
+    public void zoomIn(int indexToZoomIn, int dayToZoomIn){
         model.setState(new ZoomedInState(model));
     }
    

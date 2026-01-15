@@ -20,7 +20,7 @@ public abstract class State {
 
     //signedInState
     public void signOut(){}
-    public void zoomIn(int indexToZoomIn){}
+    public void zoomIn(int indexToZoomIn, int dayToZoomIn){}
     public void addEvent(Event event, int boundary){}
     public void removeEvent(Event event){}
     public void modifyEvent(Event event){}

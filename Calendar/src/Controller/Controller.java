@@ -30,7 +30,7 @@ public class Controller {
     }
     public void onSignInClicked(String name, String password){
         model.signIn(name, password);
-        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
+        if(model.getCurrentUser() == null || model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
             cardLayout.show(contentPane, "EmptySignedInPanel");
         } else {
             cardLayout.show(contentPane, "SignedInPanel");
@@ -40,10 +40,16 @@ public class Controller {
         model.register(name, password, birthday);
     }
     public void onAddCalendarClicked(String name, int length, Season start){
+        //if we were in the emptysignedin state, we have to switch view state
+        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
+            cardLayout.show(contentPane, "SignedInPanel");
         model.addCalendar(length, name, start);
     }
     public void onRemoveCalendarClicked(int indexToRemove){
         model.removeCalendar(indexToRemove);
+        //if we delete the last calendar, we have to switch view state
+        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
+            cardLayout.show(contentPane, "EmptySignedInPanel");
     }
     public void onModifyCalendarClicked(){
 
@@ -52,8 +58,8 @@ public class Controller {
         model.signOut();
         cardLayout.show(contentPane, "MainMenuPanel");
     }
-    public void onZoomInClicked(int indexToZoomIn){
-        model.zoomIn(indexToZoomIn);
+    public void onZoomInClicked(int indexToZoomIn, int dayToZoomIn){
+        model.zoomIn(indexToZoomIn, dayToZoomIn);
         cardLayout.show(contentPane, "ZoomedInPanel");
     }
     public void onAddNoteClicked(){

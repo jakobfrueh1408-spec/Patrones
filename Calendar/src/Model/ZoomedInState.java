@@ -40,7 +40,7 @@ public class ZoomedInState extends State {
     @Override
     public void removeCalendar(int indexToRemove){}
     @Override
-    public void zoomIn(int indexToZoomIn){}
+    public void zoomIn(int indexToZoomIn, int dayToZoomIn){}
     @Override
     public void addCalendar(int lenght, String name, Season season){}
     @Override

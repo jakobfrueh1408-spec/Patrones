@@ -24,6 +24,8 @@ public class CalendarForm extends JFrame {
     private JPasswordField signinpasswordField;
     private JTextField registertextField;
     private JPasswordField registerpasswordField;
+    private JLabel birthDay;
+    private JTextField birthDayTextField;
     private JLabel mainPageLabel;
     private JLabel signusernameLabel;
     private JLabel signpasswordLabel;
@@ -43,10 +45,30 @@ public class CalendarForm extends JFrame {
     private JButton signedinZoomInButton;
     private JButton signedinSignOutButton;
     private JButton signedinDeleteButton;
+    private JTextField zoomintextfield;
 
-    private JLabel birthDay;
-    private JTextField birthDayTextField;
+    //Zoomed in Panel
+
     private JPanel separator;
+    private JPanel dayView;
+    private JButton addEventButton;
+    private JTextField addEventTitleField;
+    private JTextField addEventTextField;
+    private JComboBox addEventLabelBox;
+    private JComboBox addEventRecurring;
+    private JButton addNoteButton;
+    private JTextField addNoteTitleField;
+    private JTextField addNoteTextField;
+    private JButton removeEventButton;
+    private JComboBox removeEventBox;
+    private JComboBox removeNoteBox;
+    private JButton removeNoteButton;
+    private JButton modifyEventButton;
+    private JTextField modifyEventText;
+    private JComboBox modifyEventBox;
+    private JButton modifyNoteButton;
+    private JComboBox modifyNoteBox;
+    private JTextField modifyNoteText;
 
     public CalendarForm(View view) {
         this.view = view;
@@ -105,7 +127,32 @@ public class CalendarForm extends JFrame {
 
         signedinZoomInButton.addActionListener(e -> {
            int index = signedinCalendarlist.getSelectedIndex();
-           new ZoomInCommand(view.getController(), index).execute();
+           int day = Integer.parseInt(zoomintextfield.getText().toString());
+           new ZoomInCommand(view.getController(), index, day).execute();
+        });
+
+        //Zoomed in state
+        addEventButton.addActionListener(e -> {
+            String text = addEventTextField.getText();
+            String title = addEventTitleField.getText();
+            int length = Integer.parseInt(addEventRecurring.getSelectedItem().toString());
+            String label =  addEventLabelBox.getSelectedItem().toString();
+            //new AddEventCommand(view.getController(), title, text, label, length, )
+        });
+        removeEventButton.addActionListener(e -> {
+
+        });
+        modifyEventButton.addActionListener(e -> {
+
+        });
+        addNoteButton.addActionListener(e -> {
+
+        });
+        removeNoteButton.addActionListener(e -> {
+
+        });
+        modifyNoteButton.addActionListener(e -> {
+
         });
     }
 
@@ -126,5 +173,9 @@ public class CalendarForm extends JFrame {
     }
     public JPanel getContentPane(){
         return contentPane;
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 }

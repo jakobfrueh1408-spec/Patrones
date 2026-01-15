@@ -19,4 +19,5 @@ public class View {
     public CalendarForm getCalendarForm() {
         return this.calendarForm;
     }
+
 }
