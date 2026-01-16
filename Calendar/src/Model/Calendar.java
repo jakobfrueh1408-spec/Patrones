@@ -123,7 +123,6 @@ public class Calendar {
                 events.add(reocurr);
         }
     }
-
     //functions for Note insertion , manipulation adn deletion
     //removing the specified event from the Event List
     public void removeNote(String title){
@@ -152,7 +151,6 @@ public class Calendar {
     /**
      * AUXILIARY METHODS
     **/
-
     public Event extractEventsByTitle(ArrayList <Event> toExtract,String title){
         Event filteredByTitle = null;
         for (Event event : toExtract){
@@ -163,7 +161,6 @@ public class Calendar {
         }
         return filteredByTitle;
     }
-
     public Note extractNotesByTitle(ArrayList <Note> toExtract,String title){
         Note filteredByTitle = null;
         for (Note note : toExtract){
@@ -174,7 +171,6 @@ public class Calendar {
         }
         return filteredByTitle;
     }
-
     //for getting all the today Events
     public ArrayList <Event> getCurrentDayEventList(){
         ArrayList <Event> currentDayEventList = new ArrayList<>();
@@ -187,7 +183,6 @@ public class Calendar {
         }
         return currentDayEventList;
     }
-
     //for getting all the today Events
     public ArrayList <Note> getCurrentDayNoteList(){
         ArrayList <Note> currentDayNoteList = new ArrayList<>();
@@ -200,7 +195,6 @@ public class Calendar {
         }
         return currentDayNoteList;
     }
-
     public Date addWeeks(Date date,int amount) {
         // adding weeks onto the Dates
         Date result = Date.from(date.toInstant()
@@ -212,17 +206,25 @@ public class Calendar {
 
         return result;
     }
-
     //checking whether two dates are the same day
     public boolean isSameDay(Date d1, Date d2) {
         return d1.getYear() == d2.getYear() &&
                 d1.getMonth() == d2.getMonth() &&
                 d1.getDate() == d2.getDate(); // .getDate() actually returns the day of the month
     }
-
     public static Date dateCreator(int day , int month, int year) {
         Date date = new Date(day, month-1,year-1900);
         return date;
+    }
+    public Date getInitiationDate(){
+        int month =0;
+        int day = 1;
+        switch(season){
+            case season.Autumn : month = 9; break;
+            case season.Spring :month = 4 ; break;
+        }
+        Date initDate = dateCreator(day,month,year);
+        return initDate;
     }
 
 }
