@@ -4,6 +4,7 @@ import Model.Event;
 import Model.Note;
 import Model.Label;
 import java.sql.*;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -38,14 +39,12 @@ public class EventNoteTableManager implements DatabaseDAO {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public void manipulateEvent(Event event) {
-        String sql = "UPDATE Events SET title = ?, description = ?, label = ? WHERE event_id = ?";
+    public void manipulateEvent(int event_id, String description) {
+        String sql = "UPDATE Events SET  description = ? WHERE event_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, event.getTitle());
-            pstmt.setString(2, event.getDescription());
-            pstmt.setString(3, event.getLabel().toString());
-            pstmt.setInt(4, event.getEvent_Id());
+            pstmt.setString(1, description);
+            pstmt.setInt(2, event_id);
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }

@@ -12,9 +12,6 @@ public class View {
     public View(Controller controller) {
         this.controller = controller;
         calendarForm = new CalendarForm(this);
-        controller.setCardLayout(calendarForm.getCardLayout());
-        controller.setContentPane(calendarForm.getContentPane());
-        controller.setView(this);
     }
     public Controller getController() {
         return controller;

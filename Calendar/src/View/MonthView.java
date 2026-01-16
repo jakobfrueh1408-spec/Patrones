@@ -15,19 +15,16 @@ import java.util.Locale;
 
 public class MonthView extends JPanel {
 
-    private final int year;
-    private final int month;
+    private final YearMonth yearMonth;
     private Calendar calendar;
 
     public MonthView(int month, Calendar calendar) {
         int year = calendar.getYear();
         this.calendar = calendar;
-        if((calendar.getSeason().toString() == "Autumn" && month >= 5) || (calendar.getSeason().toString() == "Spring" && month >= 10)){
+        if((calendar.getSeason().toString() == "Autumn" && month >= 5) || (calendar.getSeason().toString() == "Spring" && month >= 11)){
             year++;
         }
-        this.year = year;
-        this.month = month;
-        //System.out.println(month);
+        this.yearMonth = YearMonth.of(year, month);
 
         setLayout(new GridLayout(0, 7));
         buildMonth();
@@ -45,14 +42,14 @@ public class MonthView extends JPanel {
             add(header);
         }
 
-        LocalDate firstDay = LocalDate.of(year, month, 1);
+        LocalDate firstDay = yearMonth.atDay(1);
         int firstDayColumn = firstDay.getDayOfWeek().getValue() % 7;
 
         for (int i = 0; i < firstDayColumn; i++) {
             add(createEmptyCell());
         }
 
-        int daysInMonth = firstDay.lengthOfMonth();
+        int daysInMonth = yearMonth.lengthOfMonth();
         for (int day = 1; day <= daysInMonth; day++) {
             add(createDayCell(day, calendar.dayEventTitles(day), calendar.dayLabelTitles(day), calendar.dayNoteTitles(day)));
         }
