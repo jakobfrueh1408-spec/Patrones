@@ -10,13 +10,14 @@ public class Model {
     private State state;
     private static Model instance;
     private Controller controller;
-    
+
     private Model() {
         userPool = new UserPool();
         currentUser = null;
         this.controller = new Controller(this);
         state = new NotSignedIn(this);
     }
+
     public static Model getInstance() {
         if (instance == null) {
             instance = new Model();
@@ -28,15 +29,19 @@ public class Model {
     public UserPool getUserPool() {
         return userPool;
     }
+
     public User getCurrentUser() {
         return currentUser;
     }
+
     public void setState(State state) {
         this.state = state;
     }
+
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
+
     public State getState() {
         return state;
     }
@@ -45,95 +50,74 @@ public class Model {
     // The functions which we can call indirectly using the model
 
     //notSignedInState
-    public void signIn(String name, String password){
+    public void signIn(String name, String password) {
         state.signIn(name, password);
     }
-    public void register(String name, String password, String birthday){
+
+    public void register(String name, String password, String birthday) {
         state.register(name, password, birthday);
     }
 
     //signedInState
-    public void signOut(){
+    public void signOut() {
         state.signOut();
     }
-    public void zoomIn(int day, int month, int year){
+
+    public void zoomIn(int day, int month, int year) {
         //we need to set the current Date fo the current calendar of the current user
         // state function needs to det the day to zoom in
-        state.zoomIn(int day, int month, int year);
+        state.zoomIn( int day, int month, int year);
     }
 
-    public void loadCalendar(String name){
+    public void loadCalendar(String name) {
         state.loadCalendar(name);
     }
-    public void removeCalendar(int indexToRemove){
+
+    public void removeCalendar(int indexToRemove) {
         state.removeCalendar(indexToRemove);
     }
-    public void modifyCalendar(String name, String title){state.modifyCalendar(name, title);}
+
+    public void modifyCalendar(String name, String title) {
+        state.modifyCalendar(name, title);
+    }
 
     //both SignedInState and EmptySignedInState
-    public void addCalendar(String name, int length, Season season, int year){
-        state.addCalendar(name,length,season,year);
+    public void addCalendar(String name, int length, Season season, int year) {
+        state.addCalendar(name, length, season, year);
     }
 
     //ZoomedInState
-    public void zoomOut(){
+    public void zoomOut() {
         state.zoomOut();
     }
-    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
+
+    public void addEvent(String title, String description, String label, int lengthOfOccurrence) {
         //Problem with the Date persists
-        state.addEvent(title,description,label,lengthOfOccurrence);
+        state.addEvent(title, description, label, lengthOfOccurrence);
     }
-    public void addNote(String title,String text){
-        state.addNote(title,text);
+
+    public void addNote(String title, String text) {
+        state.addNote(title, text);
     }
-    public void removeEvent(String title){
+
+    public void removeEvent(String title) {
         state.removeEvent(title);
     }
-    public void removeNote(String title){
-        state.removeNote(title);
+
+    public void removeNote(int index) {
+        state.removeNote(index);
     }
-    public void modifyNote(String title, String description){
+
+    public void modifyNote(String title, String description) {
         state.modifyNote(title, description);
     }
-    public void modifyEvent( String title, String description){
+
+    public void modifyEvent(String title, String description) {
         state.modifyEvent(title, description);
     }
 
     //all States
-    public void exit(){
+    public void exit() {
         state.exit();
     }
-
-    public User getcurrentUser(){
-        return currentUser;
-    }
-
-    /*public static void main( String[]args) {
-        //new Model();
-
-        model.register("Kubo", "12345", new Date(2004,8,14), new CalendarPool());
-        
-        System.out.println(model.state);
-        model.signIn("Kubo","12345"); 
-        System.out.println(model.getCurrentUser());
-        System.out.println(model.state);
-        model.addCalendar(1,"Alcala",Season.Autumn);
-        model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(0));
-        
-        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025 - 1900,7,14), Label.sport), 2);
-        model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025 - 1900,11,20)));
-        // System.out.println(model.getCurrentUser().toString());
-        model.zoomIn();
-        model.zoomOut();
-        System.out.println(model.getCurrentUser());
-        model.addCalendar(2, "Guadalajara", Season.Spring);
-        System.out.println(model.getCurrentUser().getCalendars().getCalendars().size());
-        model.loadCalendar(model.getCurrentUser().getCalendars().getCalendar(1));
-        model.addEvent(new Event("Football", "kickabout with the boys", new Date(2025,7,14), Label.sport), 2);
-        model.addNote(new Note("sauna","Sauna with the retarded monkey", new Date(2025,11,20)));
-        System.out.println(model.getCurrentUser().toString());
-        model.signOut();
-        System.out.println(model.state);
-
-    }*/
 }

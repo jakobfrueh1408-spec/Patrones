@@ -35,7 +35,7 @@ public class Controller {
             cardLayout.show(contentPane, "CreateCalendarPanel");
         } else {
             //if there is a calendar, we show it
-            view.getCalendarForm().repaintMonthView(model.getcurrentUser().getCurrentCalendar());
+            view.getCalendarForm().repaintMonthView(model.getCurrentUser().getCurrentCalendar());
             cardLayout.show(contentPane, "SignedInPanel");
         }
     }
@@ -120,6 +120,6 @@ public class Controller {
     }
 
     public Calendar getCalendar(int index){
-        return model.getcurrentUser().getCalendars().getCalendars().get(index);
+        return model.getCurrentUser().getCalendars().getCalendars().get(index);
     }
 }
