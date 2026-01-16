@@ -31,7 +31,7 @@ public class Controller {
 
     public void onSignInClicked(String name, String password) throws Exception {
         model.signIn(name, password);
-        if(model.getCurrentUser() == null || model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
+        if(model.getCurrentUser().getCalendars().getCalendars() == null || model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
             cardLayout.show(contentPane, "CreateCalendarPanel");
         } else {
             //if there is a calendar, we show it
@@ -68,6 +68,7 @@ public class Controller {
 
     public void onModifyCalendarClicked(String newtitle){
         model.modifyCalendar(newtitle);
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
     }
 
     public void onZoomInClicked(int year, int month, int day){
@@ -124,5 +125,9 @@ public class Controller {
 
     public Calendar getCalendar(int index){
         return model.getCurrentUser().getCalendars().getCalendars().get(index);
+    }
+
+    public void setCurrentCalendar(Calendar calendar){
+        model.getCurrentUser().setCurrentCalendar(calendar);
     }
 }

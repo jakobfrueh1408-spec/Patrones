@@ -117,11 +117,12 @@ public class CalendarForm extends JFrame {
             String password = signinpasswordField.getText();
             try{
                 new SignInCommand(view.getController(), username, password).execute();
+                signintextField.setText("");
+                signinpasswordField.setText("");
             } catch  (Exception ex){
                 System.out.println(ex.getMessage());
             }
-            signintextField.setText("");
-            signinpasswordField.setText("");
+
         });
 
         registerButton.addActionListener( e -> {
@@ -163,6 +164,7 @@ public class CalendarForm extends JFrame {
             currentCalendar = calendar;
             currentmonth = 1;
             currentyear = calendar.getYear();
+            view.getController().setCurrentCalendar(currentCalendar);
             repaintMonthView(calendar);
         });
 
@@ -204,6 +206,7 @@ public class CalendarForm extends JFrame {
         modifyTitleButton.addActionListener(e -> {
             String newtitle = newtitletextField.getText();
             new ModifyCalendarCommand(view.getController(), newtitle).execute();
+            newtitletextField.setText("");
         });
 
         //******************************************************** Zoomed In State ******************************************************************//

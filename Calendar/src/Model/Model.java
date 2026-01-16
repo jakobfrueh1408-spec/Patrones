@@ -53,7 +53,6 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password) throws Exception {
         state.signIn(name, password);
-        System.out.println("signed in: " + name + " " + password);
     }
 
     public void register(String name, String password, String birthday) {
