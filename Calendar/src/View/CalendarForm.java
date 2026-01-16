@@ -68,6 +68,8 @@ public class CalendarForm extends JFrame {
     private JTextField modifyEventText;
     private JButton modifyNoteButton;
     private JTextField modifyNoteText;
+    private JButton nextMonthButton;
+    private JButton previousMonthButton;
 
     public CalendarForm(View view) {
         this.view = view;
