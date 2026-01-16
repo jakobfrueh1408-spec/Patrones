@@ -4,6 +4,7 @@ import Database.CalendarTableManager;
 import Database.EventNoteTableManager;
 import Database.UserTableManager;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class SignedIn extends State<CalendarTableManager>{
@@ -46,7 +47,7 @@ public class SignedIn extends State<CalendarTableManager>{
     public void zoomIn(int day, int month, int year){
 
         //using the information passed by the controller to set the new currentDate
-        Date date = Calendar.dateCreator(day,month,year);
+        LocalDate date = LocalDate.of(year, month, day);
         model.getCurrentUser().getCurrentCalendar().setCurrentDate(date);
 
         //setting the new state

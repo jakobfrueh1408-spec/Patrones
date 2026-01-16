@@ -5,14 +5,16 @@ import Model.Event;
 import javax.swing.*;
 
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CalendarForm extends JFrame {
     private View view;
     private CardLayout cardLayout;
-    private int currentyear;
-    private int currentmonth;
+    //private int currentyear;
+    //private int currentmonth; //1-12
     private int currentday;
+    private LocalDate displayedMonth;
     private Calendar currentCalendar;
 
     private JPanel contentPane;
@@ -106,9 +108,7 @@ public class CalendarForm extends JFrame {
         contentPane.add(SignedInPanel, "SignedInPanel");
         contentPane.add(ZoomedInPanel, "ZoomedInPanel");
 
-        //initializing the customcalendar
-//        customMonthPanel.add(new MonthView(1, currentCalendar));
-//        customDayPanel.add(new DayView());
+
 
         //******************************************************** Main Menu State ******************************************************************//
         exitFromMainMenuButton.addActionListener(e -> {
@@ -164,11 +164,10 @@ public class CalendarForm extends JFrame {
         openCalendar.addActionListener(e -> {
             int indexOfCalendar = signedinCalendarlist.getSelectedIndex();
             Calendar calendar = view.getController().getCalendar(indexOfCalendar);
-            currentCalendar = calendar;
-            currentmonth = calendar.getInitiationDate().getMonth();
-            System.out.println("CURRENTMONTH: " + currentmonth);
-            currentyear = calendar.getYear();
             view.getController().setCurrentCalendar(currentCalendar);
+
+            currentCalendar = calendar;
+            displayedMonth = currentCalendar.getStartDate().withDayOfMonth(1);
             refreshYearMonthLabels();
             repaintMonthView(calendar);
         });
@@ -180,37 +179,47 @@ public class CalendarForm extends JFrame {
         });
 
         signedinZoomInButton.addActionListener(e -> {
-           int day = Integer.parseInt(zoomintextfield.getText().toString());
-           currentday = day;
-           customDayPanel.add(new DayView(currentCalendar, currentmonth, day));
-           new ZoomInCommand(view.getController(), currentyear, currentmonth, currentday).execute();
+            try {
+                int day = Integer.parseInt(zoomintextfield.getText());
+                LocalDate clickedDate = displayedMonth.withDayOfMonth(day);
+                currentCalendar.setCurrentDate(clickedDate);
+
+                customDayPanel.removeAll();
+                customDayPanel.add(new DayView(currentCalendar, clickedDate));
+                customDayPanel.revalidate();
+                customDayPanel.repaint();
+
+                new ZoomInCommand(
+                        view.getController(),
+                        clickedDate.getYear(),
+                        clickedDate.getMonthValue(),
+                        clickedDate.getDayOfMonth()
+                ).execute();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid day input!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         previousMonthButton.addActionListener(e -> {
-            if(currentmonth > 1){
-                currentmonth--;
-            }
-            //if the month is january
-            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 5) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 11)){
-                currentyear--;
-                currentmonth--;
+            LocalDate prevMonth = displayedMonth.minusMonths(1);
+
+            if (!prevMonth.isBefore(currentCalendar.getStartDate())) {
+                displayedMonth = prevMonth;
                 refreshYearMonthLabels();
+                repaintMonthView(currentCalendar);
             }
-            repaintMonthView(currentCalendar);
         });
 
+
         nextMonthButton.addActionListener(e -> {
-            if(currentmonth < currentCalendar.getLength() * 6){
-                currentmonth++;
-            }
-            //if the month is december
-            if((currentCalendar.getSeason().toString().equals("Autumn") && currentmonth == 4) || (currentCalendar.getSeason().toString().equals("Spring") && currentmonth == 10)){
-                currentyear++;
-                currentmonth++;
+            LocalDate nextMonth = displayedMonth.plusMonths(1);
+            if (!nextMonth.isAfter(currentCalendar.getEndDate())) {
+                displayedMonth = nextMonth;
                 refreshYearMonthLabels();
+                repaintMonthView(currentCalendar);
             }
-            repaintMonthView(currentCalendar);
         });
+
 
         modifyTitleButton.addActionListener(e -> {
             String newtitle = newtitletextField.getText();
@@ -286,7 +295,7 @@ public class CalendarForm extends JFrame {
 
     public void repaintMonthView(Calendar calendar){
         customMonthPanel.removeAll();
-        MonthView monthView = new MonthView(currentmonth, currentCalendar);
+        MonthView monthView = new MonthView(displayedMonth, currentCalendar);
         customMonthPanel.setLayout(new BorderLayout());
         customMonthPanel.add(monthView, BorderLayout.CENTER);
         customMonthPanel.revalidate();
@@ -354,8 +363,9 @@ public class CalendarForm extends JFrame {
             removeEventBox.addItem(event.getTitle());
         }
     }
-    public void refreshYearMonthLabels(){
-        yearLabel.setText(String.valueOf("Year: " + currentyear));
-        monthLabel.setText(String.valueOf("Month: " + currentmonth));
+    public void refreshYearMonthLabels() {
+        yearLabel.setText("Year: " + displayedMonth.getYear());
+        monthLabel.setText("Month: " + displayedMonth.getMonthValue());
     }
+
 }

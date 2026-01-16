@@ -1,34 +1,83 @@
 package View;
 
 import Model.Calendar;
+import Model.Event;
+import Model.Note;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.util.List;
 
-public class DayView extends JLabel {
-    public DayView(Calendar calendar, int month, int day)
-    {
+public class DayView extends JPanel {
+
+    private final Calendar calendar;
+    private final LocalDate date;
+
+    public DayView(Calendar calendar, LocalDate date) {
+        this.calendar = calendar;
+        this.date = date;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        for(int i = 0; i < calendar.getEvents().size(); i++){
-            String title = calendar.getEvents().get(i).getTitle();
-            String text = calendar.getEvents().get(i).getDescription();
-            JLabel titlelabel = new JLabel(title);
-            titlelabel.setVerticalAlignment(JLabel.NORTH);
-            JLabel textlabel = new JLabel(text);
-            textlabel.setVerticalAlignment(JLabel.SOUTH);
-            add(titlelabel);
-            add(textlabel);
+        buildDay();
+    }
+
+    private void buildDay() {
+        removeAll();
+
+        JLabel dateLabel = new JLabel(date.toString());
+        dateLabel.setFont(dateLabel.getFont().deriveFont(Font.BOLD, 16f));
+        dateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        add(dateLabel);
+
+        add(Box.createVerticalStrut(10));
+
+        // Events
+        List<Event> events = calendar.getEventsForDate(date);
+        for (Event event : events) {
+            add(createEventPanel(event));
         }
-        for(int i = 0; i < calendar.getNotes().size(); i++){
-            String title = calendar.getNotes().get(i).getTitle();
-            String text = calendar.getNotes().get(i).getText();
-            JLabel titlelabel = new JLabel(title);
-            titlelabel.setVerticalAlignment(JLabel.NORTH);
-            JLabel textlabel = new JLabel(text);
-            textlabel.setVerticalAlignment(JLabel.SOUTH);
-            add(titlelabel);
-            add(textlabel);
+
+        // Notes
+        List<Note> notes = calendar.getNotesForDate(date);
+        for (Note note : notes) {
+            add(createNotePanel(note));
         }
+
+        revalidate();
+        repaint();
+    }
+    private JPanel createEventPanel(Event event) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        JLabel title = new JLabel(event.getTitle());
+        title.setFont(title.getFont().deriveFont(Font.BOLD));
+
+        JLabel text = new JLabel("<html>" + event.getDescription() + "</html>");
+
+        panel.add(title);
+        panel.add(text);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        return panel;
+    }
+    private JPanel createNotePanel(Note note) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createDashedBorder(Color.GRAY));
+
+        JLabel title = new JLabel(note.getTitle());
+        title.setFont(title.getFont().deriveFont(Font.BOLD));
+
+        JLabel text = new JLabel("<html>" + note.getText() + "</html>");
+
+        panel.add(title);
+        panel.add(text);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        return panel;
     }
 }
+

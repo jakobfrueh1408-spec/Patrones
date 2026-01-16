@@ -1,19 +1,22 @@
 package Model;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.time.ZoneId;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static Model.Label.study;
 
 public class Calendar {
 
-    private int length;
+    private int length;   //in semesters
     private int year;
-    private Date currentDate;
+    private LocalDate currentDate;
     private String name;
-    private Season season;
+    private Season season;   //either september or april
     private ArrayList <Event> events = new ArrayList<>();
     private ArrayList <Note> notes = new ArrayList<>();
 
@@ -22,6 +25,7 @@ public class Calendar {
         this.name = name;
         this.season = season;
         this.year = year;
+        this.currentDate = getInitiationDate();
     }
 
     //to String method
@@ -32,17 +36,10 @@ public class Calendar {
     }
 
     // getters and setters
-    public Date getCurrentDate() {
+    public LocalDate getCurrentDate() {
         return currentDate;
     }
-    public int getCurrentYear(){
-        int year = currentDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-                .getYear();
-        return year;
-    }
-    public void setCurrentDate(Date currentDate) {this.currentDate = currentDate;}
+    public void setCurrentDate(LocalDate currentDate) {this.currentDate = currentDate;}
     public void setName(String name) {
         this.name = name;
     }
@@ -111,14 +108,10 @@ public class Calendar {
         //add base event
         events.add(event);
         //retrieve the Date fo our baseEvent but not by reference but by value
-        Date baseDate =  event.getDate();
-        System.out.println(baseDate.toString());
-        for (int i = 0; i < lengthOfOccurrence; i++ ){
-                //clone event , update Date according to i in weeks and add it into the events List
-                Event reocurr =  event.clone();
-                Date reocurrDate = addWeeks(baseDate, i+1); 
-                reocurr.setDate(reocurrDate);
-                events.add(reocurr);
+        for (int i = 1; i <= lengthOfOccurrence; i++) {
+            Event recurring = event.clone();
+            recurring.setDate(currentDate.plusWeeks(i));
+            events.add(recurring);
         }
     }
     //functions for Note insertion , manipulation adn deletion
@@ -168,87 +161,82 @@ public class Calendar {
         return filteredByTitle;
     }
     //for getting all the today Events
-    public ArrayList <Event> getCurrentDayEventList(){
+    public ArrayList<Event> getCurrentDayEventList(){
         ArrayList <Event> currentDayEventList = new ArrayList<>();
         for (Event event : events){
-            Date dayOfEvent = event.getDate();
-            //compare dates if they are the same
-            if(isSameDay(dayOfEvent,currentDate)) {
+            if (event.getDate().equals(currentDate)) {
                 currentDayEventList.add(event);
             }
         }
         return currentDayEventList;
     }
     //for getting all the today Events
-    public ArrayList <Note> getCurrentDayNoteList(){
+    public ArrayList<Note> getCurrentDayNoteList(){
         ArrayList <Note> currentDayNoteList = new ArrayList<>();
         for (Note note : notes){
-            Date dayOfEvent = note.getDate();
-            //compare dates if they are the same
-            if(isSameDay(dayOfEvent,currentDate)) {
+            if (note.getDate().equals(currentDate)) {
                 currentDayNoteList.add(note);
             }
         }
         return currentDayNoteList;
     }
-    public Date addWeeks(Date date,int amount) {
-        // adding weeks onto the Dates
-        Date result = Date.from(date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-                .plusWeeks(amount)
-                .atStartOfDay(ZoneId.systemDefault())
-                .toInstant());
-
-        return result;
-    }
-    //checking whether two dates are the same day
-    public boolean isSameDay(Date d1, Date d2) {
-        return d1.getYear() == d2.getYear() &&
-                d1.getMonth() == d2.getMonth() &&
-                d1.getDate() == d2.getDate(); // .getDate() actually returns the day of the month
-    }
-    public static Date dateCreator(int day , int month, int year) {
-        Date date = new Date(day, month,year-1900);
-        return date;
-    }
-    public Date getInitiationDate(){
-        int month =0;
-        int day = 1;
-        switch(season){
-            case Autumn : month = 9; break;
-            case Spring :month = 4 ; break;
+    public ArrayList<String> dayEventTitles(LocalDate date){
+        ArrayList<String> result = new ArrayList<>();
+        for (Event e : events) {
+            if (e.getDate().equals(date)) {
+                result.add(e.getTitle());
+            }
         }
-        Date initDate = dateCreator(day,month,year);
-        return initDate;
+        return result;
     }
 
-    public ArrayList<String> dayEventTitles(int day){
+    public ArrayList<String> dayNoteTitles(LocalDate date) {
         ArrayList<String> result = new ArrayList<>();
-        for(int i = 0 ; i < this.getEvents().size(); i++){
-            if(this.getEvents().get(i).getCurrentDay() == day){
-                result.add(String.valueOf(this.getEvents().get(i).getTitle()));
+        for (Note note : notes) {
+            if (note.getDate().equals(date)) {
+                result.add(note.getTitle());
             }
         }
         return result;
     }
-    public ArrayList<String> dayNoteTitles(int day){
+    public ArrayList<String> dayLabelTitles(LocalDate date) {
         ArrayList<String> result = new ArrayList<>();
-        for(int i = 0 ; i < this.getNotes().size(); i++){
-            if(this.getNotes().get(i).getCurrentDay() == day){
-                result.add(String.valueOf(this.getNotes().get(i).getTitle()));
+        for (Event e : events) {
+            if (e.getDate().equals(date)) {
+                result.add(e.getLabel().toString());
             }
         }
         return result;
     }
-    public ArrayList<String> dayLabelTitles(int day){
-        ArrayList<String> result = new ArrayList<>();
-        for(int i = 0 ; i < this.getEvents().size(); i++){
-            if(this.getEvents().get(i).getCurrentDay() == day){
-                result.add(String.valueOf(this.getEvents().get(i).getLabel().toString()));
-            }
-        }
-        return result;
+    public LocalDate getInitiationDate() {
+        return switch (season) {
+            case Autumn -> LocalDate.of(year, 9, 1);
+            case Spring -> LocalDate.of(year, 4, 1);
+        };
+    }
+    public LocalDate getStartDate() {
+        return switch (season) {
+            case Autumn -> LocalDate.of(year, 9, 1);
+            case Spring -> LocalDate.of(year, 4, 1);
+        };
+    }
+
+    public LocalDate getEndDate() {
+        int months = length == 1 ? 6 : 12;
+        return getStartDate().plusMonths(months).minusDays(1);
+    }
+    public List<Event> getEventsForDate(LocalDate date) {
+        // Return only events that match the given date
+        return events.stream()
+                .filter(e -> e.getDate().equals(date))
+                .collect(Collectors.toList());
+    }
+
+    public List<Note> getNotesForDate(LocalDate date) {
+        // Return only notes that match the given date
+        return notes.stream()
+                .filter(n -> n.getDate().equals(date))
+                .collect(Collectors.toList());
     }
 
 }

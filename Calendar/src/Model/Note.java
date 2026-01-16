@@ -1,13 +1,14 @@
 package Model;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
 public class Note {
     private String title;
     private String text;
-    private Date date;
-    public Note(String title, String text, Date date) {
+    private LocalDate date;
+    public Note(String title, String text, LocalDate  date) {
         this.title = title;
         this.text = text;
         this.date = date;
@@ -24,18 +25,14 @@ public class Note {
     public void setText(String text) {
         this.text = text;
     }
-    public Date getDate() {
+    public LocalDate  getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(LocalDate  date) {
         this.date = date;
     }
     public int getCurrentDay(){
-        int day = date.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
-                .getDayOfMonth();
-        return day;
+        return date.getDayOfMonth();
     }
 
 }

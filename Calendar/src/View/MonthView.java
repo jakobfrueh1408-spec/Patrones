@@ -15,19 +15,12 @@ import java.util.Locale;
 
 public class MonthView extends JPanel {
 
-    private final int year;
-    private final int month;
-    private Calendar calendar;
+    private final LocalDate displayedMonth; // mindig a hónap 1-je
+    private final Calendar calendar;
 
-    public MonthView(int month, Calendar calendar) {
-        int year = calendar.getYear();
+    public MonthView(LocalDate displayedMonth, Calendar calendar) {
+        this.displayedMonth = displayedMonth.withDayOfMonth(1);
         this.calendar = calendar;
-        if((calendar.getSeason().toString() == "Autumn" && month >= 5) || (calendar.getSeason().toString() == "Spring" && month >= 10)){
-            year++;
-        }
-        this.year = year;
-        this.month = month;
-        //System.out.println(month);
 
         setLayout(new GridLayout(0, 7));
         buildMonth();
@@ -36,6 +29,7 @@ public class MonthView extends JPanel {
     private void buildMonth() {
         removeAll();
 
+        // Fejléc: Hétfő–Vasárnap
         for (DayOfWeek day : DayOfWeek.values()) {
             JLabel header = new JLabel(
                     day.getDisplayName(TextStyle.SHORT, Locale.getDefault()),
@@ -45,16 +39,25 @@ public class MonthView extends JPanel {
             add(header);
         }
 
-        LocalDate firstDay = LocalDate.of(year, month, 1);
-        int firstDayColumn = firstDay.getDayOfWeek().getValue() % 7;
+        LocalDate firstDayOfMonth = displayedMonth;
+        int firstDayColumn = firstDayOfMonth.getDayOfWeek().getValue() % 7;
 
+        // Üres cellák a hónap elején
         for (int i = 0; i < firstDayColumn; i++) {
             add(createEmptyCell());
         }
 
-        int daysInMonth = firstDay.lengthOfMonth();
+        int daysInMonth = firstDayOfMonth.lengthOfMonth();
+
         for (int day = 1; day <= daysInMonth; day++) {
-            add(createDayCell(day, calendar.dayEventTitles(day), calendar.dayLabelTitles(day), calendar.dayNoteTitles(day)));
+            LocalDate date = firstDayOfMonth.withDayOfMonth(day);
+
+            add(createDayCell(
+                    date,
+                    calendar.dayEventTitles(date),
+                    calendar.dayLabelTitles(date),
+                    calendar.dayNoteTitles(date)
+            ));
         }
 
         revalidate();
@@ -62,50 +65,47 @@ public class MonthView extends JPanel {
     }
 
 
-    private JPanel createDayCell(int day, ArrayList<String> eventTitles, ArrayList<String> labelTitles, ArrayList<String> noteTitles) {
+    private JPanel createDayCell(
+            LocalDate date,
+            ArrayList<String> eventTitles,
+            ArrayList<String> labelTitles,
+            ArrayList<String> noteTitles) {
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 
-        JLabel label = new JLabel(String.valueOf(day));
-        label.setHorizontalAlignment(SwingConstants.RIGHT);
-        label.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 4));
+        JLabel dayLabel = new JLabel(String.valueOf(date.getDayOfMonth()));
+        dayLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        dayLabel.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 4));
+        panel.add(dayLabel, BorderLayout.NORTH);
 
-        panel.add(label, BorderLayout.NORTH);
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
-        for(int i = 0 ; i < eventTitles.size(); i++) {
+        for (int i = 0; i < eventTitles.size(); i++) {
             JLabel title = new JLabel(eventTitles.get(i));
-            switch(labelTitles.get(i)){
-                case "sport":{
-                    title.setBackground(Color.RED);
-                    break;
-                }
-                case "study":{
-                    title.setBackground(Color.GREEN);
-                    break;
-                }
-                case "travel":{
-                    title.setBackground(Color.YELLOW);
-                    break;
-                }
-                case "free_time_activity":{
-                    title.setBackground(Color.CYAN);
-                    break;
-                }
-                default:
-                    break;
+            title.setOpaque(true);
+
+            switch (labelTitles.get(i)) {
+                case "sport" -> title.setBackground(Color.RED);
+                case "study" -> title.setBackground(Color.GREEN);
+                case "travel" -> title.setBackground(Color.YELLOW);
+                case "free_time_activity" -> title.setBackground(Color.CYAN);
             }
-            title.setHorizontalAlignment(SwingConstants.RIGHT);
-            title.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 4));
-            panel.add(title, BorderLayout.SOUTH);
+
+            contentPanel.add(title);
         }
-        for(int i = 0 ; i < noteTitles.size(); i++) {
-            JLabel note = new JLabel(noteTitles.get(i));
-            note.setHorizontalAlignment(SwingConstants.RIGHT);
-            note.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 4));
-            panel.add(note, BorderLayout.SOUTH);
+
+        for (String noteTitle : noteTitles) {
+            JLabel note = new JLabel(noteTitle);
+            contentPanel.add(note);
         }
+
+        panel.add(contentPanel, BorderLayout.CENTER);
         return panel;
     }
+
+
 
     private JPanel createEmptyCell() {
         JPanel panel = new JPanel();

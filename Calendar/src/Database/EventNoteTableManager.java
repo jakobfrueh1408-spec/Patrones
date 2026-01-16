@@ -19,7 +19,7 @@ public class EventNoteTableManager implements DatabaseDAO{
 
             for (int i = 0; i <= lengthOfOccurrence; i++) {
 
-                String eventDate = baseEvent.getDate().toInstant().toString();
+                String eventDate = baseEvent.getDate().toString();
 
 
                 pstmt.setInt(1, calendarId);
@@ -60,7 +60,7 @@ public class EventNoteTableManager implements DatabaseDAO{
 
             pstmt.setInt(1, calendarId);
             pstmt.setString(2, note.getTitle());
-            pstmt.setString(3, note.getDate().toInstant().toString());
+            pstmt.setString(3, note.getDate().toString());
             pstmt.setString(4, note.getText());
 
             pstmt.executeUpdate();
