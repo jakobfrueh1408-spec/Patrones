@@ -11,14 +11,17 @@ import java.util.Date;
 
 public class Controller {
     private Model model;
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
     private View view;
     private JPanel contentPane;
     private CardLayout cardLayout;
+
     public Controller(Model model) {
         this.model = model;
-        this.view = new View(this);
-        this.cardLayout = view.getCalendarForm().getCardLayout();
-        this.contentPane = view.getCalendarForm().getContentPane();
     }
     public View getView() {
         return view;
@@ -129,5 +132,13 @@ public class Controller {
 
     public void setCurrentCalendar(Calendar calendar){
         model.getCurrentUser().setCurrentCalendar(calendar);
+    }
+
+    public void setContentPane(JPanel contentPane) {
+        this.contentPane = contentPane;
+    }
+
+    public void setCardLayout(CardLayout cardLayout) {
+        this.cardLayout = cardLayout;
     }
 }

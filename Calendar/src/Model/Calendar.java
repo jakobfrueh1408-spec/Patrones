@@ -209,7 +209,7 @@ public class Calendar {
                 d1.getDate() == d2.getDate(); // .getDate() actually returns the day of the month
     }
     public static Date dateCreator(int day , int month, int year) {
-        Date date = new Date(day, month-1,year-1900);
+        Date date = new Date(day, month,year-1900);
         return date;
     }
     public Date getInitiationDate(){
@@ -222,6 +222,7 @@ public class Calendar {
         Date initDate = dateCreator(day,month,year);
         return initDate;
     }
+
     public ArrayList<String> dayEventTitles(int day){
         ArrayList<String> result = new ArrayList<>();
         for(int i = 0 ; i < this.getEvents().size(); i++){

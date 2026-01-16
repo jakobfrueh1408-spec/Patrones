@@ -10,12 +10,10 @@ public class Model {
     private User currentUser;
     private State state;
     private static Model instance;
-    private Controller controller;
 
     private Model() {
         userPool = new UserPool();
         currentUser = null;
-        this.controller = new Controller(this);
         state = new NotSignedIn(this, new UserTableManager());
     }
 
