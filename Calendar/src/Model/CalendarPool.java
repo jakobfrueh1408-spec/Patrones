@@ -28,10 +28,7 @@ public class CalendarPool {
     public void removeCalendar(int index) {
         calendars.remove(index);
     }
-    public void modifyCalendar(int index) {
-        Calendar tmp = calendars.get(index);
-        //TO DO
-    }
+
     public Calendar getCalendarByName(String name) {
         Calendar calendar = null;
         for (Calendar cal: calendars) {
