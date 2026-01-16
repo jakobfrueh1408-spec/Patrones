@@ -1,5 +1,8 @@
 package Model;
 
+import Database.CalendarTableManager;
+import Database.EventNoteTableManager;
+
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,14 +17,18 @@ public class Calendar {
     private Date currentDate;
     private String name;
     private Season season;
+    private int db_id;
     private ArrayList <Event> events = new ArrayList<>();
     private ArrayList <Note> notes = new ArrayList<>();
-
+    EventNoteTableManager eventTableManager;
+    CalendarTableManager calendarTableManager;
     public Calendar(int length, String name, Season season, int year) {
         this.length = length;
         this.name = name;
         this.season = season;
         this.year = year;
+        this.calendarTableManager = new CalendarTableManager();
+        this.eventTableManager = new EventNoteTableManager();
     }
 
     //to String method
@@ -67,6 +74,8 @@ public class Calendar {
     public ArrayList<Note> getNotes() {
         return notes;
     }
+    public int getDb_id() {return db_id;}
+    public void setDb_id(int db_id) {this.db_id = db_id;}
     public void setLength(int length) {
         this.length = length;
     }
@@ -85,9 +94,13 @@ public class Calendar {
     public void removeEvent(int indexToRemove) {
         //getting the current Days Events
         ArrayList <Event> currentDaysEvents = getCurrentDayEventList();
-        //removing the corresponsing Event
+        //getting the event to delete
+        Event eventToDelete = currentDaysEvents.get(indexToRemove);
+        //removing the corresponsing Event from Model and DB
+        eventTableManager.removeEvent(eventToDelete.getEvent_Id());
         currentDaysEvents.remove(indexToRemove);
     }
+
     //Only modify the description of the Event
     public void modifyEvent(int indexToModify, String description){
         //getting the current Days Events
@@ -96,6 +109,7 @@ public class Calendar {
         Event event = currentDaysEvents.get(indexToModify);
         //setting the new Description
         event.setDescription(description);
+        eventTableManager.manipulateEvent();
     }
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
         //converting string to Enum
