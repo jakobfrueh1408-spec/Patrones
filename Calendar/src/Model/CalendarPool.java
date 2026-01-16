@@ -32,5 +32,27 @@ public class CalendarPool {
         Calendar tmp = calendars.get(index);
         //TO DO
     }
+    public Calendar getCalendarByName(String name) {
+        Calendar calendar = null;
+        for (Calendar cal: calendars) {
+            if(name.equals(cal.getName())){
+                calendar = cal;
+                return calendar;
+            }
 
+        }
+        return calendar;
+    }
+    public Calendar getCalendarByIndex(int index) {
+        Calendar calendar = calendars.get(index);
+        return calendar;
+    }
+    public boolean nameAvailable(String name){
+        for(Calendar cal : calendars) {
+            if(name.equals(cal.getName())){
+                return false;
+            }
+        }
+        return true;
+    }
 }

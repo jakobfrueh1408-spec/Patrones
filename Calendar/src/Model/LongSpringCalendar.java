@@ -1,7 +1,7 @@
 package Model;
 
 public class LongSpringCalendar extends LongCalendar{
-    public LongSpringCalendar(String name){
-        super(name, Season.Spring);
+    public LongSpringCalendar(String name,int year){
+        super(name, Season.Spring,year);
     }
 }

@@ -56,42 +56,47 @@ public class Model {
     public void signOut(){
         state.signOut();
     }
-    public void zoomIn(int indexToZoomIn, int dayToZoomIn){
-        state.zoomIn(indexToZoomIn, dayToZoomIn);
+    public void zoomIn(int day, int month, int year){
+        //we need to set the current Date fo the current calendar of the current user
+        // state function needs to det the day to zoom in
+        state.zoomIn(int day, int month, int year);
     }
-    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
-    }
-    public void addNote(Note note){
-        state.addNote(note);
-    }
-    public void removeEvent(Event event){
-        state.removeEvent(event);
-    } 
-    public void removeNote(Note note){
-        state.removeNote(note);
-    }
-    public void modifyNote(Note note, String title, String description){
-        state.modifyNote(note, description);
-    }
-    public void modifyEvent(Event event, String title, String description){
-        state.modifyEvent(event, description);
-    }
-    public void loadCalendar(Calendar calendar){
-        state.loadCalendar(calendar);
+
+    public void loadCalendar(String name){
+        state.loadCalendar(name);
     }
     public void removeCalendar(int indexToRemove){
         state.removeCalendar(indexToRemove);
     }
-    public void modifyCalendar(Calendar calendar, String title){state.modifyCalendar(calendar, title);}
+    public void modifyCalendar(String name, String title){state.modifyCalendar(name, title);}
 
     //both SignedInState and EmptySignedInState
-    public void addCalendar(int length, String name, Season season){
-        state.addCalendar(length,name,season);
+    public void addCalendar(String name, int length, Season season, int year){
+        state.addCalendar(name,length,season,year);
     }
 
     //ZoomedInState
     public void zoomOut(){
         state.zoomOut();
+    }
+    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
+        //Problem with the Date persists
+        state.addEvent(title,description,label,lengthOfOccurrence);
+    }
+    public void addNote(String title,String text){
+        state.addNote(title,text);
+    }
+    public void removeEvent(String title){
+        state.removeEvent(title);
+    }
+    public void removeNote(String title){
+        state.removeNote(title);
+    }
+    public void modifyNote(String title, String description){
+        state.modifyNote(title, description);
+    }
+    public void modifyEvent( String title, String description){
+        state.modifyEvent(title, description);
     }
 
     //all States

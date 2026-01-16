@@ -39,11 +39,11 @@ public class Controller {
     public void onRegisterClicked(String name, String password,  String birthday){
         model.register(name, password, birthday);
     }
-    public void onAddCalendarClicked(String name, int length, Season start){
+    public void onAddCalendarClicked(String name, int length, Season start, int year){
         //if we were in the emptysignedin state, we have to switch view state
         if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
             cardLayout.show(contentPane, "SignedInPanel");
-        model.addCalendar(length, name, start);
+        model.addCalendar(name,length, start, year);
     }
     public void onRemoveCalendarClicked(int indexToRemove){
         model.removeCalendar(indexToRemove);
@@ -58,8 +58,8 @@ public class Controller {
         model.signOut();
         cardLayout.show(contentPane, "MainMenuPanel");
     }
-    public void onZoomInClicked(int indexToZoomIn, int dayToZoomIn){
-        model.zoomIn(indexToZoomIn, dayToZoomIn);
+    public void onZoomInClicked(int day, int month, int year){
+        model.zoomIn(int day, int month, int year);
         cardLayout.show(contentPane, "ZoomedInPanel");
     }
     public void onAddNoteClicked(){
