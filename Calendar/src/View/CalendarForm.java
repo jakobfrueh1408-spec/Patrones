@@ -48,7 +48,6 @@ public class CalendarForm extends JFrame {
     private JTextField zoomintextfield;
 
     //Zoomed in Panel
-
     private JPanel separator;
     private JPanel dayView;
     private JButton addEventButton;
@@ -56,18 +55,18 @@ public class CalendarForm extends JFrame {
     private JTextField addEventTextField;
     private JComboBox addEventLabelBox;
     private JComboBox addEventRecurring;
+    private JComboBox removeEventBox;
+    private JComboBox removeNoteBox;
+    private JComboBox modifyEventBox;
+    private JComboBox modifyNoteBox;
     private JButton addNoteButton;
     private JTextField addNoteTitleField;
     private JTextField addNoteTextField;
     private JButton removeEventButton;
-    private JComboBox removeEventBox;
-    private JComboBox removeNoteBox;
     private JButton removeNoteButton;
     private JButton modifyEventButton;
     private JTextField modifyEventText;
-    private JComboBox modifyEventBox;
     private JButton modifyNoteButton;
-    private JComboBox modifyNoteBox;
     private JTextField modifyNoteText;
 
     public CalendarForm(View view) {

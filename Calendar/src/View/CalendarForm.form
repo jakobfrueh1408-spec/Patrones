@@ -360,7 +360,14 @@
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <model>
+                <item value="sport"/>
+                <item value="free time activity"/>
+                <item value="travel"/>
+                <item value="study"/>
+              </model>
+            </properties>
           </component>
           <component id="516b7" class="javax.swing.JLabel">
             <constraints>
@@ -370,12 +377,35 @@
               <text value="Reocurring for:"/>
             </properties>
           </component>
-          <component id="4e7f7" class="javax.swing.JComboBox" binding="addEventRecurring" custom-create="true">
+          <component id="4e7f7" class="javax.swing.JComboBox" binding="addEventRecurring">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <model/>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+                <item value="3"/>
+                <item value="4"/>
+                <item value="5"/>
+                <item value="6"/>
+                <item value="7"/>
+                <item value="8"/>
+                <item value="9"/>
+                <item value="10"/>
+                <item value="11"/>
+                <item value="12"/>
+                <item value="13"/>
+                <item value="14"/>
+                <item value="15"/>
+                <item value="16"/>
+                <item value="17"/>
+                <item value="18"/>
+                <item value="19"/>
+                <item value="20"/>
+                <item value="21"/>
+                <item value="22"/>
+              </model>
             </properties>
           </component>
           <grid id="1f8e1" layout-manager="CardLayout" hgap="0" vgap="0">
@@ -454,7 +484,12 @@
             <constraints>
               <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+              </model>
+            </properties>
           </component>
           <component id="965b5" class="javax.swing.JLabel">
             <constraints>
@@ -468,7 +503,12 @@
             <constraints>
               <grid row="10" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+              </model>
+            </properties>
           </component>
           <component id="ae3b1" class="javax.swing.JButton" binding="removeNoteButton" default-binding="true">
             <constraints>
@@ -514,7 +554,12 @@
             <constraints>
               <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+              </model>
+            </properties>
           </component>
           <component id="a43c1" class="javax.swing.JButton" binding="modifyNoteButton" default-binding="true">
             <constraints>
@@ -529,7 +574,10 @@
               <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <model/>
+              <model>
+                <item value="1"/>
+                <item value="2"/>
+              </model>
             </properties>
           </component>
           <component id="373ea" class="javax.swing.JTextField" binding="modifyNoteText">
