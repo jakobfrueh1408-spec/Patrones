@@ -17,15 +17,15 @@ public class CreateCalendarState extends State{
     @Override
     public void addNote(String title,String text){}
     @Override
-    public void removeEvent(String title){}
+    public void removeEvent(int indexToRemove){}
     @Override 
-    public void removeNote(String title){}
+    public void removeNote(int indexToRemove){}
 
     //editing still has some problems (can we only edit the text or also the date and the kind of the event)
     @Override
-    public void modifyNote(String title, String description){}
+    public void modifyNote(int indexToModify, String description){}
     @Override
-    public void modifyEvent(String title, String description){}
+    public void modifyEvent(int indexToModify, String description){}
     
     @Override
     public void removeCalendar(int indexToRemove){
@@ -43,9 +43,9 @@ public class CreateCalendarState extends State{
     }
 
     @Override
-    public void loadCalendar(String name){
+    public void loadCalendar(int indexToLoad){
         Calendar calendarToAdd ;
-        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByName(name);
+        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByIndex(indexToLoad);
         if(calendarToAdd != null){
             model.getCurrentUser().setCurrentCalendar(calendarToAdd);
         }

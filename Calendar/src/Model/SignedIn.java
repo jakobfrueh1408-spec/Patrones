@@ -19,13 +19,13 @@ public class SignedIn extends State{
     @Override
     public void addNote(String title,String text){}
     @Override
-    public void removeEvent(String title){}
+    public void removeEvent(int indexToRemove){}
     @Override
-    public void removeNote(String title){}
+    public void removeNote(int indexToRemove){}
     @Override
-    public void modifyEvent(String title,String description){}
+    public void modifyEvent(int indexToModify,String description){}
     @Override
-    public void modifyNote(String title,String description){}
+    public void modifyNote(int indexToModify,String description){}
 
     //signedInState
     @Override
@@ -51,9 +51,9 @@ public class SignedIn extends State{
    
     //emptySignedInState and SignedInstate
     @Override
-    public void loadCalendar(String name){
+    public void loadCalendar(int indexToLoad){
         Calendar calendarToAdd ;
-        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByName(name);
+        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByIndex(indexToLoad);
         if(calendarToAdd != null){
             model.getCurrentUser().setCurrentCalendar(calendarToAdd);
         }
@@ -70,8 +70,8 @@ public class SignedIn extends State{
         }
     }
     @Override
-    public void modifyCalendar(String name, String newName ){
-        model.getCurrentUser().getCurrentCalendar().setName(newName);
+    public void modifyCalendar(String name){
+        model.getCurrentUser().getCurrentCalendar().setName(name);
     }
 
     @Override

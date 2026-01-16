@@ -66,19 +66,19 @@ public class Model {
     public void zoomIn(int day, int month, int year) {
         //we need to set the current Date fo the current calendar of the current user
         // state function needs to det the day to zoom in
-        state.zoomIn( int day, int month, int year);
+        state.zoomIn( day, month,  year);
     }
 
-    public void loadCalendar(String name) {
-        state.loadCalendar(name);
+    public void loadCalendar(int indexToLoad) {
+        state.loadCalendar(indexToLoad);
     }
 
     public void removeCalendar(int indexToRemove) {
         state.removeCalendar(indexToRemove);
     }
 
-    public void modifyCalendar(String name, String title) {
-        state.modifyCalendar(name, title);
+    public void modifyCalendar( String title) {
+        state.modifyCalendar( title);
     }
 
     //both SignedInState and EmptySignedInState
@@ -100,20 +100,20 @@ public class Model {
         state.addNote(title, text);
     }
 
-    public void removeEvent(String title) {
-        state.removeEvent(title);
+    public void removeEvent(int indexToRemove) {
+        state.removeEvent(indexToRemove);
     }
 
-    public void removeNote(int index) {
-        state.removeNote(index);
+    public void removeNote(int indexToRemove) {
+        state.removeNote(indexToRemove);
     }
 
-    public void modifyNote(String title, String description) {
-        state.modifyNote(title, description);
+    public void modifyNote(int indexToRemove, String description) {
+        state.modifyNote(indexToRemove, description);
     }
 
-    public void modifyEvent(String title, String description) {
-        state.modifyEvent(title, description);
+    public void modifyEvent(int indexToModify, String description) {
+        state.modifyEvent(indexToModify, description);
     }
 
     //all States

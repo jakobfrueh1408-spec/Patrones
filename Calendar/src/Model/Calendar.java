@@ -82,20 +82,18 @@ public class Calendar {
 
     //functions for Event insertion , manipulation adn deletion
     //removing the specified event from the Event List
-    public void removeEvent(String title) {
+    public void removeEvent(int indexToRemove) {
         //getting the current Days Events
         ArrayList <Event> currentDaysEvents = getCurrentDayEventList();
-        //getting the corresponding event
-        Event event = extractEventsByTitle(currentDaysEvents,title);
-        //removing event
-        events.remove(event);
+        //removing the corresponsing Event
+        currentDaysEvents.remove(indexToRemove);
     }
     //Only modify the description of the Event
-    public void modifyEvent(String title, String description){
+    public void modifyEvent(int indexToModify, String description){
         //getting the current Days Events
         ArrayList <Event> currentDaysEvents = getCurrentDayEventList();
         //getting the corresponding event
-        Event event = extractEventsByTitle(currentDaysEvents,title);
+        Event event = currentDaysEvents.get(indexToModify);
         //setting the new Description
         event.setDescription(description);
     }
@@ -125,20 +123,18 @@ public class Calendar {
     }
     //functions for Note insertion , manipulation adn deletion
     //removing the specified event from the Event List
-    public void removeNote(String title){
+    public void removeNote(int indexToRemove){
         //getting all the notes of the day
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
-        //getting the note with the corresponding title
-        Note note = extractNotesByTitle(currentDaysNotes,title);
         //removing the note from notes
-        notes.remove(note);
+        notes.remove(indexToRemove);
     }
     //Only modify the description of the Note
-    public void modifyNote(String title, String description) {
+    public void modifyNote(int indexToModify, String description) {
         //getting all the notes of the day
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
         //getting the note with the corresponding title
-        Note note = extractNotesByTitle(currentDaysNotes,title);
+        Note note = currentDaysNotes.get(indexToModify);
         //setting the notes description
         note.setText(description);
     }

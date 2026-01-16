@@ -23,7 +23,7 @@ public class ZoomedInState extends State {
     @Override
     public void signOut(){}
     @Override
-    public void loadCalendar(String name){}
+    public void loadCalendar(int indexToLoad){}
     @Override
     public void removeCalendar(int indexToRemove){}
     @Override
@@ -64,25 +64,25 @@ public class ZoomedInState extends State {
 
     //removing Events and Notes
     @Override
-    public void removeEvent(String title){
-        model.getCurrentUser().getCurrentCalendar().removeEvent(title);
+    public void removeEvent(int indexToRemove){
+        model.getCurrentUser().getCurrentCalendar().removeEvent(indexToRemove);
     }
     @Override
-    public void removeNote(String title){
-        model.getCurrentUser().getCurrentCalendar().removeNote(title);
+    public void removeNote(int indexToRemove){
+        model.getCurrentUser().getCurrentCalendar().removeNote(indexToRemove);
     }
 
     //modifying Events and Notes
     @Override
-    public void modifyNote(String title, String description){
+    public void modifyNote(int indexToModify, String description){
         //still every unsure about that until now only editing texts, we need to overload
-        model.getCurrentUser().getCurrentCalendar().modifyNote(title, description);
+        model.getCurrentUser().getCurrentCalendar().modifyNote(indexToModify, description);
 
     }
     @Override
-    public void modifyEvent(String title, String description){
+    public void modifyEvent(int indexToModify, String description){
         //still every unsure about that until now only editing texts
-        model.getCurrentUser().getCurrentCalendar().modifyEvent(title, description);
+        model.getCurrentUser().getCurrentCalendar().modifyEvent(indexToModify, description);
     }
 
     @Override
