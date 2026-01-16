@@ -88,6 +88,7 @@ public class CalendarForm extends JFrame {
     private JLabel newTitleLabel;
     private JLabel yearLabel;
     private JLabel monthLabel;
+    private JButton createNewCalendarButton;
 
 
     public CalendarForm(View view) {
@@ -165,7 +166,7 @@ public class CalendarForm extends JFrame {
             Calendar calendar = view.getController().getCalendar(indexOfCalendar);
             currentCalendar = calendar;
             currentmonth = calendar.getInitiationDate().getMonth();
-            System.out.println("CURRENTMONTH: " +currentmonth);
+            System.out.println("CURRENTMONTH: " + currentmonth);
             currentyear = calendar.getYear();
             view.getController().setCurrentCalendar(currentCalendar);
             refreshYearMonthLabels();
@@ -215,6 +216,9 @@ public class CalendarForm extends JFrame {
             String newtitle = newtitletextField.getText();
             new ModifyCalendarCommand(view.getController(), newtitle).execute();
             newtitletextField.setText("");
+        });
+        createNewCalendarButton.addActionListener(e -> {
+            cardLayout.show(contentPane, "CreateCalendarPanel");
         });
 
         //******************************************************** Zoomed In State ******************************************************************//
@@ -329,21 +333,23 @@ public class CalendarForm extends JFrame {
     }
 
     public void refreshCalendarList(ArrayList<Calendar> calendarList){
-        signedinCalendarlist.removeAll();
+        signedinCalendarlist.removeAllItems();
+        System.out.println(signedinCalendarlist.getModel().getSize());
         for(Calendar calendar : calendarList){
+            System.out.println("-View- One calendar added to the list: " + calendar.getName());
             signedinCalendarlist.addItem(calendar.getName());
         }
     }
 
     public void refreshNotesList(ArrayList<Note> notesList){
-        removeNoteBox.removeAll();
+        removeNoteBox.removeAllItems();
         for(Note note : notesList){
             removeNoteBox.addItem(note.getTitle());
         }
     }
 
     public void refreshEventsList(ArrayList<Event> eventsList){
-        removeEventBox.removeAll();
+        removeEventBox.removeAllItems();
         for(Event event : eventsList){
             removeEventBox.addItem(event.getTitle());
         }

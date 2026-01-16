@@ -1,10 +1,9 @@
 package Model;
 
-import java.util.Date;
 import java.util.HexFormat;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
+
 public class User {
     //defining attributes of the USer
     private String userName;
@@ -68,7 +67,7 @@ public class User {
     public String getIdNumber() {
         return idNumber;
     }
-    public CalendarPool getCalendars() {
+    public CalendarPool getCalendarPool() {
         return calendars;
     }
     public Calendar getCurrentCalendar() {
@@ -98,7 +97,7 @@ public class User {
         return "User [userName=" + userName + ", password=" + password + ", birthDate=" + birthDate + ", idNumber="
                 + idNumber + ", calendars=" + calendars + ", getUserName()=" + getUserName() + ", getPassword()="
                 + getPassword() + ", getBirthDate()=" + getBirthDate() + ", getIdNumber()=" + getIdNumber()
-                + ", getCalendars()=" + getCalendars() + "]";
+                + ", getCalendars()=" + getCalendarPool() + "]";
     }
 
 }

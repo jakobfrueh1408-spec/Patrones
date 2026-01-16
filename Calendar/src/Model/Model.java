@@ -1,9 +1,6 @@
 package Model;
 
-import Controller.Controller;
 import Database.UserTableManager;
-
-import java.util.Date;
 
 public class Model {
     private UserPool userPool;
@@ -84,6 +81,8 @@ public class Model {
     //both SignedInState and EmptySignedInState
     public void addCalendar(String name, int length, String season, int year) {
         state.addCalendar(name, length, season, year);
+        System.out.println("-Model- added: " + name + " " + length + " " + season + " " + year);
+        System.out.println("-Model- NUMBER OF CALENDARS: " + getCurrentUser().getCalendarPool().getCalendars().size());
     }
 
     //ZoomedInState

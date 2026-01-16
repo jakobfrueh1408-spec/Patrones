@@ -32,7 +32,7 @@ public class CreateCalendarState extends State{
     
     @Override
     public void removeCalendar(int indexToRemove){
-        model.getCurrentUser().getCalendars().removeCalendar(indexToRemove);
+        model.getCurrentUser().getCalendarPool().removeCalendar(indexToRemove);
     }
 
 
@@ -48,7 +48,7 @@ public class CreateCalendarState extends State{
     @Override
     public void loadCalendar(int indexToLoad){
         Calendar calendarToAdd ;
-        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByIndex(indexToLoad);
+        calendarToAdd = model.getCurrentUser().getCalendarPool().getCalendarByIndex(indexToLoad);
         if(calendarToAdd != null){
             model.getCurrentUser().setCurrentCalendar(calendarToAdd);
         }

@@ -1,7 +1,6 @@
 package Model;
 
 import Database.CalendarTableManager;
-import Database.DatabaseDAO;
 import Database.EventNoteTableManager;
 import Database.UserTableManager;
 
@@ -58,7 +57,7 @@ public class SignedIn extends State<CalendarTableManager>{
     @Override
     public void loadCalendar(int indexToLoad){
         Calendar calendarToAdd ;
-        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByIndex(indexToLoad);
+        calendarToAdd = model.getCurrentUser().getCalendarPool().getCalendarByIndex(indexToLoad);
         if(calendarToAdd != null){
             model.getCurrentUser().setCurrentCalendar(calendarToAdd);
         }
@@ -66,9 +65,9 @@ public class SignedIn extends State<CalendarTableManager>{
     @Override
     public void removeCalendar(int indexToRemove){
         //removing the calendar by index
-        model.getCurrentUser().getCalendars().removeCalendar(indexToRemove);
+        model.getCurrentUser().getCalendarPool().removeCalendar(indexToRemove);
         // checking the number of calendars in the calendarpool
-        int numOfCals = model.getCurrentUser().getCalendars().getCalendars().size();
+        int numOfCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
 
         if(numOfCals ==0) {
             model.setState( new CreateCalendarState(model,new CalendarTableManager()));

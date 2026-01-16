@@ -1,13 +1,10 @@
 package Controller;
 
 import Model.*;
-import Model.Event;
-import Model.Label;
 import View.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
 
 public class Controller {
     private Model model;
@@ -34,7 +31,7 @@ public class Controller {
 
     public void onSignInClicked(String name, String password) throws Exception {
         model.signIn(name, password);
-        if(model.getCurrentUser().getCalendars().getCalendars() == null || model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
+        if(model.getCurrentUser().getCalendarPool().getCalendars() == null || model.getCurrentUser().getCalendarPool().getCalendars().isEmpty()){
             cardLayout.show(contentPane, "CreateCalendarPanel");
         } else {
             //if there is a calendar, we show it
@@ -47,11 +44,10 @@ public class Controller {
         model.register(name, password, birthday);
     }
     public void onAddCalendarClicked(String name, int length, String start, int year){
-        //if we were in the emptysignedin state, we have to switch view state
-        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
-            cardLayout.show(contentPane, "SignedInPanel");
         model.addCalendar(name,length, start, year);
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
+        System.out.println("-Controller- number of calendars: " + model.getCurrentUser().getCalendarPool().getCalendars().size());
+        cardLayout.show(contentPane, "SignedInPanel");
     }
 
 
@@ -64,14 +60,14 @@ public class Controller {
     public void onRemoveCalendarClicked(int indexToRemove){
         model.removeCalendar(indexToRemove);
         //if we delete the last calendar, we have to switch view state
-        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
+        if(model.getCurrentUser().getCalendarPool().getCalendars().isEmpty())
             cardLayout.show(contentPane, "CreateCalendarPanel");
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
     }
 
     public void onModifyCalendarClicked(String newtitle){
         model.modifyCalendar(newtitle);
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
     }
 
     public void onZoomInClicked(int year, int month, int day){
@@ -127,7 +123,7 @@ public class Controller {
     }
 
     public Calendar getCalendar(int index){
-        return model.getCurrentUser().getCalendars().getCalendars().get(index);
+        return model.getCurrentUser().getCalendarPool().getCalendars().get(index);
     }
 
     public void setCurrentCalendar(Calendar calendar){
