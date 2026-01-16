@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Event implements CloneableEvent {
@@ -31,6 +32,14 @@ public class Event implements CloneableEvent {
     }
     public Date getDate() {
         return date;
+    }
+
+    public int getCurrentDay(){
+        int day = date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .getDayOfMonth();
+        return day;
     }
     public Label getLabel() {
         return label;

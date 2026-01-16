@@ -1,5 +1,6 @@
 package Model;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Note {
@@ -28,5 +29,12 @@ public class Note {
     }
     public void setDate(Date date) {
         this.date = date;
+    }
+    public int getCurrentDay(){
+        int day = date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .getDayOfMonth();
+        return day;
     }
 }
