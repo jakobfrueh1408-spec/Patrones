@@ -1,5 +1,7 @@
 package Model;
 
+import Database.UserTableManager;
+
 import java.util.ArrayList;
 
 public class NotSignedIn extends State{
@@ -29,6 +31,10 @@ public class NotSignedIn extends State{
         } else {
             model.setState(new SignedIn(model));
         }
+
+        //add database operation
+        UserTableManager usertable = new UserTableManager();
+
 
     }
     @Override
