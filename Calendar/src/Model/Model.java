@@ -52,10 +52,12 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password) {
         state.signIn(name, password);
+        System.out.println("signed in: " + name + " " + password);
     }
 
     public void register(String name, String password, String birthday) {
         state.register(name, password, birthday);
+        System.out.println("registrated: " + name + " " + password + " " + birthday);
     }
 
     //signedInState
