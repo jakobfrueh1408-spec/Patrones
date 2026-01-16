@@ -69,7 +69,6 @@ public class ZoomedInState extends State <EventNoteTableManager>{
     //removing Events and Notes
     @Override
     public void removeEvent(int indexToRemove){
-        // we need the nth. event from the current day
         model.getCurrentUser().getCurrentCalendar().removeEvent(indexToRemove);
     }
     @Override

@@ -1,12 +1,9 @@
 package Model;
 
-import Database.CalendarTableManager;
-
-import java.util.Date;
 import java.util.HexFormat;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
+
 public class User {
     //defining attributes of the USer
     private String userName;
@@ -15,23 +12,20 @@ public class User {
     private String idNumber;
     private Calendar currentCalendar;
     private CalendarPool calendars;
-    private CalendarTableManager calendarTableManager;
+    
     public User(String userName, String password, String birthDate) {
         this.userName = userName;
         this.password = password;
         this.birthDate = birthDate;
         this.idNumber = hash(userName);
         this.calendars = new  CalendarPool();
-        this.calendarTableManager = new CalendarTableManager();
     }
 
     public void createCalendar(String name, int length, String season, int year) {
        if(calendars.nameAvailable(name)){
            if(length == 1){
                if(season == Season.Autumn.toString()){
-                   //add the new calendar to the list
                    calendars.addCalendar(new ShortAutumnCalendar(name,year));
-
                } else {
                    calendars.addCalendar(new ShortSpringCalendar(name,year));
                }
@@ -42,8 +36,6 @@ public class User {
                    calendars.addCalendar(new LongSpringCalendar(name,year));
                }
            }
-           //add the new calendar to the database
-           this.calendarTableManager.addCalendar(name,length,season,year,idNumber);
        }
     }
 
@@ -75,7 +67,7 @@ public class User {
     public String getIdNumber() {
         return idNumber;
     }
-    public CalendarPool getCalendars() {
+    public CalendarPool getCalendarPool() {
         return calendars;
     }
     public Calendar getCurrentCalendar() {
@@ -105,7 +97,7 @@ public class User {
         return "User [userName=" + userName + ", password=" + password + ", birthDate=" + birthDate + ", idNumber="
                 + idNumber + ", calendars=" + calendars + ", getUserName()=" + getUserName() + ", getPassword()="
                 + getPassword() + ", getBirthDate()=" + getBirthDate() + ", getIdNumber()=" + getIdNumber()
-                + ", getCalendars()=" + getCalendars() + "]";
+                + ", getCalendars()=" + getCalendarPool() + "]";
     }
 
 }

@@ -1,21 +1,16 @@
 package Model;
 
-import Controller.Controller;
 import Database.UserTableManager;
-
-import java.util.Date;
 
 public class Model {
     private UserPool userPool;
     private User currentUser;
     private State state;
     private static Model instance;
-    private Controller controller;
 
     private Model() {
         userPool = new UserPool();
         currentUser = null;
-        this.controller = new Controller(this);
         state = new NotSignedIn(this, new UserTableManager());
     }
 
@@ -53,7 +48,6 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password) throws Exception {
         state.signIn(name, password);
-        System.out.println("signed in: " + name + " " + password);
     }
 
     public void register(String name, String password, String birthday) {
@@ -87,6 +81,8 @@ public class Model {
     //both SignedInState and EmptySignedInState
     public void addCalendar(String name, int length, String season, int year) {
         state.addCalendar(name, length, season, year);
+        System.out.println("-Model- added: " + name + " " + length + " " + season + " " + year);
+        System.out.println("-Model- NUMBER OF CALENDARS: " + getCurrentUser().getCalendarPool().getCalendars().size());
     }
 
     //ZoomedInState
