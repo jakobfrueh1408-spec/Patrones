@@ -66,7 +66,7 @@ public class Model {
     }
     public void removeEvent(Event event){
         state.removeEvent(event);
-    } 
+    }
     public void removeNote(Note note){
         state.removeNote(note);
     }
