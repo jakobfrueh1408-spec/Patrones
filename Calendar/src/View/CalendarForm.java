@@ -136,7 +136,7 @@ public class CalendarForm extends JFrame {
             String title = addEventTitleField.getText();
             int length = Integer.parseInt(addEventRecurring.getSelectedItem().toString());
             String label =  addEventLabelBox.getSelectedItem().toString();
-            //new AddEventCommand(view.getController(), title, text, label, length, )
+            new AddEventCommand(view.getController(), title, text, label, length);
         });
         removeEventButton.addActionListener(e -> {
 

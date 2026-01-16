@@ -59,8 +59,7 @@ public class Model {
     public void zoomIn(int indexToZoomIn, int dayToZoomIn){
         state.zoomIn(indexToZoomIn, dayToZoomIn);
     }
-    public void addEvent(Event event, int boundary){
-        state.addEvent(event, boundary);
+    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
     }
     public void addNote(Note note){
         state.addNote(note);

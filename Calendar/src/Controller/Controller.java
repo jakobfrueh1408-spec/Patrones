@@ -71,9 +71,8 @@ public class Controller {
     public void onModifyNoteClicked(){
 
     }
-    public void onAddEventClicked(String  title, String description, Label label, int lengthOfOccurrence, Date date){
-        Event eventToAdd = new Event(title, description, date, label);
-        model.getCurrentUser().getCurrentCalendar().addEvent(eventToAdd, lengthOfOccurrence);
+    public void onAddEventClicked(String  title, String description, String label, int lengthOfOccurrence){
+        model.addEvent(title, description, label, lengthOfOccurrence);
     }
     public void onRemoveEventClicked(){
 

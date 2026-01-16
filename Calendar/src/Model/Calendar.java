@@ -6,6 +6,7 @@ import java.util.Date;
 import java.time.ZoneId;
 public class Calendar {
     private int length;
+    private int currentDay;
     private String name;
     private Season season;
     private ArrayList <Event> events = new ArrayList<>();
@@ -83,6 +84,9 @@ public class Calendar {
         notes.add(note);
     }
 
+    public int getCurrentDay() {
+        return currentDay;
+    }
 
 }
 
