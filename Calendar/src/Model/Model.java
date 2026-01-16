@@ -10,12 +10,10 @@ public class Model {
     private User currentUser;
     private State state;
     private static Model instance;
-    private Controller controller;
 
     private Model() {
         userPool = new UserPool();
         currentUser = null;
-        this.controller = new Controller(this);
         state = new NotSignedIn(this, new UserTableManager());
     }
 
@@ -53,7 +51,6 @@ public class Model {
     //notSignedInState
     public void signIn(String name, String password) throws Exception {
         state.signIn(name, password);
-        System.out.println("signed in: " + name + " " + password);
     }
 
     public void register(String name, String password, String birthday) {

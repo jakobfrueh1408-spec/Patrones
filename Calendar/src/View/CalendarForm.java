@@ -86,6 +86,8 @@ public class CalendarForm extends JFrame {
     private JTextField newtitletextField;
     private JButton modifyTitleButton;
     private JLabel newTitleLabel;
+    private JLabel yearLabel;
+    private JLabel monthLabel;
 
 
     public CalendarForm(View view) {
@@ -117,11 +119,12 @@ public class CalendarForm extends JFrame {
             String password = signinpasswordField.getText();
             try{
                 new SignInCommand(view.getController(), username, password).execute();
+                signintextField.setText("");
+                signinpasswordField.setText("");
             } catch  (Exception ex){
                 System.out.println(ex.getMessage());
             }
-            signintextField.setText("");
-            signinpasswordField.setText("");
+
         });
 
         registerButton.addActionListener( e -> {
@@ -161,8 +164,11 @@ public class CalendarForm extends JFrame {
             int indexOfCalendar = signedinCalendarlist.getSelectedIndex();
             Calendar calendar = view.getController().getCalendar(indexOfCalendar);
             currentCalendar = calendar;
-            currentmonth = 1;
+            currentmonth = calendar.getInitiationDate().getMonth();
+            System.out.println("CURRENTMONTH: " +currentmonth);
             currentyear = calendar.getYear();
+            view.getController().setCurrentCalendar(currentCalendar);
+            refreshYearMonthLabels();
             repaintMonthView(calendar);
         });
 
@@ -183,20 +189,24 @@ public class CalendarForm extends JFrame {
             if(currentmonth > 1){
                 currentmonth--;
             }
-            //if the new month is december
-            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 4) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 10)){
+            //if the month is january
+            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 5) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 11)){
                 currentyear--;
+                currentmonth--;
+                refreshYearMonthLabels();
             }
             repaintMonthView(currentCalendar);
         });
 
         nextMonthButton.addActionListener(e -> {
-            if(currentmonth < currentCalendar.getLength()){
+            if(currentmonth < currentCalendar.getLength() * 6){
                 currentmonth++;
             }
-            //if the new month is january
-            if((currentCalendar.getSeason().toString().equals("Autumn") && currentmonth == 5) || (currentCalendar.getSeason().toString().equals("Spring") && currentmonth == 11)){
+            //if the month is december
+            if((currentCalendar.getSeason().toString().equals("Autumn") && currentmonth == 4) || (currentCalendar.getSeason().toString().equals("Spring") && currentmonth == 10)){
                 currentyear++;
+                currentmonth++;
+                refreshYearMonthLabels();
             }
             repaintMonthView(currentCalendar);
         });
@@ -204,6 +214,7 @@ public class CalendarForm extends JFrame {
         modifyTitleButton.addActionListener(e -> {
             String newtitle = newtitletextField.getText();
             new ModifyCalendarCommand(view.getController(), newtitle).execute();
+            newtitletextField.setText("");
         });
 
         //******************************************************** Zoomed In State ******************************************************************//
@@ -336,5 +347,9 @@ public class CalendarForm extends JFrame {
         for(Event event : eventsList){
             removeEventBox.addItem(event.getTitle());
         }
+    }
+    public void refreshYearMonthLabels(){
+        yearLabel.setText(String.valueOf("Year: " + currentyear));
+        monthLabel.setText(String.valueOf("Month: " + currentmonth));
     }
 }
