@@ -1,13 +1,15 @@
 package Controller;
 
 public class AddNoteCommand extends Command {
-    public AddNoteCommand(Controller controller) {
+    private String title;
+    private String text;
+    public AddNoteCommand(Controller controller, String title, String text) {
         super(controller);
+        this.title = title;
+        this.text = text;
     }
     public void execute() {
-        controller.onExitClicked();
+        controller.onAddNoteClicked(this.title, this.text);
     }
-    public void fetchParameters() {
 
-    }
 }

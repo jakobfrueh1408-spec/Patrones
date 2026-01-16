@@ -20,7 +20,4 @@ public class AddEventCommand extends Command {
     public void execute() {
         controller.onAddEventClicked(this.title, this.description, this.label, this.lengthOfOccurrence);
     }
-    public void fetchParameters() {
-
-    }
 }

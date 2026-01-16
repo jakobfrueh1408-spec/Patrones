@@ -1,14 +1,16 @@
 package Controller;
 
 public class ZoomInCommand extends Command {
-    private int index;
-    private int dayToZoomIn;
-    public ZoomInCommand(Controller controller, int indexToZoomIn, int dayToZoomIn) {
+    private int year;
+    private int month;
+    private int day;
+    public ZoomInCommand(Controller controller, int year, int month, int day) {
         super(controller);
-        this.index = indexToZoomIn;
-        this.dayToZoomIn = dayToZoomIn;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
     public void execute() {
-        controller.onZoomInClicked(this.index, this.dayToZoomIn);
+        controller.onZoomInClicked(this.year, this.month, this.day);
     }
 }

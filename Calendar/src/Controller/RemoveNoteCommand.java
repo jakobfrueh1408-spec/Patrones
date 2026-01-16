@@ -1,13 +1,12 @@
 package Controller;
 
 public class RemoveNoteCommand extends Command {
-    public RemoveNoteCommand(Controller controller) {
+    private int index;
+    public RemoveNoteCommand(Controller controller, int index) {
         super(controller);
+        this.index = index;
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onRemoveNoteClicked(int index);
     }
 }

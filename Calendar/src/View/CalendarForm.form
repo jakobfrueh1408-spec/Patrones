@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="View.CalendarForm">
   <grid id="27dc6" binding="contentPane" layout-manager="CardLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="646" height="489"/>
+      <xy x="20" y="20" width="646" height="528"/>
     </constraints>
     <properties>
       <preferredSize width="400" height="200"/>
@@ -139,7 +139,7 @@
           </grid>
         </children>
       </grid>
-      <grid id="9e58e" binding="SignedInPanel" layout-manager="GridLayoutManager" row-count="6" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="9e58e" binding="SignedInPanel" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <card name="Card2"/>
@@ -164,7 +164,7 @@
           </component>
           <component id="b69ea" class="javax.swing.JButton" binding="signedinZoomInButton">
             <constraints>
-              <grid row="2" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Zoom in"/>
@@ -172,15 +172,15 @@
           </component>
           <component id="6d82e" class="javax.swing.JButton" binding="signedinSignOutButton">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Sign out"/>
             </properties>
           </component>
-          <grid id="9501b" layout-manager="CardLayout" hgap="0" vgap="0">
+          <grid id="9501b" binding="customMonthPanel" custom-create="true" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="0" row-span="1" col-span="5" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -188,7 +188,7 @@
           </grid>
           <component id="a3a50" class="javax.swing.JButton" binding="signedinDeleteButton">
             <constraints>
-              <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Delete"/>
@@ -196,7 +196,7 @@
           </component>
           <component id="4e91d" class="javax.swing.JLabel">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Day to zoom in"/>
@@ -204,7 +204,7 @@
           </component>
           <component id="88b40" class="javax.swing.JTextField" binding="zoomintextfield">
             <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -214,7 +214,7 @@
           </component>
           <component id="2c98b" class="javax.swing.JButton" binding="nextMonthButton" default-binding="true">
             <constraints>
-              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Next month"/>
@@ -222,15 +222,47 @@
           </component>
           <component id="f917f" class="javax.swing.JButton" binding="previousMonthButton" default-binding="true">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Previous month"/>
             </properties>
           </component>
+          <component id="670f5" class="javax.swing.JButton" binding="openCalendar">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Open"/>
+            </properties>
+          </component>
+          <component id="3d56b" class="javax.swing.JTextField" binding="newtitletextField">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="6a657" class="javax.swing.JLabel" binding="newTitleLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="New title"/>
+            </properties>
+          </component>
+          <component id="9819b" class="javax.swing.JButton" binding="modifyTitleButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Modify title"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <grid id="5c742" binding="EmptySignedInPanel" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="5c742" binding="CreateCalendarPanel" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <card name="Card3"/>
@@ -238,9 +270,9 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="33fa7" class="javax.swing.JButton" binding="emptyCreateCalendarButton">
+          <component id="33fa7" class="javax.swing.JButton" binding="CreateCalendarButton">
             <constraints>
-              <grid row="0" column="2" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="5" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Create calendar"/>
@@ -270,7 +302,7 @@
               <text value="Start of semester"/>
             </properties>
           </component>
-          <component id="58cbd" class="javax.swing.JTextField" binding="emptyTitleOfCalendar">
+          <component id="58cbd" class="javax.swing.JTextField" binding="TitleOfCalendar">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -278,7 +310,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="e416e" class="javax.swing.JComboBox" binding="emptyLengthOfStay">
+          <component id="e416e" class="javax.swing.JComboBox" binding="LengthOfStay">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -289,7 +321,7 @@
               </model>
             </properties>
           </component>
-          <component id="e7a5d" class="javax.swing.JComboBox" binding="emptyStartOfSemester">
+          <component id="e7a5d" class="javax.swing.JComboBox" binding="StartOfSemester">
             <constraints>
               <grid row="2" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -300,17 +332,25 @@
               </model>
             </properties>
           </component>
-          <component id="920fb" class="javax.swing.JButton" binding="emptySignOutButton">
+          <component id="a2d09" class="javax.swing.JLabel">
             <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Sign out"/>
+              <text value="Year"/>
             </properties>
+          </component>
+          <component id="b83b3" class="javax.swing.JTextField" binding="yearTextField">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
           </component>
         </children>
       </grid>
-      <grid id="41add" binding="ZoomedInPanel" layout-manager="GridLayoutManager" row-count="14" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="41add" binding="ZoomedInPanel" layout-manager="GridLayoutManager" row-count="15" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <card name="Card4"/>
@@ -318,7 +358,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="93ee9" binding="dayView" layout-manager="CardLayout" hgap="0" vgap="0">
+          <grid id="93ee9" binding="customDayPanel" custom-create="true" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -612,6 +652,14 @@
             </constraints>
             <properties>
               <text value="Modify Note"/>
+            </properties>
+          </component>
+          <component id="f8765" class="javax.swing.JButton" binding="zoomOutButton" default-binding="true">
+            <constraints>
+              <grid row="14" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Zoom out"/>
             </properties>
           </component>
         </children>

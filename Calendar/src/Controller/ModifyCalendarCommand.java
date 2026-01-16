@@ -1,13 +1,12 @@
 package Controller;
 
 public class ModifyCalendarCommand extends Command {
-    public ModifyCalendarCommand(Controller controller) {
+    private String newtitle;
+    public ModifyCalendarCommand(Controller controller, String newtittle) {
         super(controller);
+        this.newtitle = newtittle;
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onModifyCalendarClicked(this.newtitle);
     }
 }

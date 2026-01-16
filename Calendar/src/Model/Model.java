@@ -99,6 +99,9 @@ public class Model {
         state.exit();
     }
 
+    public User getcurrentUser(){
+        return currentUser;
+    }
 
     /*public static void main( String[]args) {
         //new Model();

@@ -1,13 +1,14 @@
 package Controller;
 
 public class ModifyEventCommand extends Command {
-    public ModifyEventCommand(Controller controller) {
+    private int index;
+    private String text;
+    public ModifyEventCommand(Controller controller, int index, String text) {
         super(controller);
+        this.index = index;
+        this.text = text;
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onModifyEventClicked(this.index, this.text);
     }
 }

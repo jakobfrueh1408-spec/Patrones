@@ -1,13 +1,12 @@
 package Controller;
 
 public class RemoveEventCommand extends Command {
-    public RemoveEventCommand(Controller controller) {
+    private int index;
+    public RemoveEventCommand(Controller controller, int index) {
         super(controller);
+        this.index = index;
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onRemoveEventClicked(int index);
     }
 }

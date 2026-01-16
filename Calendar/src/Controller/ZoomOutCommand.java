@@ -5,9 +5,6 @@ public class ZoomOutCommand extends Command {
         super(controller);
     }
     public void execute() {
-        controller.onExitClicked();
-    }
-    public void fetchParameters() {
-
+        controller.onZoomOutClicked();
     }
 }
