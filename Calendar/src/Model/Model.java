@@ -50,7 +50,7 @@ public class Model {
     // The functions which we can call indirectly using the model
 
     //notSignedInState
-    public void signIn(String name, String password) {
+    public void signIn(String name, String password) throws Exception {
         state.signIn(name, password);
         System.out.println("signed in: " + name + " " + password);
     }

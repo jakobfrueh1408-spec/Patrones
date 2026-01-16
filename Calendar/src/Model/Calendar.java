@@ -216,8 +216,8 @@ public class Calendar {
         int month =0;
         int day = 1;
         switch(season){
-            case season.Autumn : month = 9; break;
-            case season.Spring :month = 4 ; break;
+            case Autumn : month = 9; break;
+            case Spring :month = 4 ; break;
         }
         Date initDate = dateCreator(day,month,year);
         return initDate;

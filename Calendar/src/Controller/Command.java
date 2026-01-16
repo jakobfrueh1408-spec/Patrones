@@ -5,5 +5,5 @@ public abstract class Command {
     public Command(Controller controller) {
         this.controller = controller;
     }
-    public abstract void execute();
+    public abstract void execute() throws Exception;
 }

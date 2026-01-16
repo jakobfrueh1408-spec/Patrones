@@ -13,7 +13,7 @@ public abstract class State {
     }
 
     //notSignedInState
-    public void signIn(String name, String password){
+    public void signIn(String name, String password) throws Exception {
         
     } 
     public void register(String name, String password, String birthday) {}

@@ -13,6 +13,10 @@ public class CommandActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.command.execute();
+        try {
+            this.command.execute();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

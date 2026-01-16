@@ -1,9 +1,11 @@
 package View;
 import Controller.*;
 import Model.*;
-
+import Model.Event;
 import javax.swing.*;
+
 import java.awt.*;
+import java.util.ArrayList;
 
 public class CalendarForm extends JFrame {
     private View view;
@@ -38,9 +40,14 @@ public class CalendarForm extends JFrame {
     //Create Calendar Panel
     private JButton CreateCalendarButton;
     private JTextField TitleOfCalendar;
+
+
+
     private JComboBox LengthOfStay;
     private JComboBox StartOfSemester;
     private JTextField yearTextField;
+
+
 
 
     //Signed in Panel
@@ -108,24 +115,41 @@ public class CalendarForm extends JFrame {
         signInButton.addActionListener(e -> {
             String username = signintextField.getText();
             String password = signinpasswordField.getText();
-            new SignInCommand(view.getController(), username, password).execute();
+            try{
+                new SignInCommand(view.getController(), username, password).execute();
+            } catch  (Exception ex){
+                System.out.println(ex.getMessage());
+            }
+            signintextField.setText("");
+            signinpasswordField.setText("");
         });
 
         registerButton.addActionListener( e -> {
             String username = registertextField.getText();
             String password = registerpasswordField.getText();
             String birthday = birthDayTextField.getText();
-            new RegisterCommand(view.getController(), username, password,  birthday).execute();
+            try{
+                new RegisterCommand(view.getController(), username, password,  birthday).execute();
+            } catch  (Exception ex){
+                System.out.println(ex.getMessage());
+            }
+            birthDayTextField.setText("");
+            registertextField.setText("");
+            registerpasswordField.setText("");
         });
 
         //******************************************************** Create Calendar State ******************************************************************//
 
         CreateCalendarButton.addActionListener(e -> {
-            String name = TitleOfCalendar.getText();
+            String name = TitleOfCalendar.getText().toString();
             String start = StartOfSemester.getSelectedItem().toString();
             int length =  Integer.parseInt(LengthOfStay.getSelectedItem().toString());
             int year = Integer.parseInt(yearTextField.getText().toString());
             new AddCalendarCommand(view.getController(), name, length, start, year).execute();
+            TitleOfCalendar.setText("");
+            StartOfSemester.setSelectedIndex(0);
+            yearTextField.setText("");
+            LengthOfStay.setSelectedIndex(0);
         });
 
         //******************************************************** Signed In State ******************************************************************//
@@ -146,7 +170,6 @@ public class CalendarForm extends JFrame {
             int index = signedinCalendarlist.getSelectedIndex();
             //if this was the last calendar, the model goes to createcalendar state
             new RemoveCalendarCommand(view.getController(), index).execute();
-
         });
 
         signedinZoomInButton.addActionListener(e -> {
@@ -257,5 +280,61 @@ public class CalendarForm extends JFrame {
     private void createUIComponents() {
         customMonthPanel = new JPanel(new BorderLayout());
         customDayPanel = new JPanel(new BorderLayout());
+    }
+
+    public JComboBox getSignedinCalendarlist() {
+        return signedinCalendarlist;
+    }
+    public JComboBox getLengthOfStay() {
+        return LengthOfStay;
+    }
+
+    public JComboBox getStartOfSemester() {
+        return StartOfSemester;
+    }
+
+    public JComboBox getAddEventLabelBox() {
+        return addEventLabelBox;
+    }
+
+    public JComboBox getAddEventRecurring() {
+        return addEventRecurring;
+    }
+
+    public JComboBox getRemoveEventBox() {
+        return removeEventBox;
+    }
+
+    public JComboBox getRemoveNoteBox() {
+        return removeNoteBox;
+    }
+
+    public JComboBox getModifyEventBox() {
+        return modifyEventBox;
+    }
+
+    public JComboBox getModifyNoteBox() {
+        return modifyNoteBox;
+    }
+
+    public void refreshCalendarList(ArrayList<Calendar> calendarList){
+        signedinCalendarlist.removeAll();
+        for(Calendar calendar : calendarList){
+            signedinCalendarlist.addItem(calendar.getName());
+        }
+    }
+
+    public void refreshNotesList(ArrayList<Note> notesList){
+        removeNoteBox.removeAll();
+        for(Note note : notesList){
+            removeNoteBox.addItem(note.getTitle());
+        }
+    }
+
+    public void refreshEventsList(ArrayList<Event> eventsList){
+        removeEventBox.removeAll();
+        for(Event event : eventsList){
+            removeEventBox.addItem(event.getTitle());
+        }
     }
 }

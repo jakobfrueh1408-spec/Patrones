@@ -8,11 +8,11 @@ public class NotSignedIn extends State{
     }
 
     @Override
-    public void signIn(String userName, String password){
+    public void signIn(String userName, String password) throws Exception {
         //set the current user in the model
        
         ArrayList <User> listToTraverse = model.getUserPool().getUsers();
-        System.out.println(listToTraverse.size());
+        System.out.println("number of users: " + listToTraverse.size());
         for(int i = 0; i < listToTraverse.size(); i++) {
             User u = listToTraverse.get(i);
             //if the 
@@ -20,6 +20,8 @@ public class NotSignedIn extends State{
             if(u.getIdNumber().equals(u.hash(userName))  && u.getPassword().equals(password)) {
                 model.setCurrentUser(u);
                 break; 
+            } else {
+                throw new Exception("Not registered user!");
             }
         }
         if(model.getCurrentUser() == null) {

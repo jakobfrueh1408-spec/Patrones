@@ -29,7 +29,7 @@ public class Controller {
         System.exit(0);
     }
 
-    public void onSignInClicked(String name, String password){
+    public void onSignInClicked(String name, String password) throws Exception {
         model.signIn(name, password);
         if(model.getCurrentUser() == null || model.getCurrentUser().getCalendars().getCalendars().isEmpty()){
             cardLayout.show(contentPane, "CreateCalendarPanel");
@@ -48,6 +48,7 @@ public class Controller {
         if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
             cardLayout.show(contentPane, "SignedInPanel");
         model.addCalendar(name,length, start, year);
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
     }
 
 
@@ -62,6 +63,7 @@ public class Controller {
         //if we delete the last calendar, we have to switch view state
         if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
             cardLayout.show(contentPane, "CreateCalendarPanel");
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendars().getCalendars());
     }
 
     public void onModifyCalendarClicked(String newtitle){
@@ -70,6 +72,7 @@ public class Controller {
 
     public void onZoomInClicked(int year, int month, int day){
         model.zoomIn(year, month, day);
+
         cardLayout.show(contentPane, "ZoomedInPanel");
     }
 

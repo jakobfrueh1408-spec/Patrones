@@ -8,7 +8,7 @@ public class SignInCommand extends Command {
         this.userName = userName;
         this.password = password;
     }
-    public void execute() {
+    public void execute() throws Exception {
         controller.onSignInClicked(this.userName, this.password);
     }
 }
