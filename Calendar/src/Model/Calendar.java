@@ -1,6 +1,9 @@
 package Model;
 
 import java.time.LocalDate;
+import Database.CalendarTableManager;
+import Database.EventNoteTableManager;
+
 import java.time.ZoneId;
 import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
@@ -17,15 +20,20 @@ public class Calendar {
     private LocalDate currentDate;
     private String name;
     private Season season;   //either september or april
+    private Season season;
+    private int db_id;
     private ArrayList <Event> events = new ArrayList<>();
     private ArrayList <Note> notes = new ArrayList<>();
-
+    EventNoteTableManager eventTableManager;
+    CalendarTableManager calendarTableManager;
     public Calendar(int length, String name, Season season, int year) {
         this.length = length;
         this.name = name;
         this.season = season;
         this.year = year;
         this.currentDate = getInitiationDate();
+        this.calendarTableManager = new CalendarTableManager();
+        this.eventTableManager = new EventNoteTableManager();
     }
 
     //to String method
@@ -64,6 +72,8 @@ public class Calendar {
     public ArrayList<Note> getNotes() {
         return notes;
     }
+    public int getDb_id() {return db_id;}
+    public void setDb_id(int db_id) {this.db_id = db_id;}
     public void setLength(int length) {
         this.length = length;
     }
@@ -82,9 +92,13 @@ public class Calendar {
     public void removeEvent(int indexToRemove) {
         //getting the current Days Events
         ArrayList <Event> currentDaysEvents = getCurrentDayEventList();
-        //removing the corresponsing Event
+        //getting the event to delete
+        Event eventToDelete = currentDaysEvents.get(indexToRemove);
+        //removing the corresponsing Event from Model and DB
+        eventTableManager.removeEvent(eventToDelete.getEvent_Id());
         currentDaysEvents.remove(indexToRemove);
     }
+
     //Only modify the description of the Event
     public void modifyEvent(int indexToModify, String description){
         //getting the current Days Events
@@ -93,6 +107,8 @@ public class Calendar {
         Event event = currentDaysEvents.get(indexToModify);
         //setting the new Description
         event.setDescription(description);
+        //setting the change into the DB
+        eventTableManager.manipulateEvent(event.getEvent_Id(),description);
     }
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
         //converting string to Enum
@@ -112,7 +128,11 @@ public class Calendar {
             Event recurring = event.clone();
             recurring.setDate(currentDate.plusWeeks(i));
             events.add(recurring);
+            eventTableManager.addEventWithClones(this.db_id,recurring,lengthOfOccurrence);
+
         }
+
+
     }
     //functions for Note insertion , manipulation adn deletion
     //removing the specified event from the Event List
@@ -120,7 +140,13 @@ public class Calendar {
         //getting all the notes of the day
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
         //removing the note from notes
+        Note noteToRemove = currentDaysNotes.get(indexToRemove);
+        //removing Note from Database
+        eventTableManager.removeNote(noteToRemove.getDb_id());
+        //remove Note from the Model
         notes.remove(indexToRemove);
+
+
     }
     //Only modify the description of the Note
     public void modifyNote(int indexToModify, String description) {
@@ -128,11 +154,14 @@ public class Calendar {
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
         //getting the note with the corresponding title
         Note note = currentDaysNotes.get(indexToModify);
-        //setting the notes description
+        //setting the notes description int the DB
+        eventTableManager.manipulateNote(note.getDb_id(),description);
         note.setText(description);
     }
     public void addNote(String title,String text) {
         Note note = new Note(title,text,currentDate);
+        //adding note to the model and to the database
+        eventTableManager.addNote(this.db_id,title,text,  this.currentDate);
         notes.add(note);
     }
 

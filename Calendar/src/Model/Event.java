@@ -9,7 +9,8 @@ public class Event implements CloneableEvent {
     private String description;
     private LocalDate date;
     private Label label;
-   
+    private int event_Id;
+
     public Event(String title, String description, LocalDate date, Label label) {
         this.title = title;
         this.description = description;
@@ -58,5 +59,11 @@ public class Event implements CloneableEvent {
     }
     public void setLabel(Label label) {
         this.label = label;
+    }
+    public int getEvent_Id() {
+        return event_Id;
+    }
+    public void setEvent_Id(int event_Id) {
+        this.event_Id = event_Id;
     }
 }

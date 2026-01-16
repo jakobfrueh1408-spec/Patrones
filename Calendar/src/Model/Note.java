@@ -8,7 +8,8 @@ public class Note {
     private String title;
     private String text;
     private LocalDate date;
-    public Note(String title, String text, LocalDate  date) {
+    private int db_id;
+    public Note(String title, String text, LocalDate date) {
         this.title = title;
         this.text = text;
         this.date = date;
@@ -34,5 +35,10 @@ public class Note {
     public int getCurrentDay(){
         return date.getDayOfMonth();
     }
-
+    public int getDb_id() {
+        return db_id;
+    }
+    public void setDb_id(int db_id) {
+        this.db_id = db_id;
+    }
 }
