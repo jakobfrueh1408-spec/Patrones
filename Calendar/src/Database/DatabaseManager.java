@@ -4,7 +4,7 @@ import Model.User;
 
 import java.sql.*;
 
-public class DatabaseManager {
+public class DatabaseManager implements DatabaseDAO {
     // Die URL verweist direkt auf die Datei in deinem Projektordner
     private static final String URL = "jdbc:sqlite:calendar.db";
 
@@ -22,7 +22,7 @@ public class DatabaseManager {
      * Das ist super für dein "1.u.t." Setup, damit die DB beim Partner sofort bereit ist.
      */
     public static void initializeDatabase() {
-        // Wir sammeln alle Statements in einem Array, um sie nacheinander auszuführen
+
         String[] sqlStatements = {
                 // 1. Users Tabelle
                 "CREATE TABLE IF NOT EXISTS Users (" +
@@ -32,7 +32,6 @@ public class DatabaseManager {
                         "password_hash TEXT NOT NULL" +
                         ");",
 
-                // 2. Calendars Tabelle (Beachte: INTEGER PRIMARY KEY für Auto-Inkrement in SQLite)
                 "CREATE TABLE IF NOT EXISTS Calendars (" +
                         "calendar_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "name TEXT NOT NULL, " +
@@ -69,7 +68,6 @@ public class DatabaseManager {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // SQLite muss Foreign Keys explizit aktivieren!
             stmt.execute("PRAGMA foreign_keys = ON;");
 
             for (String sql : sqlStatements) {

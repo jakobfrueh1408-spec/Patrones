@@ -1,12 +1,14 @@
 package Model;
 
+import Database.CalendarTableManager;
+import Database.DatabaseDAO;
 import Database.UserTableManager;
 
 import java.util.ArrayList;
 
-public class NotSignedIn extends State{
-    public NotSignedIn(Model model) {
-        super(model);
+public class NotSignedIn extends State <UserTableManager>{
+    public NotSignedIn(Model model, UserTableManager database) {
+        super(model,database);
     }
 
     @Override
@@ -15,31 +17,22 @@ public class NotSignedIn extends State{
        
         ArrayList <User> listToTraverse = model.getUserPool().getUsers();
         System.out.println("number of users: " + listToTraverse.size());
-        for(int i = 0; i < listToTraverse.size(); i++) {
-            User u = listToTraverse.get(i);
-            //if the 
-            System.out.println(u.getIdNumber() == u.hash(userName));
-            if(u.getIdNumber().equals(u.hash(userName))  && u.getPassword().equals(password)) {
-                model.setCurrentUser(u);
-                break; 
-            } else {
-                throw new Exception("Not registered user!");
-            }
-        }
-        if(model.getCurrentUser() == null) {
-            model.setState(new CreateCalendarState(model));
-        } else {
-            model.setState(new SignedIn(model));
-        }
 
         //add database operation
-        UserTableManager usertable = new UserTableManager();
-
-
+        User loggedUser = getDatabase().getUserByLogin(userName, password);
+        if(loggedUser != null){
+            model.setCurrentUser(loggedUser);
+            model.setState(new SignedIn(model, new CalendarTableManager()));
+        }else {
+            throw new Exception("Not registered user!");
+        }
     }
     @Override
     public void register(String name, String password, String birthday){
-        model.getUserPool().addUser(new User(name, password, birthday));
+        UserTableManager usertable = new UserTableManager();
+        User user = new User(name,password,birthday);
+        usertable.register(user);
+        model.getUserPool().addUser(user);
         System.out.println("Users in the userpool"+model.getUserPool());
     } 
     //signedInState

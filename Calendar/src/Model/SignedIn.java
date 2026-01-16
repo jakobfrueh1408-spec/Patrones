@@ -1,10 +1,15 @@
 package Model;
 
+import Database.CalendarTableManager;
+import Database.DatabaseDAO;
+import Database.EventNoteTableManager;
+import Database.UserTableManager;
+
 import java.util.Date;
 
-public class SignedIn extends State{
-    public SignedIn(Model model) {
-        super(model);
+public class SignedIn extends State<CalendarTableManager>{
+    public SignedIn(Model model, CalendarTableManager database) {
+        super(model,database);
     }
     
     //notSignedInState
@@ -31,7 +36,7 @@ public class SignedIn extends State{
     @Override
     public void signOut(){
         model.setCurrentUser(null);
-        model.setState(new NotSignedIn(model));
+        model.setState(new NotSignedIn(model,new UserTableManager()));
     }
    @Override
     public void addCalendar(String name, int length,  String season, int year){
@@ -46,7 +51,7 @@ public class SignedIn extends State{
         model.getCurrentUser().getCurrentCalendar().setCurrentDate(date);
 
         //setting the new state
-        model.setState(new ZoomedInState(model));
+        model.setState(new ZoomedInState(model, new EventNoteTableManager()));
     }
    
     //emptySignedInState and SignedInstate
@@ -66,7 +71,7 @@ public class SignedIn extends State{
         int numOfCals = model.getCurrentUser().getCalendars().getCalendars().size();
 
         if(numOfCals ==0) {
-            model.setState( new CreateCalendarState(model));
+            model.setState( new CreateCalendarState(model,new CalendarTableManager()));
         }
     }
     @Override

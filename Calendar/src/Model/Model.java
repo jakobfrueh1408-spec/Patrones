@@ -1,6 +1,7 @@
 package Model;
 
 import Controller.Controller;
+import Database.UserTableManager;
 
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class Model {
         userPool = new UserPool();
         currentUser = null;
         this.controller = new Controller(this);
-        state = new NotSignedIn(this);
+        state = new NotSignedIn(this, new UserTableManager());
     }
 
     public static Model getInstance() {

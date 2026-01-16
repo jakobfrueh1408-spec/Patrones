@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserTableManager {
+public class UserTableManager implements DatabaseDAO{
 
 
     public void register(User user){
@@ -17,7 +17,6 @@ public class UserTableManager {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Mapping von Model-Attributen auf SQL-Parameter
             pstmt.setString(1, user.getIdNumber());
             pstmt.setString(2, user.getUserName());
             pstmt.setString(3, user.getBirthDate());
@@ -37,7 +36,6 @@ public class UserTableManager {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // SQLite: Sicherstellen, dass Foreign Keys aktiv sind für Cascade Delete
             pstmt.executeUpdate("PRAGMA foreign_keys = ON;");
 
             pstmt.setString(1, userId);
@@ -62,19 +60,19 @@ public class UserTableManager {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Wir bauen das User-Objekt aus den DB-Daten wieder zusammen
+
                 User user = new User(
                         rs.getString("name"),
                         rs.getString("password_hash"),
                         rs.getString("birthday")
                 );
-                // Die ID wird automatisch über den Hash im Konstruktor gesetzt
+
                 return user;
             }
         } catch (SQLException e) {
             System.err.println("Login-Fehler: " + e.getMessage());
         }
-        return null; // Kein User gefunden oder Fehler
+        return null;
     }
     public static void main(String[]args){
         User user = new User("jakot","1234", "14.08.2004");

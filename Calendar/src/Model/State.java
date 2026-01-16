@@ -1,15 +1,27 @@
 package Model;
 
+import Database.DatabaseDAO;
+
 import java.util.Date;
 
-public abstract class State {
+public abstract class State<T extends DatabaseDAO> {
     protected Model model;
+    private T database;
 
-    public State(Model model) {
+    public State(Model model, T database) {
+        this.database = database;
         this.model = model;
     }
+
+    //getters and setters
     public void setModel(Model model) {
         this.model = model;
+    }
+    public T getDatabase() {
+        return database;
+    }
+    public void setDatabase(T database) {
+        this.database = database;
     }
 
     //notSignedInState

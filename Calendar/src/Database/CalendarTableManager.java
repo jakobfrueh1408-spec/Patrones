@@ -6,8 +6,8 @@ import Model.Season;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CalendarTableManager {
-    // 1. addCalendar: Erzeugt neuen Kalender für den currentUser
+public class CalendarTableManager implements DatabaseDAO{
+
     public int addCalendar(String name, String season, int year, String userId) {
         String sql = "INSERT INTO Calendars (name, season, user_id) VALUES (?, ?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
@@ -35,7 +35,6 @@ public class CalendarTableManager {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // 3. modifyCalendar: Ändert den Namen
     public void modifyCalendar(int calendarId, String newTitle) {
         String sql = "UPDATE Calendars SET name = ? WHERE calendar_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
@@ -46,7 +45,6 @@ public class CalendarTableManager {
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // 4. loadCalendar: Das "Mapping" von DB-Zeilen in deine Java-Klassen
     public ArrayList<Calendar> loadAllCalendarsForUser(String userId, int year) {
         ArrayList<Calendar> calendars = new ArrayList<>();
         String sql = "SELECT * FROM Calendars WHERE user_id = ?";
@@ -62,10 +60,8 @@ public class CalendarTableManager {
                 String seasonStr = rs.getString("season");
                 int id = rs.getInt("calendar_id");
 
-                // Hier nutzen wir deine vorhandene Logik aus der User-Klasse (Short/Long Auswahl)
-                // Für dieses Beispiel erstellen wir ein Standard-Objekt:
                 Calendar cal = new Calendar(1, name, Season.valueOf(seasonStr), year);
-                // WICHTIG: Du solltest im Calendar-Objekt ein Feld 'dbId' hinzufügen!
+
                 calendars.add(cal);
             }
         } catch (SQLException e) { e.printStackTrace(); }

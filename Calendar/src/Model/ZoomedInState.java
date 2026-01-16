@@ -1,11 +1,15 @@
 package Model;
 
+import Database.CalendarTableManager;
+import Database.DatabaseDAO;
+import Database.EventNoteTableManager;
+
 import java.util.Date;
 
-public class ZoomedInState extends State {
+public class ZoomedInState extends State <EventNoteTableManager>{
    
-    public ZoomedInState(Model model){
-        super(model);
+    public ZoomedInState(Model model,EventNoteTableManager database){
+        super(model,database);
     }
 
 
@@ -89,6 +93,6 @@ public class ZoomedInState extends State {
     public void zoomOut(){
         // make the current Date in the Current Calenadar in the Current User null, idk if that is good practice with the null though
         model.getCurrentUser().getCurrentCalendar().setCurrentDate(null) ;
-        model.setState(new SignedIn(model));
+        model.setState(new SignedIn(model,new CalendarTableManager()));
     }
 }

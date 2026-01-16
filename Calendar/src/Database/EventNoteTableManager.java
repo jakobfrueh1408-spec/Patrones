@@ -1,12 +1,13 @@
 package Database;
 
 import Model.Event;
+import Model.Note;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class EventTableManager {
+public class EventNoteTableManager implements DatabaseDAO{
     /**
      * Entspricht addEvent(...). Speichert das Basis-Event und alle wöchentlichen Clones.
      */
@@ -16,21 +17,19 @@ public class EventTableManager {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Schleife für das Basis-Event (i=0) und alle Clones
             for (int i = 0; i <= lengthOfOccurrence; i++) {
-                // Wir nutzen die Logik aus deiner Calendar.addWeeks Methode
-                // Hier vereinfacht als String-Repräsentation des Datums
+
                 String eventDate = baseEvent.getDate().toInstant().toString();
-                // Hinweis: In der echten Schleife müsstest du hier das Datum pro Iteration um i Wochen erhöhen
+
 
                 pstmt.setInt(1, calendarId);
                 pstmt.setString(2, baseEvent.getTitle());
                 pstmt.setString(3, eventDate);
-                pstmt.setString(4, eventDate); // Falls Start = Ende bei euch
+                pstmt.setString(4, eventDate);
                 pstmt.setString(5, baseEvent.getDescription());
                 pstmt.setString(6, baseEvent.getLabel().toString());
 
-                pstmt.addBatch(); // Sammelt die Inserts für bessere Performance
+                pstmt.addBatch();
             }
             pstmt.executeBatch();
 
@@ -50,6 +49,30 @@ public class EventTableManager {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, newDescription);
             pstmt.setInt(2, eventDbId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    public void addNote(int calendarId, Note note) {
+        String sql = "INSERT INTO Notes (calendar_id, name, note_date, description) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, calendarId);
+            pstmt.setString(2, note.getTitle());
+            pstmt.setString(3, note.getDate().toInstant().toString());
+            pstmt.setString(4, note.getText());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    public void modifyNote(int noteDbId, String newText) {
+        String sql = "UPDATE Notes SET description = ? WHERE note_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newText);
+            pstmt.setInt(2, noteDbId);
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }

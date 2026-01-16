@@ -1,10 +1,13 @@
 package Model;
 
+import Database.CalendarTableManager;
+import Database.DatabaseDAO;
+
 public class CreateCalendarState extends State{
     
 
-    public CreateCalendarState(Model model){
-        super(model);
+    public CreateCalendarState(Model model, DatabaseDAO database){
+        super(model,database);
     }
 
     //signedInState
@@ -39,7 +42,7 @@ public class CreateCalendarState extends State{
     }
     @Override
     public void switchToSignedIn() {
-        model.setState(new SignedIn(model));
+        model.setState(new SignedIn(model,new CalendarTableManager()));
     }
 
     @Override
