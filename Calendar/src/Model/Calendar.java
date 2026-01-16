@@ -20,7 +20,6 @@ public class Calendar {
     private LocalDate currentDate;
     private String name;
     private Season season;   //either september or april
-    private Season season;
     private int db_id;
     private ArrayList <Event> events = new ArrayList<>();
     private ArrayList <Note> notes = new ArrayList<>();

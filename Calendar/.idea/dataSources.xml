@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\jakob\Universität Regensburg\Wintersemester 2025\Patrones Software\Patrones\Calendar\calendar.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="calendar" uuid="9a0d628c-3e23-414c-8613-d1530bd17b26">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/calendar.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

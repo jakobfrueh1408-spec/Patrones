@@ -4,6 +4,7 @@ import Model.Event;
 import Model.Note;
 import Model.Label;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class EventNoteTableManager implements DatabaseDAO {
 
     // --- NOTE OPERATIONEN ---
 
-    public void addNote(int calendarId, String title , String text, Date date) {
+    public void addNote(int calendarId, String title , String text, LocalDate date) {
         // Query angepasst an Schema: calendar_id, title, text, date
         String sql = "INSERT INTO Notes (calendar_id, title, text, date) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
@@ -85,8 +86,8 @@ public class EventNoteTableManager implements DatabaseDAO {
             pstmt.setString(1, param);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                // Konvertierung String -> Date
-                java.util.Date d = sdf.parse(rs.getString("date"));
+                // Konvertierung String -> LocalDate
+                LocalDate d = LocalDate.parse(rs.getString("date"));
 
                 Event e = new Event(
                         rs.getString("title"),
@@ -108,12 +109,12 @@ public class EventNoteTableManager implements DatabaseDAO {
             pstmt.setString(1, param);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                java.util.Date d = sdf.parse(rs.getString("date"));
+                LocalDate d = LocalDate.parse(rs.getString("date"));
 
                 Note n = new Note(
                         rs.getString("title"),
                         rs.getString("text"),
-                        rs.getDate("date")
+                        d // <-- use LocalDate, not java.sql.Date
                 );
                 n.setDb_id(rs.getInt("note_id"));
 
