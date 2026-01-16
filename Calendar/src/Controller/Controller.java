@@ -43,16 +43,11 @@ public class Controller {
     public void onRegisterClicked(String name, String password,  String birthday){
         model.register(name, password, birthday);
     }
-
-
-    //******************************************************** Create Calendar State ******************************************************************//
-    public void onAddCalendarClicked(String name, int length, String start, int year){
-        model.addCalendar(length, name, start, year);
-        if(model.getcurrentUser().getCalendars().getCalendars().size() == 1 ){
-            this.view.getCalendarForm().getCurrentCalendar() = model.getcurrentUser().getCalendars().getCalendars().getFirst();
-        }
-        view.getCalendarForm().repaintMonthView(model.getcurrentUser().getCurrentCalendar());
-        cardLayout.show(contentPane, "SignedInPanel");
+    public void onAddCalendarClicked(String name, int length, Season start, int year){
+        //if we were in the emptysignedin state, we have to switch view state
+        if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
+            cardLayout.show(contentPane, "SignedInPanel");
+        model.addCalendar(name,length, start, year);
     }
 
 

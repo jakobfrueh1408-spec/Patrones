@@ -7,11 +7,25 @@ public class SignedIn extends State{
         super(model);
     }
     
-//notSignedInState
+    //notSignedInState
     @Override
     public void signIn(String name , String password){}
     @Override 
     public void register(String name, String password, String birthday){}
+
+    //zoomedInState
+    @Override
+    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){}
+    @Override
+    public void addNote(String title,String text){}
+    @Override
+    public void removeEvent(String title){}
+    @Override
+    public void removeNote(String title){}
+    @Override
+    public void modifyEvent(String title,String description){}
+    @Override
+    public void modifyNote(String title,String description){}
 
     //signedInState
     @Override
@@ -20,65 +34,43 @@ public class SignedIn extends State{
         model.setState(new NotSignedIn(model));
     }
    @Override
-    public void addCalendar(int lenght, String name, Season season){
-        model.getCurrentUser().createCalendar(lenght,name,season);
+    public void addCalendar(String name, int length,  Season season, int year){
+        model.getCurrentUser().createCalendar( name,  length,  season, year);
     }
-  
-    @Override
-    public void addEvent(Event event, int boundary){
-            // check if there is a current calendar to be manipulated
-        if(model.getCurrentUser().getCurrentCalendar() == null) {
-            //throw some Exception or something ( until now just return)
-            return; 
-        }
-        model.getCurrentUser().getCurrentCalendar().addEvent(event,boundary);
-    }
-    @Override
-    public void addNote(Note note){
-        // check if there is a current calendar to be manipulated
-        if(model.getCurrentUser().getCurrentCalendar() == null) {
-            //throw some Exception or something ( until now just return)
-            return; 
-        }
-        model.getCurrentUser().getCurrentCalendar().addNote(note); 
-    }
-    @Override
-    public void removeEvent(Event event){
-        model.getCurrentUser().getCurrentCalendar().removeEvent(event);
-    }
-    @Override 
-    public void removeNote(Note note){
-        model.getCurrentUser().getCurrentCalendar().removeNote(note);
-    }
-    @Override
-    public void modifyNote(Note note, String description){
-        //still every unsure about that until now only editing texts, we need to overload
-        model.getCurrentUser().getCurrentCalendar().modifyNote(note, description);
-    
-    }
-    @Override
-    public void modifyEvent(Event event, String description){
-        //still every unsure about that until now only editing texts
-        model.getCurrentUser().getCurrentCalendar().modifyEvent(event, description);
-    }
-    
 
     @Override
-    public void zoomIn(int indexToZoomIn, int dayToZoomIn){
+    public void zoomIn(int day, int month, int year){
+
+        //using the information passed by the controller to set the new currentDate
+        Date date = Calendar.dateCreator(day,month,year);
+        model.getCurrentUser().getCurrentCalendar().setCurrentDate(date);
+
+        //setting the new state
         model.setState(new ZoomedInState(model));
     }
    
     //emptySignedInState and SignedInstate
     @Override
-    public void loadCalendar(Calendar calendar){
-        model.getCurrentUser().setCurrentCalendar(calendar);
+    public void loadCalendar(String name){
+        Calendar calendarToAdd ;
+        calendarToAdd = model.getCurrentUser().getCalendars().getCalendarByName(name);
+        if(calendarToAdd != null){
+            model.getCurrentUser().setCurrentCalendar(calendarToAdd);
+        }
     }
     @Override
     public void removeCalendar(int indexToRemove){
+        //removing the calendar by index
         model.getCurrentUser().getCalendars().removeCalendar(indexToRemove);
+        // checking the number of calendars in the calendarpool
+        int numOfCals = model.getCurrentUser().getCalendars().getCalendars().size();
+
+        if(numOfCals ==0) {
+            model.setState( new CreateCalendarState(model));
+        }
     }
     @Override
-    public void modifyCalendar(Calendar calendar, String newName ){
+    public void modifyCalendar(String name, String newName ){
         model.getCurrentUser().getCurrentCalendar().setName(newName);
     }
 

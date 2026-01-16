@@ -7,47 +7,88 @@ public class ZoomedInState extends State {
     public ZoomedInState(Model model){
         super(model);
     }
-    
-    @Override
-    public void zoomOut(){
-        model.setState(new SignedIn(model));
-    }
 
-    //notSignedInState
+
+    /**
+     NOT SIGNED IN STATE
+     */
     @Override
     public void signIn(String name, String password){}
     @Override 
     public void register(String name, String password, String  birthday){}
 
-    //signedInState
+    /**
+     SIGNED IN STATE
+     */
     @Override
     public void signOut(){}
     @Override
-    public void addEvent(Event event, int bounadry){}
-    @Override
-    public void addNote(Note note){}
-    @Override
-    public void removeEvent(Event event){}
-    @Override 
-    public void removeNote(Note note){}
-    @Override
-    public void modifyEvent(Event event,String description){}
-    @Override
-    public void modifyNote(Note note,String description){}
-
-    @Override
-    public void loadCalendar(Calendar calendar){}
+    public void loadCalendar(String name){}
     @Override
     public void removeCalendar(int indexToRemove){}
     @Override
-    public void zoomIn(int indexToZoomIn, int dayToZoomIn){}
+    public void zoomIn(int day, int month, int year){}
     @Override
-    public void addCalendar(int lenght, String name, Season season){}
+    public void addCalendar( String name,int length, Season season,int year){}
     @Override
     public void switchToSignedIn() {}
     //all States
     @Override
     public void exit(){
         model.exit();
+    }
+
+
+    /**
+    ZOOMED IN STATE
+     */
+    //adding Events and Notes
+    @Override
+    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
+        // check if there is a current calendar to be manipulated
+        if(model.getCurrentUser().getCurrentCalendar() == null) {
+            //throw some Exception or something ( until now just return)
+            return;
+        }
+        model.getCurrentUser().getCurrentCalendar().addEvent(title,description,label,lengthOfOccurrence);
+    }
+    @Override
+    public void addNote(String title,String text){
+        // check if there is a current calendar to be manipulated
+        if(model.getCurrentUser().getCurrentCalendar() == null) {
+            //throw some Exception or something ( until now just return)
+            return;
+        }
+        model.getCurrentUser().getCurrentCalendar().addNote(title,text);
+    }
+
+    //removing Events and Notes
+    @Override
+    public void removeEvent(String title){
+        model.getCurrentUser().getCurrentCalendar().removeEvent(title);
+    }
+    @Override
+    public void removeNote(String title){
+        model.getCurrentUser().getCurrentCalendar().removeNote(title);
+    }
+
+    //modifying Events and Notes
+    @Override
+    public void modifyNote(String title, String description){
+        //still every unsure about that until now only editing texts, we need to overload
+        model.getCurrentUser().getCurrentCalendar().modifyNote(title, description);
+
+    }
+    @Override
+    public void modifyEvent(String title, String description){
+        //still every unsure about that until now only editing texts
+        model.getCurrentUser().getCurrentCalendar().modifyEvent(title, description);
+    }
+
+    @Override
+    public void zoomOut(){
+        // make the current Date in the Current Calenadar in the Current User null, idk if that is good practice with the null though
+        model.getCurrentUser().getCurrentCalendar().setCurrentDate(null) ;
+        model.setState(new SignedIn(model));
     }
 }

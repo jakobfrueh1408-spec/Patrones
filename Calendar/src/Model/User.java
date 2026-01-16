@@ -11,8 +11,7 @@ public class User {
     private String password;
     private String birthDate;
     private String idNumber;
-    private Calendar currentCalendar; 
-
+    private Calendar currentCalendar;
     private CalendarPool calendars;
     
     public User(String userName, String password, String birthDate) {
@@ -22,21 +21,23 @@ public class User {
         this.idNumber = hash(userName);
         this.calendars = new  CalendarPool();
     }
-    public void createCalendar(int length, String name, Season season) {
-        if(length == 1){
-            if(season == Season.Autumn){
-                calendars.addCalendar(new ShortAutumnCalendar(name));
-            } else {
-                calendars.addCalendar(new ShortSpringCalendar(name));
-            }
-        } else {
-            if(season == Season.Autumn){
-                calendars.addCalendar(new LongAutumnCalendar(name));
-            } else {
-                calendars.addCalendar(new LongSpringCalendar(name));
-            }
-        }
 
+    public void createCalendar(String name, int length, Season season, int year) {
+       if(calendars.nameAvailable(name)){
+           if(length == 1){
+               if(season == Season.Autumn){
+                   calendars.addCalendar(new ShortAutumnCalendar(name,year));
+               } else {
+                   calendars.addCalendar(new ShortSpringCalendar(name,year));
+               }
+           } else {
+               if(season == Season.Autumn){
+                   calendars.addCalendar(new LongAutumnCalendar(name,year));
+               } else {
+                   calendars.addCalendar(new LongSpringCalendar(name,year));
+               }
+           }
+       }
     }
 
     public String hash (String toHash) {
@@ -70,11 +71,26 @@ public class User {
     public CalendarPool getCalendars() {
         return calendars;
     }
-     public void setCurrentCalendar(Calendar currentCalendar) {
-        this.currentCalendar = currentCalendar;
-    }
     public Calendar getCurrentCalendar() {
         return currentCalendar;
+    }
+    public void setCurrentCalendar(Calendar currentCalendar) {
+        this.currentCalendar = currentCalendar;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+    public void setCalendars(CalendarPool calendars) {
+        this.calendars = calendars;
     }
 
     @Override

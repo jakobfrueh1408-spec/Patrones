@@ -20,21 +20,19 @@ public abstract class State {
 
     //signedInState
     public void signOut(){}
-    public void zoomIn(int indexToZoomIn, int dayToZoomIn){}
-    public void addEvent(Event event, int boundary){}
-    public void removeEvent(Event event){}
-    public void modifyEvent(Event event){}
-    public void addNote(Note note){}
-    public void removeNote(Note note){}
-    public void modifyNote(Note note){}
-    public void modifyNote(Note note, String description){}
-    public void modifyEvent(Event event, String description){}
-    public void loadCalendar(Calendar calendar){}
+    public void zoomIn(int day, int month, int year){}
+    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){}
+    public void removeEvent(String title){}
+    public void modifyEvent(String title, String description){}
+    public void addNote(String title,String text){}
+    public void removeNote(String title){}
+    public void modifyNote(String title, String description){}
+    public void loadCalendar(String name){}
     public void removeCalendar(int indexToRemove){}
-    public void modifyCalendar(Calendar calendar, String newTitle){}
+    public void modifyCalendar(String name, String newTitle){}
 
     //both SignedInState and EmptySignedInState
-    public void addCalendar(int lenght, String name, Season season){}
+    public void addCalendar(String name,int length,  Season season,int year){}
 
     //only EmptySignedInState
     public void switchToSignedIn() {}
