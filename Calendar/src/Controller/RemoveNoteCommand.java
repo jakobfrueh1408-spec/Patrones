@@ -7,6 +7,6 @@ public class RemoveNoteCommand extends Command {
         this.index = index;
     }
     public void execute() {
-        controller.onRemoveNoteClicked(int index);
+        controller.onRemoveNoteClicked(this.index);
     }
 }

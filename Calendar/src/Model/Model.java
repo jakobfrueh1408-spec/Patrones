@@ -82,7 +82,7 @@ public class Model {
     }
 
     //both SignedInState and EmptySignedInState
-    public void addCalendar(String name, int length, Season season, int year) {
+    public void addCalendar(String name, int length, String season, int year) {
         state.addCalendar(name, length, season, year);
     }
 

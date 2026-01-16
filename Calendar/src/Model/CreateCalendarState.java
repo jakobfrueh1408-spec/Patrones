@@ -34,7 +34,7 @@ public class CreateCalendarState extends State{
 
 
     @Override
-    public void addCalendar( String name,int length, Season season,int year){
+    public void addCalendar( String name,int length, String season,int year){
         model.getCurrentUser().createCalendar(name,length,season,year);
     }
     @Override

@@ -22,16 +22,16 @@ public class User {
         this.calendars = new  CalendarPool();
     }
 
-    public void createCalendar(String name, int length, Season season, int year) {
+    public void createCalendar(String name, int length, String season, int year) {
        if(calendars.nameAvailable(name)){
            if(length == 1){
-               if(season == Season.Autumn){
+               if(season == Season.Autumn.toString()){
                    calendars.addCalendar(new ShortAutumnCalendar(name,year));
                } else {
                    calendars.addCalendar(new ShortSpringCalendar(name,year));
                }
            } else {
-               if(season == Season.Autumn){
+               if(season == Season.Autumn.toString()){
                    calendars.addCalendar(new LongAutumnCalendar(name,year));
                } else {
                    calendars.addCalendar(new LongSpringCalendar(name,year));

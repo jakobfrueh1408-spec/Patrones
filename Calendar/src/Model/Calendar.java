@@ -222,6 +222,33 @@ public class Calendar {
         Date initDate = dateCreator(day,month,year);
         return initDate;
     }
+    public ArrayList<String> dayEventTitles(int day){
+        ArrayList<String> result = new ArrayList<>();
+        for(int i = 0 ; i < this.getEvents().size(); i++){
+            if(this.getEvents().get(i).getCurrentDay() == day){
+                result.add(String.valueOf(this.getEvents().get(i).getTitle()));
+            }
+        }
+        return result;
+    }
+    public ArrayList<String> dayNoteTitles(int day){
+        ArrayList<String> result = new ArrayList<>();
+        for(int i = 0 ; i < this.getNotes().size(); i++){
+            if(this.getNotes().get(i).getCurrentDay() == day){
+                result.add(String.valueOf(this.getNotes().get(i).getTitle()));
+            }
+        }
+        return result;
+    }
+    public ArrayList<String> dayLabelTitles(int day){
+        ArrayList<String> result = new ArrayList<>();
+        for(int i = 0 ; i < this.getEvents().size(); i++){
+            if(this.getEvents().get(i).getCurrentDay() == day){
+                result.add(String.valueOf(this.getEvents().get(i).getLabel().toString()));
+            }
+        }
+        return result;
+    }
 
 }
 

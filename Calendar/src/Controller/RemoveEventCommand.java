@@ -7,6 +7,6 @@ public class RemoveEventCommand extends Command {
         this.index = index;
     }
     public void execute() {
-        controller.onRemoveEventClicked(int index);
+        controller.onRemoveEventClicked(this.index);
     }
 }

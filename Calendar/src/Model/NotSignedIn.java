@@ -58,7 +58,7 @@ public class NotSignedIn extends State{
     @Override
     public void removeCalendar(int indexToRemove){}
     @Override
-    public void addCalendar( String name,int length, Season season,int year){}
+    public void addCalendar( String name,int length, String season,int year){}
     
 
     //ZoomedInState

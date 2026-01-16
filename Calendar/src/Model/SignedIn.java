@@ -34,7 +34,7 @@ public class SignedIn extends State{
         model.setState(new NotSignedIn(model));
     }
    @Override
-    public void addCalendar(String name, int length,  Season season, int year){
+    public void addCalendar(String name, int length,  String season, int year){
         model.getCurrentUser().createCalendar( name,  length,  season, year);
     }
 

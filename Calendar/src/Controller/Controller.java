@@ -43,7 +43,7 @@ public class Controller {
     public void onRegisterClicked(String name, String password,  String birthday){
         model.register(name, password, birthday);
     }
-    public void onAddCalendarClicked(String name, int length, Season start, int year){
+    public void onAddCalendarClicked(String name, int length, String start, int year){
         //if we were in the emptysignedin state, we have to switch view state
         if(model.getCurrentUser().getCalendars().getCalendars().isEmpty())
             cardLayout.show(contentPane, "SignedInPanel");

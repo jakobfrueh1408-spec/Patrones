@@ -152,6 +152,7 @@ public class CalendarForm extends JFrame {
         signedinZoomInButton.addActionListener(e -> {
            int day = Integer.parseInt(zoomintextfield.getText().toString());
            currentday = day;
+           customDayPanel.add(new DayView(currentCalendar, currentmonth, day));
            new ZoomInCommand(view.getController(), currentyear, currentmonth, currentday).execute();
         });
 
@@ -171,7 +172,7 @@ public class CalendarForm extends JFrame {
                 currentmonth++;
             }
             //if the new month is january
-            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 5) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 11)){
+            if((currentCalendar.getSeason().toString().equals("Autumn") && currentmonth == 5) || (currentCalendar.getSeason().toString().equals("Spring") && currentmonth == 11)){
                 currentyear++;
             }
             repaintMonthView(currentCalendar);
@@ -179,7 +180,7 @@ public class CalendarForm extends JFrame {
 
         modifyTitleButton.addActionListener(e -> {
             String newtitle = newtitletextField.getText();
-            new ModifyCalendarCommand(view.getController(), newtitle);
+            new ModifyCalendarCommand(view.getController(), newtitle).execute();
         });
 
         //******************************************************** Zoomed In State ******************************************************************//
@@ -188,30 +189,30 @@ public class CalendarForm extends JFrame {
             String title = addEventTitleField.getText();
             int length = Integer.parseInt(addEventRecurring.getSelectedItem().toString());
             String label =  addEventLabelBox.getSelectedItem().toString();
-            new AddEventCommand(view.getController(), title, text, label, length);
+            new AddEventCommand(view.getController(), title, text, label, length).execute();
         });
         removeEventButton.addActionListener(e -> {
             int index = removeEventBox.getSelectedIndex();
-            new RemoveEventCommand(view.getController(), index);
+            new RemoveEventCommand(view.getController(), index).execute();
         });
         modifyEventButton.addActionListener(e -> {
             int index = modifyEventBox.getSelectedIndex();
             String text = modifyEventText.getText();
-            new ModifyEventCommand(view.getController(), index, text);
+            new ModifyEventCommand(view.getController(), index, text).execute();
         });
         addNoteButton.addActionListener(e -> {
             String title = addNoteTitleField.getText();
             String text  = addNoteTextField.getText();
-            new AddNoteCommand(view.getController(), title, text);
+            new AddNoteCommand(view.getController(), title, text).execute();
         });
         removeNoteButton.addActionListener(e -> {
             int index = removeNoteBox.getSelectedIndex();
-            new RemoveNoteCommand(view.getController(), index);
+            new RemoveNoteCommand(view.getController(), index).execute();
         });
         modifyNoteButton.addActionListener(e -> {
             int index = modifyNoteBox.getSelectedIndex();
             String text = modifyNoteText.getText();
-            new ModifyNoteCommand(view.getController(), index, text);
+            new ModifyNoteCommand(view.getController(), index, text).execute();
         });
         zoomOutButton.addActionListener(e -> {
            new  ZoomOutCommand(view.getController()).execute();
@@ -248,6 +249,13 @@ public class CalendarForm extends JFrame {
     public void repaintMonthView(Calendar calendar){
         customMonthPanel.removeAll();
         MonthView monthView = new MonthView(currentmonth, currentCalendar);
-        customMonthPanel.add(monthView, new BorderLayout());
+        customMonthPanel.setLayout(new BorderLayout());
+        customMonthPanel.add(monthView, BorderLayout.CENTER);
+        customMonthPanel.revalidate();
+        customMonthPanel.repaint();
+    }
+    private void createUIComponents() {
+        customMonthPanel = new JPanel(new BorderLayout());
+        customDayPanel = new JPanel(new BorderLayout());
     }
 }

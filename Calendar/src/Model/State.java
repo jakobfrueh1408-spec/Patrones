@@ -25,7 +25,7 @@ public abstract class State {
     public void modifyCalendar( String newTitle){}
 
     //both SignedInState and CreateCalendarState
-    public void addCalendar(String name,int length,  Season season,int year){}
+    public void addCalendar(String name,int length,  String season,int year){}
     public void loadCalendar(int indexToLoad){}
 
     //only CreateCalendarState

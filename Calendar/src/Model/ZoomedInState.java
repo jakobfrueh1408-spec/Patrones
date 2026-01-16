@@ -29,7 +29,7 @@ public class ZoomedInState extends State {
     @Override
     public void zoomIn(int day, int month, int year){}
     @Override
-    public void addCalendar( String name,int length, Season season,int year){}
+    public void addCalendar( String name,int length, String season,int year){}
     @Override
     public void switchToSignedIn() {}
     //all States
