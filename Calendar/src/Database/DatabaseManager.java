@@ -1,9 +1,8 @@
 package Database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import Model.User;
+
+import java.sql.*;
 
 public class DatabaseManager {
     // Die URL verweist direkt auf die Datei in deinem Projektordner
@@ -77,9 +76,13 @@ public class DatabaseManager {
                 stmt.execute(sql);
             }
 
-            System.out.println("Alle Tabellen (Users, Calendars, Events, Notes) wurden erfolgreich initialisiert.");
+            System.out.println("All Tables have been succesfully initialized.");
         } catch (SQLException e) {
-            System.err.println("Fehler bei der Initialisierung der Requisa-Datenbank: " + e.getMessage());
+            System.err.println(": " + e.getMessage());
         }
     }
+
+
+
+
 }
