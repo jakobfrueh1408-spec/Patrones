@@ -66,7 +66,7 @@ public class Model {
     public void zoomIn(int day, int month, int year) {
         //we need to set the current Date fo the current calendar of the current user
         // state function needs to det the day to zoom in
-        state.zoomIn( day, month,  year);
+        state.zoomIn(day, month, year);
     }
 
     public void loadCalendar(int indexToLoad) {

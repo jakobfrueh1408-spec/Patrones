@@ -97,8 +97,8 @@ public class CalendarForm extends JFrame {
         contentPane.add(ZoomedInPanel, "ZoomedInPanel");
 
         //initializing the customcalendar
-        customMonthPanel.add(new MonthView(1, 1));
-        customDayPanel.add(new DayView());
+//        customMonthPanel.add(new MonthView(1, currentCalendar));
+//        customDayPanel.add(new DayView());
 
         //******************************************************** Main Menu State ******************************************************************//
         exitFromMainMenuButton.addActionListener(e -> {
@@ -160,7 +160,7 @@ public class CalendarForm extends JFrame {
                 currentmonth--;
             }
             //if the new month is december
-            if((currentCalendar.getSeason() == "Autumn" && currentmonth == 4) || (currentCalendar.getSeason() == "Spring" && currentmonth == 10)){
+            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 4) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 10)){
                 currentyear--;
             }
             repaintMonthView(currentCalendar);
@@ -171,7 +171,7 @@ public class CalendarForm extends JFrame {
                 currentmonth++;
             }
             //if the new month is january
-            if((currentCalendar.getSeason() == "Autumn" && currentmonth == 5) || (currentCalendar.getSeason() == "Spring" && currentmonth == 11)){
+            if((currentCalendar.getSeason().toString() == "Autumn" && currentmonth == 5) || (currentCalendar.getSeason().toString() == "Spring" && currentmonth == 11)){
                 currentyear++;
             }
             repaintMonthView(currentCalendar);
@@ -247,7 +247,7 @@ public class CalendarForm extends JFrame {
 
     public void repaintMonthView(Calendar calendar){
         customMonthPanel.removeAll();
-        MonthView monthView = new MonthView(currentCalendar.getYear(), currentmonth);
+        MonthView monthView = new MonthView(currentmonth, currentCalendar);
         customMonthPanel.add(monthView, new BorderLayout());
     }
 }
