@@ -7,6 +7,7 @@ public class Note {
     private String title;
     private String text;
     private Date date;
+    private int db_id;
     public Note(String title, String text, Date date) {
         this.title = title;
         this.text = text;
@@ -37,5 +38,10 @@ public class Note {
                 .getDayOfMonth();
         return day;
     }
-
+    public int getDb_id() {
+        return db_id;
+    }
+    public void setDb_id(int db_id) {
+        this.db_id = db_id;
+    }
 }

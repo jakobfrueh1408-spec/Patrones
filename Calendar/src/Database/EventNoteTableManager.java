@@ -2,82 +2,148 @@ package Database;
 
 import Model.Event;
 import Model.Note;
+import Model.Label;
+import java.sql.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+public class EventNoteTableManager implements DatabaseDAO {
 
-public class EventNoteTableManager implements DatabaseDAO{
-    /**
-     * Entspricht addEvent(...). Speichert das Basis-Event und alle wöchentlichen Clones.
-     */
+    // Hilfsmittel für Datumsformatierung (ISO 8601)
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    // --- EVENT OPERATIONEN ---
+
     public void addEventWithClones(int calendarId, Event baseEvent, int lengthOfOccurrence) {
-        String sql = "INSERT INTO Events (calendar_id, name, date_from, date_until, description, event_type) VALUES (?, ?, ?, ?, ?, ?)";
+        // Query angepasst an neues Schema: title, description, date, label
+        String sql = "INSERT INTO Events (calendar_id, title, description, date, label) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             for (int i = 0; i <= lengthOfOccurrence; i++) {
-
-                String eventDate = baseEvent.getDate().toInstant().toString();
-
+                // Hier müsstest du eigentlich die addWeeks Logik anwenden,
+                // für den Moment nehmen wir das Datum des Objekts
+                String dateStr = sdf.format(baseEvent.getDate());
 
                 pstmt.setInt(1, calendarId);
                 pstmt.setString(2, baseEvent.getTitle());
-                pstmt.setString(3, eventDate);
-                pstmt.setString(4, eventDate);
-                pstmt.setString(5, baseEvent.getDescription());
-                pstmt.setString(6, baseEvent.getLabel().toString());
+                pstmt.setString(3, baseEvent.getDescription());
+                pstmt.setString(4, dateStr);
+                pstmt.setString(5, baseEvent.getLabel().toString());
 
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public void removeEvent(int eventDbId) {
-        String sql = "DELETE FROM Events WHERE event_id = ?";
-        executeUpdate(sql, eventDbId);
-    }
-
-    public void modifyEvent(int eventDbId, String newDescription) {
-        String sql = "UPDATE Events SET description = ? WHERE event_id = ?";
+    public void manipulateEvent(int event_id, String description) {
+        String sql = "UPDATE Events SET  description = ? WHERE event_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, newDescription);
-            pstmt.setInt(2, eventDbId);
+            pstmt.setString(1, description);
+            pstmt.setInt(2, event_id);
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public void addNote(int calendarId, Note note) {
-        String sql = "INSERT INTO Notes (calendar_id, name, note_date, description) VALUES (?, ?, ?, ?)";
+    // --- NOTE OPERATIONEN ---
+
+    public void addNote(int calendarId, String title , String text, Date date) {
+        // Query angepasst an Schema: calendar_id, title, text, date
+        String sql = "INSERT INTO Notes (calendar_id, title, text, date) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, calendarId);
-            pstmt.setString(2, note.getTitle());
-            pstmt.setString(3, note.getDate().toInstant().toString());
-            pstmt.setString(4, note.getText());
+            pstmt.setString(2, title);
+            pstmt.setString(3, text);
+            pstmt.setString(4, sdf.format(date));
 
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    public void modifyNote(int noteDbId, String newText) {
-        String sql = "UPDATE Notes SET description = ? WHERE note_id = ?";
+    public void manipulateNote( int note_id,String text) {
+        String sql = "UPDATE Notes SET  text = ? WHERE note_id = ?";
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, newText);
-            pstmt.setInt(2, noteDbId);
+            pstmt.setString(1,text);
+            pstmt.setString(2, Integer.toString(note_id));
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // Hilfsmethode für einfache Deletes
+    // --- SEARCH & FETCH ---
+
+    private ArrayList<Event> fetchEvents(String sql, String param) {
+        ArrayList<Event> list = new ArrayList<>();
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, param);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // Konvertierung String -> Date
+                java.util.Date d = sdf.parse(rs.getString("date"));
+
+                Event e = new Event(
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        d,
+                        Label.valueOf(rs.getString("label"))
+                );
+                e.setEvent_Id(rs.getInt("event_id"));
+                list.add(e);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+
+    private ArrayList<Note> fetchNotes(String sql, String param) {
+        ArrayList<Note> list = new ArrayList<>();
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, param);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                java.util.Date d = sdf.parse(rs.getString("date"));
+
+                Note n = new Note(
+                        rs.getString("title"),
+                        rs.getString("text"),
+                        rs.getDate("date")
+                );
+                n.setDb_id(rs.getInt("note_id"));
+
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+
+    // --- DELETE WRAPPERS ---
+
+    public void removeEvent(int eventDbId) {
+        executeUpdate("DELETE FROM Events WHERE event_id = ?", eventDbId);
+    }
+
+    public void removeNote(int noteDbId) {
+        executeUpdate("DELETE FROM Notes WHERE note_id = ?", noteDbId);
+    }
+
+    public void removeEvents(ArrayList<Event> eventList) {
+        String sql = "DELETE FROM Events WHERE event_id = ?";
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            for (Event e : eventList) {
+                pstmt.setInt(1, e.getEvent_Id());
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
     private void executeUpdate(String sql, int id) {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
