@@ -32,7 +32,7 @@ public abstract class State<T extends DatabaseDAO> {
 
     //signedInState
     public void signOut(){}
-    public void zoomIn(int day, int month, int year){}
+    public void zoomIn(int year, int month, int day){}
     public void removeCalendar(int indexToRemove){}
     public void modifyCalendar( String newTitle){}
 

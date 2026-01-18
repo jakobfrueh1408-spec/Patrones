@@ -35,7 +35,7 @@ public class Controller {
             cardLayout.show(contentPane, "CreateCalendarPanel");
         } else {
             //if there is a calendar, we show it
-            view.getCalendarForm().repaintMonthView(model.getCurrentUser().getCurrentCalendar());
+            refreshCalendarView();
             cardLayout.show(contentPane, "SignedInPanel");
         }
     }
@@ -60,19 +60,26 @@ public class Controller {
     public void onRemoveCalendarClicked(int indexToRemove){
         model.removeCalendar(indexToRemove);
         //if we delete the last calendar, we have to switch view state
-        if(model.getCurrentUser().getCalendarPool().getCalendars().isEmpty())
+        if(model.getCurrentUser().getCalendarPool().getCalendars().isEmpty()){
             cardLayout.show(contentPane, "CreateCalendarPanel");
+        } else{
+            Calendar updatedCalendar = model.getCurrentUser().getCalendarPool().getCalendars().get(0);
+            model.loadCalendar(0);
+            refreshCalendarView();
+
+        }
+
         view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
     }
 
     public void onModifyCalendarClicked(String newtitle){
         model.modifyCalendar(newtitle);
         view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
+        System.out.println(model.getCurrentUser().getCurrentCalendar().getName());
     }
 
     public void onZoomInClicked(int year, int month, int day){
         model.zoomIn(year, month, day);
-
         cardLayout.show(contentPane, "ZoomedInPanel");
     }
 
@@ -91,7 +98,7 @@ public class Controller {
     }
 
     public void onAddEventClicked(String  title, String description, String label, int lengthOfOccurrence){
-        model.addEvent(title, description, label, lengthOfOccurrence);
+        model.addEvent(title, description, label, lengthOfOccurrence-1);
     }
 
     public void onRemoveEventClicked(int index){
@@ -103,12 +110,25 @@ public class Controller {
     }
 
     public void onZoomOutClicked(){
+        refreshCalendarView();
         model.zoomOut();
         cardLayout.show(contentPane, "SignedInPanel");
+
+
     }
 
 
     //******************************************************** Helping Functions ******************************************************************//
+    public void refreshCalendarView(){
+        view.getCalendarForm().setCurrentCalendar(model.getCurrentUser().getCurrentCalendar());
+        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
+        view.getCalendarForm().setDisplayedMonth(model.getCurrentUser().getCurrentCalendar().getCurrentDate());
+        view.getCalendarForm().refreshYearMonthLabels();
+        view.getCalendarForm().refreshEventsList(model.getCurrentUser().getCurrentCalendar().getEvents());
+        view.getCalendarForm().refreshNotesList(model.getCurrentUser().getCurrentCalendar().getNotes());
+        view.getCalendarForm().repaintMonthView(model.getCurrentUser().getCurrentCalendar());
+    }
+
     public String[] getUserNames(){
         int numOfUsers = model.getUserPool().getUsers().size();
         String[] result = new String[numOfUsers];
@@ -137,4 +157,5 @@ public class Controller {
     public void setCardLayout(CardLayout cardLayout) {
         this.cardLayout = cardLayout;
     }
+
 }

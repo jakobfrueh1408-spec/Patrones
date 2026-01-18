@@ -1,6 +1,8 @@
 package Model;
 
 import java.time.LocalDate;
+
+import Controller.SignOutCommand;
 import Database.CalendarTableManager;
 import Database.EventNoteTableManager;
 
@@ -95,7 +97,7 @@ public class Calendar {
         Event eventToDelete = currentDaysEvents.get(indexToRemove);
         //removing the corresponsing Event from Model and DB
         eventTableManager.removeEvent(eventToDelete.getEvent_Id());
-        currentDaysEvents.remove(indexToRemove);
+        events.remove(indexToRemove);
     }
 
     //Only modify the description of the Event
@@ -105,7 +107,7 @@ public class Calendar {
         //getting the corresponding event
         Event event = currentDaysEvents.get(indexToModify);
         //setting the new Description
-        event.setDescription(description);
+        event.setTitle(description);
         //setting the change into the DB
         eventTableManager.manipulateEvent(event.getEvent_Id(),description);
     }
@@ -116,22 +118,33 @@ public class Calendar {
             case "sport" : eventLabel = Label.sport; break;
             case "free time activity": eventLabel = Label.free_time_activity; break;
             case "travel": eventLabel = Label.travel; break;
-            case "study": eventLabel = study; break;
+            case "study": eventLabel = study;
+
         }
         //create new Event
         Event event = new Event(title,description,currentDate,eventLabel);
+        System.out.println(event);
         //add base event
         events.add(event);
+        eventTableManager.addEventsToDB(this.db_id,
+                event.getTitle(),
+                event.getDescription(),
+                event.getDate(),
+                event.getLabel(),
+                lengthOfOccurrence);
         //retrieve the Date fo our baseEvent but not by reference but by value
         for (int i = 1; i <= lengthOfOccurrence; i++) {
             Event recurring = event.clone();
             recurring.setDate(currentDate.plusWeeks(i));
             events.add(recurring);
-            eventTableManager.addEventWithClones(this.db_id,recurring,lengthOfOccurrence);
-
+            eventTableManager.addEventsToDB(this.db_id,
+                    recurring.getTitle(),
+                    recurring.getDescription(),
+                    recurring.getDate(),
+                    recurring.getLabel(),
+                    lengthOfOccurrence);
         }
-
-
+        //System.out.println("was inside the function");
     }
     //functions for Note insertion , manipulation adn deletion
     //removing the specified event from the Event List
@@ -151,17 +164,19 @@ public class Calendar {
     public void modifyNote(int indexToModify, String description) {
         //getting all the notes of the day
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
+        System.out.printf("NUMBER OF NOTES: %d", currentDaysNotes.size());
         //getting the note with the corresponding title
         Note note = currentDaysNotes.get(indexToModify);
         //setting the notes description int the DB
         eventTableManager.manipulateNote(note.getDb_id(),description);
-        note.setText(description);
+        currentDaysNotes.get(indexToModify).setTitle(description);
     }
     public void addNote(String title,String text) {
         Note note = new Note(title,text,currentDate);
         //adding note to the model and to the database
         eventTableManager.addNote(this.db_id,title,text,  this.currentDate);
         notes.add(note);
+        System.out.println("NOTE ADDED");
     }
 
 

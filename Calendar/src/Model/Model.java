@@ -60,10 +60,10 @@ public class Model {
         state.signOut();
     }
 
-    public void zoomIn(int day, int month, int year) {
+    public void zoomIn(int year, int month, int day) {
         //we need to set the current Date fo the current calendar of the current user
         // state function needs to det the day to zoom in
-        state.zoomIn(day, month, year);
+        state.zoomIn(year, month, day);
     }
 
     public void loadCalendar(int indexToLoad) {

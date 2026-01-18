@@ -14,6 +14,8 @@ public class CalendarForm extends JFrame {
     //private int currentyear;
     //private int currentmonth; //1-12
     private int currentday;
+
+
     private LocalDate displayedMonth;
     private Calendar currentCalendar;
 
@@ -44,12 +46,9 @@ public class CalendarForm extends JFrame {
     private JTextField TitleOfCalendar;
 
 
-
     private JComboBox LengthOfStay;
     private JComboBox StartOfSemester;
     private JTextField yearTextField;
-
-
 
 
     //Signed in Panel
@@ -109,7 +108,6 @@ public class CalendarForm extends JFrame {
         contentPane.add(ZoomedInPanel, "ZoomedInPanel");
 
 
-
         //******************************************************** Main Menu State ******************************************************************//
         exitFromMainMenuButton.addActionListener(e -> {
             new ExitCommand(view.getController()).execute();
@@ -118,23 +116,24 @@ public class CalendarForm extends JFrame {
         signInButton.addActionListener(e -> {
             String username = signintextField.getText();
             String password = signinpasswordField.getText();
-            try{
+            try {
                 new SignInCommand(view.getController(), username, password).execute();
                 signintextField.setText("");
                 signinpasswordField.setText("");
-            } catch  (Exception ex){
+
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
 
         });
 
-        registerButton.addActionListener( e -> {
+        registerButton.addActionListener(e -> {
             String username = registertextField.getText();
             String password = registerpasswordField.getText();
             String birthday = birthDayTextField.getText();
-            try{
-                new RegisterCommand(view.getController(), username, password,  birthday).execute();
-            } catch  (Exception ex){
+            try {
+                new RegisterCommand(view.getController(), username, password, birthday).execute();
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
             birthDayTextField.setText("");
@@ -147,7 +146,7 @@ public class CalendarForm extends JFrame {
         CreateCalendarButton.addActionListener(e -> {
             String name = TitleOfCalendar.getText().toString();
             String start = StartOfSemester.getSelectedItem().toString();
-            int length =  Integer.parseInt(LengthOfStay.getSelectedItem().toString());
+            int length = Integer.parseInt(LengthOfStay.getSelectedItem().toString());
             int year = Integer.parseInt(yearTextField.getText().toString());
             new AddCalendarCommand(view.getController(), name, length, start, year).execute();
             TitleOfCalendar.setText("");
@@ -235,7 +234,7 @@ public class CalendarForm extends JFrame {
             String text = addEventTextField.getText();
             String title = addEventTitleField.getText();
             int length = Integer.parseInt(addEventRecurring.getSelectedItem().toString());
-            String label =  addEventLabelBox.getSelectedItem().toString();
+            String label = addEventLabelBox.getSelectedItem().toString();
             new AddEventCommand(view.getController(), title, text, label, length).execute();
         });
         removeEventButton.addActionListener(e -> {
@@ -249,7 +248,7 @@ public class CalendarForm extends JFrame {
         });
         addNoteButton.addActionListener(e -> {
             String title = addNoteTitleField.getText();
-            String text  = addNoteTextField.getText();
+            String text = addNoteTextField.getText();
             new AddNoteCommand(view.getController(), title, text).execute();
         });
         removeNoteButton.addActionListener(e -> {
@@ -262,38 +261,45 @@ public class CalendarForm extends JFrame {
             new ModifyNoteCommand(view.getController(), index, text).execute();
         });
         zoomOutButton.addActionListener(e -> {
-           new  ZoomOutCommand(view.getController()).execute();
+            new ZoomOutCommand(view.getController()).execute();
         });
     }
 
 
     //******************************************************** Helping Functions ******************************************************************//
-    public String getSigninUsername(){
+    public String getSigninUsername() {
         return this.signintextField.getText();
     }
-    public String getSigninPassword(){
+
+    public String getSigninPassword() {
         return this.signinpasswordField.getText();
     }
-    public String getRegisterUsername(){
+
+    public String getRegisterUsername() {
         return this.registertextField.getText();
     }
-    public String getRegisterPassword(){
+
+    public String getRegisterPassword() {
         return this.registerpasswordField.getText();
     }
-    public CardLayout getCardLayout(){
+
+    public CardLayout getCardLayout() {
         return this.cardLayout;
     }
-    public JPanel getContentPane(){
+
+    public JPanel getContentPane() {
         return contentPane;
     }
-    public JPanel getCustomCalendarPanel(){
+
+    public JPanel getCustomCalendarPanel() {
         return customMonthPanel;
     }
-    public Calendar getCurrentCalendar(){
+
+    public Calendar getCurrentCalendar() {
         return currentCalendar;
     }
 
-    public void repaintMonthView(Calendar calendar){
+    public void repaintMonthView(Calendar calendar) {
         customMonthPanel.removeAll();
         MonthView monthView = new MonthView(displayedMonth, currentCalendar);
         customMonthPanel.setLayout(new BorderLayout());
@@ -301,6 +307,7 @@ public class CalendarForm extends JFrame {
         customMonthPanel.revalidate();
         customMonthPanel.repaint();
     }
+
     private void createUIComponents() {
         customMonthPanel = new JPanel(new BorderLayout());
         customDayPanel = new JPanel(new BorderLayout());
@@ -309,6 +316,7 @@ public class CalendarForm extends JFrame {
     public JComboBox getSignedinCalendarlist() {
         return signedinCalendarlist;
     }
+
     public JComboBox getLengthOfStay() {
         return LengthOfStay;
     }
@@ -341,31 +349,40 @@ public class CalendarForm extends JFrame {
         return modifyNoteBox;
     }
 
-    public void refreshCalendarList(ArrayList<Calendar> calendarList){
+    public void refreshCalendarList(ArrayList<Calendar> calendarList) {
         signedinCalendarlist.removeAllItems();
-        System.out.println(signedinCalendarlist.getModel().getSize());
-        for(Calendar calendar : calendarList){
-            System.out.println("-View- One calendar added to the list: " + calendar.getName());
+        //System.out.println(signedinCalendarlist.getModel().getSize
+        for (Calendar calendar : calendarList) {
             signedinCalendarlist.addItem(calendar.getName());
         }
     }
 
     public void refreshNotesList(ArrayList<Note> notesList){
         removeNoteBox.removeAllItems();
+        modifyNoteBox.removeAllItems();
         for(Note note : notesList){
             removeNoteBox.addItem(note.getTitle());
+            modifyNoteBox.addItem(note.getTitle());
         }
     }
 
     public void refreshEventsList(ArrayList<Event> eventsList){
         removeEventBox.removeAllItems();
+        modifyEventBox.removeAllItems();
         for(Event event : eventsList){
             removeEventBox.addItem(event.getTitle());
+            modifyEventBox.addItem(event.getTitle());
         }
     }
     public void refreshYearMonthLabels() {
         yearLabel.setText("Year: " + displayedMonth.getYear());
         monthLabel.setText("Month: " + displayedMonth.getMonthValue());
     }
-
+    //getters and setter
+    public void setDisplayedMonth(LocalDate displayedMonth) {
+        this.displayedMonth = displayedMonth;
+    }
+    public void setCurrentCalendar(Calendar currentCalendar) {
+        this.currentCalendar = currentCalendar;
+    }
 }

@@ -14,19 +14,32 @@ public class NotSignedIn extends State <UserTableManager>{
     @Override
     public void signIn(String userName, String password) throws Exception {
         //set the current user in the model
-       
+
         ArrayList <User> listToTraverse = model.getUserPool().getUsers();
         System.out.println("number of users: " + listToTraverse.size());
 
         //add database operation
         User loggedUser = getDatabase().getUserByLogin(userName, password);
+        CalendarTableManager calendarTableManager = new CalendarTableManager();
+        ArrayList<Calendar>  userCalendars = calendarTableManager.loadAllCalendarsForUser(loggedUser.getIdNumber());
+        System.out.println(loggedUser);
+        System.out.println(userCalendars);
         if(loggedUser != null){
             model.setCurrentUser(loggedUser);
-            model.setState(new SignedIn(model, new CalendarTableManager()));
+            model.getCurrentUser().getCalendarPool().setCalendars(userCalendars);
+            int numOfUserCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
+            if(numOfUserCals ==0){
+                model.setState(new CreateCalendarState(model, new CalendarTableManager()));
+            }else{
+                model.getCurrentUser().setCurrentCalendar(userCalendars.get(0));
+                model.setState(new SignedIn(model, new CalendarTableManager()));
+            }
+
         }else {
             throw new Exception("Not registered user!");
         }
     }
+
     @Override
     public void register(String name, String password, String birthday){
         UserTableManager usertable = new UserTableManager();
@@ -39,7 +52,7 @@ public class NotSignedIn extends State <UserTableManager>{
     @Override
     public void signOut(){}
     @Override
-    public void zoomIn(int day, int month, int year){}
+    public void zoomIn(int year, int month, int day){}
     @Override
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){}
     @Override

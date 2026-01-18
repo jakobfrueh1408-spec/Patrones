@@ -16,28 +16,30 @@ public class EventNoteTableManager implements DatabaseDAO {
 
     // --- EVENT OPERATIONEN ---
 
-    public void addEventWithClones(int calendarId, Event baseEvent, int lengthOfOccurrence) {
+    public void addEventsToDB(int calendarId, String title  , String description, LocalDate date, Label label, int lengthOfOccurrence) {
         // Query angepasst an neues Schema: title, description, date, label
         String sql = "INSERT INTO Events (calendar_id, title, description, date, label) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            for (int i = 0; i <= lengthOfOccurrence; i++) {
                 // Hier müsstest du eigentlich die addWeeks Logik anwenden,
                 // für den Moment nehmen wir das Datum des Objekts
-                String dateStr = sdf.format(baseEvent.getDate());
+
+
+                String dateStr = date.toString(); // Ergebnis: "2026-01-17"
 
                 pstmt.setInt(1, calendarId);
-                pstmt.setString(2, baseEvent.getTitle());
-                pstmt.setString(3, baseEvent.getDescription());
+                pstmt.setString(2, title);
+                pstmt.setString(3, description);
                 pstmt.setString(4, dateStr);
-                pstmt.setString(5, baseEvent.getLabel().toString());
+                pstmt.setString(5, label.toString());
 
                 pstmt.addBatch();
-            }
+
             pstmt.executeBatch();
         } catch (SQLException e) { e.printStackTrace(); }
+
     }
 
     public void manipulateEvent(int event_id, String description) {
@@ -58,10 +60,12 @@ public class EventNoteTableManager implements DatabaseDAO {
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+            String dateStr = date.toString();
+
             pstmt.setInt(1, calendarId);
             pstmt.setString(2, title);
             pstmt.setString(3, text);
-            pstmt.setString(4, sdf.format(date));
+            pstmt.setString(4, dateStr);
 
             pstmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }

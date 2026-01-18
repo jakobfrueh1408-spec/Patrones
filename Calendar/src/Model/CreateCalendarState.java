@@ -14,7 +14,7 @@ public class CreateCalendarState extends State{
     @Override
     public void signOut(){}
     @Override
-    public void zoomIn(int day, int month, int year){}
+    public void zoomIn(int year, int month, int day){}
     @Override
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){}
     @Override
@@ -42,6 +42,11 @@ public class CreateCalendarState extends State{
     }
     @Override
     public void switchToSignedIn() {
+        int numOfCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
+        if(numOfCals ==1){
+            System.out.println("hello");
+            model.getCurrentUser().setCurrentCalendar(model.getCurrentUser().getCalendarPool().getCalendars().get(0));
+        }
         model.setState(new SignedIn(model,new CalendarTableManager()));
     }
 
@@ -49,9 +54,11 @@ public class CreateCalendarState extends State{
     public void loadCalendar(int indexToLoad){
         Calendar calendarToAdd ;
         calendarToAdd = model.getCurrentUser().getCalendarPool().getCalendarByIndex(indexToLoad);
+
         if(calendarToAdd != null){
             model.getCurrentUser().setCurrentCalendar(calendarToAdd);
         }
+
     }
     
 

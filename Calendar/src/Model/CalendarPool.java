@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarPool {
+
+
     private ArrayList<Calendar> calendars;
 
     public ArrayList<Calendar> getCalendars() {
@@ -28,7 +30,9 @@ public class CalendarPool {
     public void removeCalendar(int index) {
         calendars.remove(index);
     }
-
+    public void setCalendars(ArrayList<Calendar> calendars) {
+        this.calendars = calendars;
+    }
     public Calendar getCalendarByName(String name) {
         Calendar calendar = null;
         for (Calendar cal: calendars) {
