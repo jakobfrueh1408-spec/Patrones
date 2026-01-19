@@ -49,20 +49,10 @@ public class User {
      */
     public void createCalendar(String name, int length, String season, int year) {
         if(calendars.nameAvailable(name)){
-            if(length == 1){
-                if(season == Season.Autumn.toString()){
-                    //add the new calendar to the list
-                    calendars.addCalendar(new ShortAutumnCalendar(name,year));
-
-                } else {
-                    calendars.addCalendar(new ShortSpringCalendar(name,year));
-                }
+            if (season.equals("Autumn")) {
+                calendars.addCalendar(new Calendar(length, name, Season.Autumn, year));
             } else {
-                if(season == Season.Autumn.toString()){
-                    calendars.addCalendar(new LongAutumnCalendar(name,year));
-                } else {
-                    calendars.addCalendar(new LongSpringCalendar(name,year));
-                }
+                calendars.addCalendar(new Calendar(length, name, Season.Spring, year));
             }
             //add the new calendar to the database
             this.calendarTableManager.addCalendar(name,length,season,year,idNumber);
