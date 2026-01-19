@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class Event implements CloneableEvent {
+public class Event {
     private String title;
     private String description;
     private LocalDate date;

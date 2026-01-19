@@ -288,6 +288,11 @@ public class CalendarForm extends JFrame {
         customMonthPanel.repaint();
     }
 
+    private void createUIComponents() {
+        customMonthPanel = new JPanel(new BorderLayout());
+        customDayPanel = new JPanel(new BorderLayout());
+    }
+
 
     public void refreshCalendarList(ArrayList<Calendar> calendarList) {
         signedinCalendarlist.removeAllItems();
@@ -325,7 +330,6 @@ public class CalendarForm extends JFrame {
         customDayPanel.revalidate();
         customDayPanel.repaint();
     }
-
     //getters and setter
     public void setDisplayedMonth(LocalDate displayedMonth) {
         this.displayedMonth = displayedMonth;
