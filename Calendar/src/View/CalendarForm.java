@@ -85,6 +85,8 @@ public class CalendarForm extends JFrame {
     private JLabel yearLabel;
     private JLabel monthLabel;
     private JButton createNewCalendarButton;
+    private JButton exitFromZoomedInButton;
+    private JButton exitFromSignedInButton;
 
 
     public CalendarForm(View view) {
@@ -223,6 +225,9 @@ public class CalendarForm extends JFrame {
         createNewCalendarButton.addActionListener(e -> {
             new SwitchToCalendarCreationCommand(view.getController()).execute();
         });
+        exitFromSignedInButton.addActionListener(e -> {
+            new ExitCommand(view.getController()).execute();
+        });
 
         //******************************************************** Zoomed In State ******************************************************************//
         addEventButton.addActionListener(e -> {
@@ -263,6 +268,9 @@ public class CalendarForm extends JFrame {
         });
         zoomOutButton.addActionListener(e -> {
             new ZoomOutCommand(view.getController()).execute();
+        });
+        exitFromZoomedInButton.addActionListener(e -> {
+            new ExitCommand(view.getController()).execute();
         });
     }
 
