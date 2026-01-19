@@ -93,6 +93,7 @@ public class Model {
 
     public void addEvent(String title, String description, String label, int lengthOfOccurrence) {
         state.addEvent(title, description, label, lengthOfOccurrence);
+        notifyObservers();
     }
 
     public void switchToCreateCalendar(){
@@ -101,6 +102,7 @@ public class Model {
 
     public void addNote(String title, String text) {
         state.addNote(title, text);
+        notifyObservers();
     }
 
     public void removeEvent(int indexToRemove) {
@@ -135,6 +137,8 @@ public class Model {
     public void removeObserver(ModelObserver observer) {
         observers.remove(observer);
     }
+
+
 
     private void notifyObservers() {
         for (ModelObserver observer : observers) {
