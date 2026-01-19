@@ -26,7 +26,7 @@ public class Event implements CloneableEvent {
     public Event clone() {
         return new Event(this);
     }
-     public String getTitle() {
+    public String getTitle() {
         return title;
     }
     public String getDescription() {
@@ -36,12 +36,10 @@ public class Event implements CloneableEvent {
         return date;
     }
 
-    public int getCurrentDay(){
-        return date.getDayOfMonth();
-    }
     public Label getLabel() {
         return label;
     }
+
     @Override
     public String toString() {
         return "Event [title=" + title + ", description=" + description + ", date=" + date + ", label=" + label
@@ -50,9 +48,6 @@ public class Event implements CloneableEvent {
     }
     public void setTitle(String title) {
         this.title = title;
-    }
-    public void setDescription(String description) {
-        this.description = description;
     }
     public void setDate(LocalDate date) {
         this.date = date;

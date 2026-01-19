@@ -25,8 +25,8 @@ public class Calendar {
     private int db_id;
     private ArrayList <Event> events = new ArrayList<>();
     private ArrayList <Note> notes = new ArrayList<>();
-    EventNoteTableManager eventTableManager;
-    CalendarTableManager calendarTableManager;
+    private EventNoteTableManager eventTableManager;
+    private CalendarTableManager calendarTableManager;
     public Calendar(int length, String name, Season season, int year) {
         this.length = length;
         this.name = name;
@@ -111,6 +111,7 @@ public class Calendar {
         //setting the change into the DB
         eventTableManager.manipulateEvent(event.getEvent_Id(),description);
     }
+
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
         //converting string to Enum
         Label eventLabel = null;
@@ -171,6 +172,7 @@ public class Calendar {
         eventTableManager.manipulateNote(note.getDb_id(),description);
         currentDaysNotes.get(indexToModify).setTitle(description);
     }
+
     public void addNote(String title,String text) {
         Note note = new Note(title,text,currentDate);
         //adding note to the model and to the database
@@ -183,26 +185,6 @@ public class Calendar {
     /**
      * AUXILIARY METHODS
     **/
-    public Event extractEventsByTitle(ArrayList <Event> toExtract,String title){
-        Event filteredByTitle = null;
-        for (Event event : toExtract){
-            if(title.equals(event.getTitle())){
-                filteredByTitle = event;
-                return filteredByTitle;
-            }
-        }
-        return filteredByTitle;
-    }
-    public Note extractNotesByTitle(ArrayList <Note> toExtract,String title){
-        Note filteredByTitle = null;
-        for (Note note : toExtract){
-            if(title.equals(note.getTitle())){
-                filteredByTitle = note;
-                return filteredByTitle;
-            }
-        }
-        return filteredByTitle;
-    }
     //for getting all the today Events
     public ArrayList<Event> getCurrentDayEventList(){
         ArrayList <Event> currentDayEventList = new ArrayList<>();
