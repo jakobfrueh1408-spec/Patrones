@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * loading their calendars, events, and notes from the persistence layer.
  * </p>
  */
-public class NotSignedIn extends State<UserTableManager> {
+public class NotSignedIn extends State<UserTableManager> implements signInInterface {
 
     /**
      * Constructs a NotSignedIn state.
@@ -42,7 +42,6 @@ public class NotSignedIn extends State<UserTableManager> {
     @Override
     public void signIn(String userName, String password) throws Exception {
         ArrayList<User> listToTraverse = model.getUserPool().getUsers();
-        System.out.println("number of users: " + listToTraverse.size());
 
         // Authenticate via Database
         User loggedUser = getDatabase().getUserByLogin(userName, password);
