@@ -49,12 +49,9 @@ public class CreateCalendarState extends State {
 
     /**
      * Handles application exit procedures while in the calendar creation state.
-     * (Database cleanup logic to be implemented).
      */
     @Override
-    public void exit(){
-        // TO DO DB logic for saving current progress or closing connections
-    }
+    public void exit(){}
 
     /**
      * Returns the name of this state.

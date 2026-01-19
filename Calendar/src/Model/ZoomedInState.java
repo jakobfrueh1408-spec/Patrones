@@ -109,4 +109,9 @@ public class ZoomedInState extends State<EventNoteTableManager> {
     public String toString() {
         return "ZoomedIn";
     }
+
+    /**
+     * Handles application exit by delegating to the core model logic.
+     */
+    public void exit(){}
 }

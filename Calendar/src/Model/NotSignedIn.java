@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * loading their calendars, events, and notes from the persistence layer.
  * </p>
  */
-public class NotSignedIn extends State<UserTableManager> implements signInInterface {
+public class NotSignedIn extends State<UserTableManager> {
 
     /**
      * Constructs a NotSignedIn state.

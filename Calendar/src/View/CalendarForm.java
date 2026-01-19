@@ -102,11 +102,18 @@ public class CalendarForm extends JFrame {
      */
     public CalendarForm(View view) {
         this.view = view;
+
         setTitle("Erasmus calendar");
         setContentPane(contentPane);
+        contentPane.setBackground(new Color(245, 245, 245));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
         setVisible(true);
+
+        stylePanel(MainMenuPanel);
+        stylePanel(SignedInPanel);
+        stylePanel(CreateCalendarPanel);
+        stylePanel(ZoomedInPanel);
 
         cardLayout = new CardLayout();
         contentPane.setLayout(cardLayout);
@@ -429,5 +436,28 @@ public class CalendarForm extends JFrame {
      */
     public void showZoomedInPanel(){
         cardLayout.show(contentPane, "ZoomedInPanel");
+    }
+
+    private void stylePanel(JPanel panel) {
+        if (panel == null) return;
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        for (Component comp : panel.getComponents()) {
+            // Style Buttons
+            if (comp instanceof JButton) {
+                JButton btn = (JButton) comp;
+                btn.setFocusPainted(false);
+                btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                btn.setFont(new Font("SansSerif", Font.BOLD, 12));
+            }
+            // Style Text Fields
+            if (comp instanceof JTextField) {
+                ((JTextField) comp).setMargin(new Insets(2, 5, 2, 5));
+            }
+            // Style Labels
+            if (comp instanceof JLabel) {
+                comp.setFont(new Font("SansSerif", Font.PLAIN, 13));
+            }
+        }
     }
 }

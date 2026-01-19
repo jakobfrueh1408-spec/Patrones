@@ -163,6 +163,6 @@ public abstract class State<T extends DatabaseDAO> {
     /**
      * Handles application shutdown procedures. (Implemented in all states).
      */
-    public void exit(){}
+    public abstract void exit();
 
 }
