@@ -1,12 +1,16 @@
 package Model;
 
+import Controller.ModelObserver;
 import Database.UserTableManager;
+
+import java.util.ArrayList;
 
 public class Model {
     private UserPool userPool;
     private User currentUser;
     private State state;
     private static Model instance;
+    private final ArrayList<ModelObserver> observers = new ArrayList<>();
 
     private Model() {
         userPool = new UserPool();
@@ -118,5 +122,19 @@ public class Model {
     //all States
     public void exit() {
         state.exit();
+    }
+
+    public void addObserver(ModelObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(ModelObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (ModelObserver observer : observers) {
+            observer.modelChanged();
+        }
     }
 }
