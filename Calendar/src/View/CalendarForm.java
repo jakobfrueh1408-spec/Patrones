@@ -194,6 +194,7 @@ public class CalendarForm extends JFrame {
                         clickedDate.getMonthValue(),
                         clickedDate.getDayOfMonth()
                 ).execute();
+                zoomintextfield.setText("");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Invalid day input!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -236,6 +237,8 @@ public class CalendarForm extends JFrame {
             int length = Integer.parseInt(addEventRecurring.getSelectedItem().toString());
             String label = addEventLabelBox.getSelectedItem().toString();
             new AddEventCommand(view.getController(), title, text, label, length).execute();
+            addEventTextField.setText("");
+            addEventTitleField.setText("");
         });
         removeEventButton.addActionListener(e -> {
             int index = removeEventBox.getSelectedIndex();
@@ -245,11 +248,14 @@ public class CalendarForm extends JFrame {
             int index = modifyEventBox.getSelectedIndex();
             String text = modifyEventText.getText();
             new ModifyEventCommand(view.getController(), index, text).execute();
+            modifyEventText.setText("");
         });
         addNoteButton.addActionListener(e -> {
             String title = addNoteTitleField.getText();
             String text = addNoteTextField.getText();
             new AddNoteCommand(view.getController(), title, text).execute();
+            addNoteTextField.setText("");
+            addNoteTextField.setText("");
         });
         removeNoteButton.addActionListener(e -> {
             int index = removeNoteBox.getSelectedIndex();
@@ -259,6 +265,7 @@ public class CalendarForm extends JFrame {
             int index = modifyNoteBox.getSelectedIndex();
             String text = modifyNoteText.getText();
             new ModifyNoteCommand(view.getController(), index, text).execute();
+            modifyNoteText.setText("");
         });
         zoomOutButton.addActionListener(e -> {
             new ZoomOutCommand(view.getController()).execute();
