@@ -38,13 +38,14 @@ public class CreateCalendarState extends State{
 
     @Override
     public void addCalendar( String name,int length, String season,int year){
+
         model.getCurrentUser().createCalendar(name,length,season,year);
+        switchToSignedIn();
     }
     @Override
     public void switchToSignedIn() {
         int numOfCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
-        if(numOfCals ==1){
-            System.out.println("hello");
+        if(numOfCals == 1){
             model.getCurrentUser().setCurrentCalendar(model.getCurrentUser().getCalendarPool().getCalendars().get(0));
         }
         model.setState(new SignedIn(model,new CalendarTableManager()));
@@ -74,6 +75,6 @@ public class CreateCalendarState extends State{
     }
 
     public String toString(){
-        return "EmptySignedIn";
+        return "CreateCalendar";
     }
 }

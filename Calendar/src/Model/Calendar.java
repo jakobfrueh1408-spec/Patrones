@@ -19,7 +19,7 @@ public class Calendar {
 
     private int length;   //in semesters
     private int year;
-    private LocalDate currentDate;
+    private LocalDate currentDate;      //for the day
     private String name;
     private Season season;   //either september or april
     private int db_id;

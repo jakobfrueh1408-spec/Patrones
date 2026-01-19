@@ -40,7 +40,7 @@ public class SignedIn extends State<CalendarTableManager>{
     }
    @Override
     public void addCalendar(String name, int length,  String season, int year){
-        model.getCurrentUser().createCalendar( name,  length,  season, year);
+        //model.getCurrentUser().createCalendar( name,  length,  season, year);
     }
 
     @Override
@@ -52,6 +52,12 @@ public class SignedIn extends State<CalendarTableManager>{
 
         //setting the new state
         model.setState(new ZoomedInState(model, new EventNoteTableManager()));
+    }
+
+    @Override
+    public void switchToCreateCalendar(){
+        System.out.println("HALOOOOOOOO");
+        model.setState(new CreateCalendarState(model, new CalendarTableManager()));
     }
    
     //emptySignedInState and SignedInstate
@@ -74,7 +80,6 @@ public class SignedIn extends State<CalendarTableManager>{
         int numOfCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
         if(numOfCals ==0) {
             model.setState( new CreateCalendarState(model,new CalendarTableManager()));
-
         }
     }
     @Override
@@ -100,5 +105,10 @@ public class SignedIn extends State<CalendarTableManager>{
         Calendar cal = getDatabase().getCalendarByName(nameOfRemoval,userId);
         int cal_id = cal.getDb_id();
         return cal_id;
+    }
+
+    @Override
+    public String toString() {
+        return "SignedIn";
     }
 }

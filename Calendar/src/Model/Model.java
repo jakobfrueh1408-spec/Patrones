@@ -36,18 +36,18 @@ public class Model {
 
     public void setState(State state) {
         this.state = state;
+        notifyObservers();
     }
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    public State getState() {
-        return state;
+    public String getState() {
+        return state.toString();
     }
 
     /*********************************************************************************************************************/
-    // The functions which we can call indirectly using the model
 
     //notSignedInState
     public void signIn(String name, String password) throws Exception {
@@ -56,7 +56,6 @@ public class Model {
 
     public void register(String name, String password, String birthday) {
         state.register(name, password, birthday);
-        System.out.println("registrated: " + name + " " + password + " " + birthday);
     }
 
     //signedInState
@@ -65,8 +64,6 @@ public class Model {
     }
 
     public void zoomIn(int year, int month, int day) {
-        //we need to set the current Date fo the current calendar of the current user
-        // state function needs to det the day to zoom in
         state.zoomIn(year, month, day);
     }
 
@@ -76,17 +73,17 @@ public class Model {
 
     public void removeCalendar(int indexToRemove) {
         state.removeCalendar(indexToRemove);
+        notifyObservers();
     }
 
     public void modifyCalendar( String title) {
         state.modifyCalendar( title);
+        notifyObservers();
     }
 
-    //both SignedInState and EmptySignedInState
+    //CreateCalendarState
     public void addCalendar(String name, int length, String season, int year) {
         state.addCalendar(name, length, season, year);
-        //System.out.println("-Model- added: " + name + " " + length + " " + season + " " + year);
-        //System.out.println("-Model- NUMBER OF CALENDARS: " + getCurrentUser().getCalendarPool().getCalendars().size());
     }
 
     //ZoomedInState
@@ -95,8 +92,11 @@ public class Model {
     }
 
     public void addEvent(String title, String description, String label, int lengthOfOccurrence) {
-        //Problem with the Date persists
         state.addEvent(title, description, label, lengthOfOccurrence);
+    }
+
+    public void switchToCreateCalendar(){
+        state.switchToCreateCalendar();
     }
 
     public void addNote(String title, String text) {
@@ -105,18 +105,22 @@ public class Model {
 
     public void removeEvent(int indexToRemove) {
         state.removeEvent(indexToRemove);
+        notifyObservers();
     }
 
     public void removeNote(int indexToRemove) {
         state.removeNote(indexToRemove);
+        notifyObservers();
     }
 
     public void modifyNote(int indexToRemove, String description) {
         state.modifyNote(indexToRemove, description);
+        notifyObservers();
     }
 
     public void modifyEvent(int indexToModify, String description) {
         state.modifyEvent(indexToModify, description);
+        notifyObservers();
     }
 
     //all States

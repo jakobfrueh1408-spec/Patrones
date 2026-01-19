@@ -123,7 +123,7 @@ public class EventNoteTableManager implements DatabaseDAO {
                         d // <-- use LocalDate, not java.sql.Date
                 );
                 n.setDb_id(rs.getInt("note_id"));
-
+                list.add(n);
             }
         } catch (Exception e) { e.printStackTrace(); }
         return list;

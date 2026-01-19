@@ -25,9 +25,7 @@ public abstract class State<T extends DatabaseDAO> {
     }
 
     //notSignedInState
-    public void signIn(String name, String password) throws Exception {
-        
-    } 
+    public void signIn(String name, String password) throws Exception {}
     public void register(String name, String password, String birthday) {}
 
     //signedInState
@@ -35,6 +33,7 @@ public abstract class State<T extends DatabaseDAO> {
     public void zoomIn(int year, int month, int day){}
     public void removeCalendar(int indexToRemove){}
     public void modifyCalendar( String newTitle){}
+    public void switchToCreateCalendar(){}
 
     //both SignedInState and CreateCalendarState
     public void addCalendar(String name,int length,  String season,int year){}

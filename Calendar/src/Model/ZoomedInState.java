@@ -46,6 +46,8 @@ public class ZoomedInState extends State <EventNoteTableManager>{
     /**
     ZOOMED IN STATE
      */
+
+
     //adding Events and Notes
     @Override
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
@@ -92,7 +94,12 @@ public class ZoomedInState extends State <EventNoteTableManager>{
     @Override
     public void zoomOut(){
         // make the current Date in the Current Calenadar in the Current User null, idk if that is good practice with the null though
-        model.getCurrentUser().getCurrentCalendar().setCurrentDate(null) ;
+        //model.getCurrentUser().getCurrentCalendar().setCurrentDate(null);
         model.setState(new SignedIn(model,new CalendarTableManager()));
+    }
+
+    @Override
+    public String toString() {
+        return "ZoomedIn";
     }
 }

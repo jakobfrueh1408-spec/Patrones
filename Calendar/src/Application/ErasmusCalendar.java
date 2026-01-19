@@ -8,6 +8,6 @@ public class ErasmusCalendar {
     public static void startCalendar(){
         Model model = Model.getInstance();
         Controller controller = new Controller(model);
-        View view = new View(controller);
+        View view = new View(controller, model);
     }
 }

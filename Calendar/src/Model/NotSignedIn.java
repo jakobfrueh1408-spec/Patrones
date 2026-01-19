@@ -94,6 +94,8 @@ public class NotSignedIn extends State <UserTableManager>{
     public void exit(){
         model.exit();
     }
+
+    @Override
     public String toString(){
         return "NotSignedIn";
     }

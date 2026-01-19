@@ -31,56 +31,36 @@ public class Controller {
 
     public void onSignInClicked(String name, String password) throws Exception {
         model.signIn(name, password);
-        if(model.getCurrentUser().getCalendarPool().getCalendars() == null || model.getCurrentUser().getCalendarPool().getCalendars().isEmpty()){
-            cardLayout.show(contentPane, "CreateCalendarPanel");
-        } else {
-            //if there is a calendar, we show it
-            refreshCalendarView();
-            cardLayout.show(contentPane, "SignedInPanel");
-        }
     }
 
     public void onRegisterClicked(String name, String password,  String birthday){
         model.register(name, password, birthday);
     }
+
     public void onAddCalendarClicked(String name, int length, String start, int year){
         model.addCalendar(name,length, start, year);
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
-        System.out.println("-Controller- number of calendars: " + model.getCurrentUser().getCalendarPool().getCalendars().size());
-        cardLayout.show(contentPane, "SignedInPanel");
     }
 
 
     //******************************************************** Signed In State ******************************************************************//
     public void onSignOutClicked(){
         model.signOut();
-        cardLayout.show(contentPane, "MainMenuPanel");
     }
 
     public void onRemoveCalendarClicked(int indexToRemove){
         model.removeCalendar(indexToRemove);
-        //if we delete the last calendar, we have to switch view state
-        if(model.getCurrentUser().getCalendarPool().getCalendars().isEmpty()){
-            cardLayout.show(contentPane, "CreateCalendarPanel");
-        } else{
-            Calendar updatedCalendar = model.getCurrentUser().getCalendarPool().getCalendars().get(0);
-            model.loadCalendar(0);
-            refreshCalendarView();
-
-        }
-
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
     }
 
     public void onModifyCalendarClicked(String newtitle){
         model.modifyCalendar(newtitle);
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
-        System.out.println(model.getCurrentUser().getCurrentCalendar().getName());
     }
 
     public void onZoomInClicked(int year, int month, int day){
         model.zoomIn(year, month, day);
-        cardLayout.show(contentPane, "ZoomedInPanel");
+    }
+
+    public void onCreateNewCalendarClicked(){
+        model.switchToCreateCalendar();
     }
 
 
@@ -110,24 +90,11 @@ public class Controller {
     }
 
     public void onZoomOutClicked(){
-        refreshCalendarView();
         model.zoomOut();
-        cardLayout.show(contentPane, "SignedInPanel");
-
-
     }
 
 
     //******************************************************** Helping Functions ******************************************************************//
-    public void refreshCalendarView(){
-        view.getCalendarForm().setCurrentCalendar(model.getCurrentUser().getCurrentCalendar());
-        view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
-        view.getCalendarForm().setDisplayedMonth(model.getCurrentUser().getCurrentCalendar().getCurrentDate());
-        view.getCalendarForm().refreshYearMonthLabels();
-        view.getCalendarForm().refreshEventsList(model.getCurrentUser().getCurrentCalendar().getCurrentDayEventList());
-        view.getCalendarForm().refreshNotesList(model.getCurrentUser().getCurrentCalendar().getCurrentDayNoteList());
-        view.getCalendarForm().repaintMonthView(model.getCurrentUser().getCurrentCalendar());
-    }
 
     public String[] getUserNames(){
         int numOfUsers = model.getUserPool().getUsers().size();

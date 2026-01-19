@@ -11,11 +11,6 @@ import java.util.ArrayList;
 public class CalendarForm extends JFrame {
     private View view;
     private CardLayout cardLayout;
-    //private int currentyear;
-    //private int currentmonth; //1-12
-    private int currentday;
-
-
     private LocalDate displayedMonth;
     private Calendar currentCalendar;
 
@@ -210,7 +205,6 @@ public class CalendarForm extends JFrame {
             }
         });
 
-
         nextMonthButton.addActionListener(e -> {
             LocalDate nextMonth = displayedMonth.plusMonths(1);
             if (!nextMonth.isAfter(currentCalendar.getEndDate())) {
@@ -220,14 +214,14 @@ public class CalendarForm extends JFrame {
             }
         });
 
-
         modifyTitleButton.addActionListener(e -> {
             String newtitle = newtitletextField.getText();
             new ModifyCalendarCommand(view.getController(), newtitle).execute();
             newtitletextField.setText("");
         });
+
         createNewCalendarButton.addActionListener(e -> {
-            cardLayout.show(contentPane, "CreateCalendarPanel");
+            new SwitchToCalendarCreationCommand(view.getController()).execute();
         });
 
         //******************************************************** Zoomed In State ******************************************************************//
@@ -385,11 +379,31 @@ public class CalendarForm extends JFrame {
         yearLabel.setText("Year: " + displayedMonth.getYear());
         monthLabel.setText("Month: " + displayedMonth.getMonthValue());
     }
+
+    public void refreshDayPanel(){
+        customDayPanel.removeAll();
+        customDayPanel.add(new DayView(currentCalendar, currentCalendar.getCurrentDate()));
+        customDayPanel.revalidate();
+        customDayPanel.repaint();
+    }
     //getters and setter
     public void setDisplayedMonth(LocalDate displayedMonth) {
         this.displayedMonth = displayedMonth;
     }
     public void setCurrentCalendar(Calendar currentCalendar) {
         this.currentCalendar = currentCalendar;
+    }
+
+    public void showMainMenuPanel(){
+        cardLayout.show(contentPane, "MainMenuPanel");
+    }
+    public void showCreateCalendarPanel(){
+        cardLayout.show(contentPane, "CreateCalendarPanel");
+    }
+    public void showSignedInPanel(){
+        cardLayout.show(contentPane, "SignedInPanel");
+    }
+    public void showZoomedInPanel(){
+        cardLayout.show(contentPane, "ZoomedInPanel");
     }
 }
