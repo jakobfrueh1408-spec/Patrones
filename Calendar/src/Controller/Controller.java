@@ -124,8 +124,8 @@ public class Controller {
         view.getCalendarForm().refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
         view.getCalendarForm().setDisplayedMonth(model.getCurrentUser().getCurrentCalendar().getCurrentDate());
         view.getCalendarForm().refreshYearMonthLabels();
-        view.getCalendarForm().refreshEventsList(model.getCurrentUser().getCurrentCalendar().getEvents());
-        view.getCalendarForm().refreshNotesList(model.getCurrentUser().getCurrentCalendar().getNotes());
+        view.getCalendarForm().refreshEventsList(model.getCurrentUser().getCurrentCalendar().getCurrentDayEventList());
+        view.getCalendarForm().refreshNotesList(model.getCurrentUser().getCurrentCalendar().getCurrentDayNoteList());
         view.getCalendarForm().repaintMonthView(model.getCurrentUser().getCurrentCalendar());
     }
 

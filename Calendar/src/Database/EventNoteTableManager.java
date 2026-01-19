@@ -83,11 +83,12 @@ public class EventNoteTableManager implements DatabaseDAO {
 
     // --- SEARCH & FETCH ---
 
-    private ArrayList<Event> fetchEvents(String sql, String param) {
+    public ArrayList<Event> fetchEvents(int calendarId) {
+        String sql = "SELECT event_id,title,description,date,label FROM Events where calendar_id =?";
         ArrayList<Event> list = new ArrayList<>();
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, param);
+            pstmt.setString(1, String.valueOf(calendarId));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 // Konvertierung String -> LocalDate
@@ -106,11 +107,12 @@ public class EventNoteTableManager implements DatabaseDAO {
         return list;
     }
 
-    private ArrayList<Note> fetchNotes(String sql, String param) {
+    public  ArrayList<Note> fetchNotes(int calendarId) {
+        String sql = "SELECT note_id, title, text, date FROM Notes WHERE calendar_id = ?";
         ArrayList<Note> list = new ArrayList<>();
         try (Connection conn = DatabaseManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, param);
+            pstmt.setString(1, String.valueOf(calendarId));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 LocalDate d = LocalDate.parse(rs.getString("date"));
@@ -127,7 +129,6 @@ public class EventNoteTableManager implements DatabaseDAO {
         return list;
     }
 
-    // --- DELETE WRAPPERS ---
 
     public void removeEvent(int eventDbId) {
         executeUpdate("DELETE FROM Events WHERE event_id = ?", eventDbId);
