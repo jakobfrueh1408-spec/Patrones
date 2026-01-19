@@ -189,15 +189,15 @@ controlflow {
 <ref refid="5343a860-f559-11f0-b51f-4cb04ade7fd7"/>
 <ref refid="6c3931d8-f559-11f0-af5c-4cb04ade7fd7"/>
 <ref refid="62fac4d7-f560-11f0-8dc5-d4548bc70d16"/>
+<ref refid="74b1fddb-f560-11f0-a0ff-d4548bc70d16"/>
 <ref refid="85f225e8-f560-11f0-a3fd-d4548bc70d16"/>
+<ref refid="449e0aaf-f561-11f0-9934-d4548bc70d16"/>
+<ref refid="715ffae7-f561-11f0-87b4-d4548bc70d16"/>
 <ref refid="ee3bf89e-f561-11f0-86f7-d4548bc70d16"/>
 <ref refid="09c0e6bb-e280-11f0-95ac-4cb04ade7fd7"/>
 <ref refid="0d9a533f-e280-11f0-acbe-4cb04ade7fd7"/>
 <ref refid="20f19b88-e280-11f0-841b-4cb04ade7fd7"/>
 <ref refid="269776e6-e280-11f0-b154-4cb04ade7fd7"/>
-<ref refid="74b1fddb-f560-11f0-a0ff-d4548bc70d16"/>
-<ref refid="715ffae7-f561-11f0-87b4-d4548bc70d16"/>
-<ref refid="449e0aaf-f561-11f0-9934-d4548bc70d16"/>
 </reflist>
 </packagedElement>
 </UML:Package>
@@ -1018,6 +1018,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <ref refid="85366aec-f539-11f0-9456-4cb04ade7fd7"/>
 <ref refid="931ddeb1-f539-11f0-adf9-4cb04ade7fd7"/>
 <ref refid="53b130e9-f53b-11f0-bdc0-4cb04ade7fd7"/>
+<ref refid="80b50f43-f571-11f0-94c5-d4548bc70d16"/>
 </reflist>
 </ownedOperation>
 <owningPackage>
@@ -1034,7 +1035,7 @@ existing classes or even new classes with specific responsibilities.</val>
 </UML:Class>
 <UML:ClassItem id="c100924e-e27b-11f0-8603-4cb04ade7fd7">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1349.4212112093444, 1028.359095021562)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1349.4212112093435, 1028.359095021562)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -8970,6 +8971,27 @@ existing classes or even new classes with specific responsibilities.</val>
 </name>
 <ownerFormalParam>
 <ref refid="58e5682f-f561-11f0-a47d-d4548bc70d16"/>
+</ownerFormalParam>
+</UML:Parameter>
+<UML:Operation id="80b50f43-f571-11f0-94c5-d4548bc70d16">
+<class_>
+<ref refid="c0ffa29e-e27b-11f0-a99d-4cb04ade7fd7"/>
+</class_>
+<name>
+<val>setState</val>
+</name>
+<ownedParameter>
+<reflist>
+<ref refid="80bf2577-f571-11f0-9078-d4548bc70d16"/>
+</reflist>
+</ownedParameter>
+</UML:Operation>
+<UML:Parameter id="80bf2577-f571-11f0-9078-d4548bc70d16">
+<name>
+<val>state</val>
+</name>
+<ownerFormalParam>
+<ref refid="80b50f43-f571-11f0-94c5-d4548bc70d16"/>
 </ownerFormalParam>
 </UML:Parameter>
 </model>
