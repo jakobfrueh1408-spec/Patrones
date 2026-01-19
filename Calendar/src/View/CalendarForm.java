@@ -8,6 +8,12 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The main graphical user interface for the Erasmus Calendar application.
+ * This class extends {@link JFrame} and manages multiple views using a {@link CardLayout}.
+ * It handles the transitions between the main menu, calendar creation, month view,
+ * and detailed day view, while delegating user actions to command objects.
+ */
 public class CalendarForm extends JFrame {
     private View view;
     private CardLayout cardLayout;
@@ -89,6 +95,11 @@ public class CalendarForm extends JFrame {
     private JButton exitFromSignedInButton;
 
 
+    /**
+     * Constructs a new CalendarForm, initializes the UI components,
+     * and sets up the action listeners for the various application states.
+     * * @param view The View object that acts as a bridge to the Controller.
+     */
     public CalendarForm(View view) {
         this.view = view;
         setTitle("Erasmus calendar");
@@ -278,15 +289,27 @@ public class CalendarForm extends JFrame {
     //******************************************************** Helping Functions ******************************************************************//
 
 
+    /**
+     * Gets the CardLayout manager used for switching between panels.
+     * * @return The CardLayout instance.
+     */
     public CardLayout getCardLayout() {
         return this.cardLayout;
     }
 
+    /**
+     * Gets the main content pane that holds all application panels.
+     * * @return The content pane JPanel.
+     */
     public JPanel getContentPane() {
         return contentPane;
     }
 
 
+    /**
+     * Refreshes the MonthView component based on the current displayedMonth
+     * and currentCalendar data.
+     */
     public void repaintMonthView() {
         customMonthPanel.removeAll();
         MonthView monthView = new MonthView(displayedMonth, currentCalendar);
@@ -296,12 +319,21 @@ public class CalendarForm extends JFrame {
         customMonthPanel.repaint();
     }
 
+    /**
+     * Initializes custom UI components. This is used by the GUI builder
+     * for custom layout components like month and day containers.
+     */
     private void createUIComponents() {
         customMonthPanel = new JPanel(new BorderLayout());
         customDayPanel = new JPanel(new BorderLayout());
     }
 
 
+    /**
+     * Replaces the current items in the calendar selection combo box
+     * with names from the provided list.
+     * * @param calendarList The list of calendars to display.
+     */
     public void refreshCalendarList(ArrayList<Calendar> calendarList) {
         signedinCalendarlist.removeAllItems();
         //System.out.println(signedinCalendarlist.getModel().getSize
@@ -310,6 +342,10 @@ public class CalendarForm extends JFrame {
         }
     }
 
+    /**
+     * Refreshes the combo boxes used for removing and modifying notes.
+     * * @param notesList The current list of notes for the selected day.
+     */
     public void refreshNotesList(ArrayList<Note> notesList){
         removeNoteBox.removeAllItems();
         modifyNoteBox.removeAllItems();
@@ -319,6 +355,10 @@ public class CalendarForm extends JFrame {
         }
     }
 
+    /**
+     * Refreshes the combo boxes used for removing and modifying events.
+     * * @param eventsList The current list of events for the selected day.
+     */
     public void refreshEventsList(ArrayList<Event> eventsList){
         removeEventBox.removeAllItems();
         modifyEventBox.removeAllItems();
@@ -327,34 +367,66 @@ public class CalendarForm extends JFrame {
             modifyEventBox.addItem(event.getTitle());
         }
     }
+
+    /**
+     * Updates the text of labels showing the currently displayed year and month.
+     */
     public void refreshYearMonthLabels() {
         yearLabel.setText("Year: " + displayedMonth.getYear());
         monthLabel.setText("Month: " + displayedMonth.getMonthValue());
     }
 
+    /**
+     * Updates the detailed day view panel with the events and notes
+     * of the currently selected date.
+     */
     public void refreshDayPanel(){
         customDayPanel.removeAll();
         customDayPanel.add(new DayView(currentCalendar, currentCalendar.getCurrentDate()));
         customDayPanel.revalidate();
         customDayPanel.repaint();
     }
-    //getters and setter
+
+    /**
+     * Sets the month that should currently be displayed in the calendar view.
+     * * @param displayedMonth The LocalDate representing the month to view.
+     */
     public void setDisplayedMonth(LocalDate displayedMonth) {
         this.displayedMonth = displayedMonth;
     }
+
+    /**
+     * Sets the calendar object currently being used by the application.
+     * * @param currentCalendar The Calendar model instance.
+     */
     public void setCurrentCalendar(Calendar currentCalendar) {
         this.currentCalendar = currentCalendar;
     }
 
+    /**
+     * Switches the CardLayout to display the Main Menu panel.
+     */
     public void showMainMenuPanel(){
         cardLayout.show(contentPane, "MainMenuPanel");
     }
+
+    /**
+     * Switches the CardLayout to display the Calendar Creation panel.
+     */
     public void showCreateCalendarPanel(){
         cardLayout.show(contentPane, "CreateCalendarPanel");
     }
+
+    /**
+     * Switches the CardLayout to display the main Signed In view (Month View).
+     */
     public void showSignedInPanel(){
         cardLayout.show(contentPane, "SignedInPanel");
     }
+
+    /**
+     * Switches the CardLayout to display the Zoomed In view (Day View).
+     */
     public void showZoomedInPanel(){
         cardLayout.show(contentPane, "ZoomedInPanel");
     }
