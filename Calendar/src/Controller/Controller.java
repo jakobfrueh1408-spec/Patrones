@@ -8,20 +8,12 @@ import java.awt.*;
 
 public class Controller {
     private Model model;
-
-    public void setView(View view) {
-        this.view = view;
-    }
-
     private View view;
     private JPanel contentPane;
     private CardLayout cardLayout;
 
     public Controller(Model model) {
         this.model = model;
-    }
-    public View getView() {
-        return view;
     }
 
     //******************************************************** Main Menu State ******************************************************************//
@@ -96,19 +88,6 @@ public class Controller {
 
     //******************************************************** Helping Functions ******************************************************************//
 
-    public String[] getUserNames(){
-        int numOfUsers = model.getUserPool().getUsers().size();
-        String[] result = new String[numOfUsers];
-        for(int i = 0; i < numOfUsers; i++){
-            result[i] = model.getUserPool().getUsers().toString();
-        }
-        return result;
-    }
-
-    public Calendar getCurrentCalendar(){
-        return model.getCurrentUser().getCurrentCalendar();
-    }
-
     public Calendar getCalendar(int index){
         return model.getCurrentUser().getCalendarPool().getCalendars().get(index);
     }
@@ -125,4 +104,11 @@ public class Controller {
         this.cardLayout = cardLayout;
     }
 
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public Model getModel(){
+        return model;
+    }
 }

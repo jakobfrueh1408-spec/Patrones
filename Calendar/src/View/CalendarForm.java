@@ -163,7 +163,7 @@ public class CalendarForm extends JFrame {
             currentCalendar = calendar;
             displayedMonth = currentCalendar.getStartDate().withDayOfMonth(1);
             refreshYearMonthLabels();
-            repaintMonthView(calendar);
+            repaintMonthView();
         });
 
         signedinDeleteButton.addActionListener(e -> {
@@ -201,7 +201,7 @@ public class CalendarForm extends JFrame {
             if (!prevMonth.isBefore(currentCalendar.getStartDate())) {
                 displayedMonth = prevMonth;
                 refreshYearMonthLabels();
-                repaintMonthView(currentCalendar);
+                repaintMonthView();
             }
         });
 
@@ -210,7 +210,7 @@ public class CalendarForm extends JFrame {
             if (!nextMonth.isAfter(currentCalendar.getEndDate())) {
                 displayedMonth = nextMonth;
                 refreshYearMonthLabels();
-                repaintMonthView(currentCalendar);
+                repaintMonthView();
             }
         });
 
@@ -268,21 +268,7 @@ public class CalendarForm extends JFrame {
 
 
     //******************************************************** Helping Functions ******************************************************************//
-    public String getSigninUsername() {
-        return this.signintextField.getText();
-    }
 
-    public String getSigninPassword() {
-        return this.signinpasswordField.getText();
-    }
-
-    public String getRegisterUsername() {
-        return this.registertextField.getText();
-    }
-
-    public String getRegisterPassword() {
-        return this.registerpasswordField.getText();
-    }
 
     public CardLayout getCardLayout() {
         return this.cardLayout;
@@ -292,15 +278,8 @@ public class CalendarForm extends JFrame {
         return contentPane;
     }
 
-    public JPanel getCustomCalendarPanel() {
-        return customMonthPanel;
-    }
 
-    public Calendar getCurrentCalendar() {
-        return currentCalendar;
-    }
-
-    public void repaintMonthView(Calendar calendar) {
+    public void repaintMonthView() {
         customMonthPanel.removeAll();
         MonthView monthView = new MonthView(displayedMonth, currentCalendar);
         customMonthPanel.setLayout(new BorderLayout());
@@ -309,46 +288,6 @@ public class CalendarForm extends JFrame {
         customMonthPanel.repaint();
     }
 
-    private void createUIComponents() {
-        customMonthPanel = new JPanel(new BorderLayout());
-        customDayPanel = new JPanel(new BorderLayout());
-    }
-
-    public JComboBox getSignedinCalendarlist() {
-        return signedinCalendarlist;
-    }
-
-    public JComboBox getLengthOfStay() {
-        return LengthOfStay;
-    }
-
-    public JComboBox getStartOfSemester() {
-        return StartOfSemester;
-    }
-
-    public JComboBox getAddEventLabelBox() {
-        return addEventLabelBox;
-    }
-
-    public JComboBox getAddEventRecurring() {
-        return addEventRecurring;
-    }
-
-    public JComboBox getRemoveEventBox() {
-        return removeEventBox;
-    }
-
-    public JComboBox getRemoveNoteBox() {
-        return removeNoteBox;
-    }
-
-    public JComboBox getModifyEventBox() {
-        return modifyEventBox;
-    }
-
-    public JComboBox getModifyNoteBox() {
-        return modifyNoteBox;
-    }
 
     public void refreshCalendarList(ArrayList<Calendar> calendarList) {
         signedinCalendarlist.removeAllItems();
@@ -386,6 +325,7 @@ public class CalendarForm extends JFrame {
         customDayPanel.revalidate();
         customDayPanel.repaint();
     }
+
     //getters and setter
     public void setDisplayedMonth(LocalDate displayedMonth) {
         this.displayedMonth = displayedMonth;

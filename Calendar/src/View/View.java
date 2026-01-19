@@ -5,18 +5,14 @@ import Controller.ModelObserver;
 import Model.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class View implements ModelObserver {
     private Controller controller;
-    private Model model;
     private CalendarForm calendarForm;
 
-    public View(Controller controller, Model model) {
+    public View(Controller controller) {
         this.controller = controller;
-        this.model = model;
-        model.addObserver(this);
+        controller.getModel().addObserver(this);
         calendarForm = new CalendarForm(this);
         controller.setCardLayout(calendarForm.getCardLayout());
         controller.setContentPane(calendarForm.getContentPane());
@@ -30,30 +26,26 @@ public class View implements ModelObserver {
     }
 
     private void refreshView(){
-        if (model.getCurrentUser() == null) {
-            System.out.println("State-" + model.getState() + "-Vége");
+        if (controller.getModel().getCurrentUser() == null) {
             calendarForm.showMainMenuPanel();
             return;
         }
-        Calendar current = model.getCurrentUser().getCurrentCalendar();
+        Calendar current = controller.getModel().getCurrentUser().getCurrentCalendar();
         if (current == null) {
-            System.out.println("State-" + model.getState() + "-Vége");
             calendarForm.showCreateCalendarPanel();
             return;
         }
 
-        System.out.println("State-" + model.getState() + "-Vége");
-
         calendarForm.setCurrentCalendar(current);
-        calendarForm.refreshCalendarList(model.getCurrentUser().getCalendarPool().getCalendars());
+        calendarForm.refreshCalendarList(controller.getModel().getCurrentUser().getCalendarPool().getCalendars());
         calendarForm.setDisplayedMonth(current.getCurrentDate());
         calendarForm.refreshYearMonthLabels();
         calendarForm.refreshDayPanel();
         calendarForm.refreshEventsList(current.getCurrentDayEventList());
         calendarForm.refreshNotesList(current.getCurrentDayNoteList());
-        calendarForm.repaintMonthView(current);
+        calendarForm.repaintMonthView();
 
-        switch(model.getState()){
+        switch(controller.getModel().getState()){
             case "MainMenu":
                 calendarForm.showMainMenuPanel();
                 break;
@@ -74,10 +66,6 @@ public class View implements ModelObserver {
 
     public Controller getController() {
         return controller;
-    }
-
-    public CalendarForm getCalendarForm() {
-        return this.calendarForm;
     }
 
 }
