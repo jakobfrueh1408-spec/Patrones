@@ -101,49 +101,54 @@ public class Calendar {
     }
 
     //Only modify the description of the Event
-    public void modifyEvent(int indexToModify, String description){
+    public void modifyEvent(int indexToModify, String title){
         //getting the current Days Events
         ArrayList <Event> currentDaysEvents = getCurrentDayEventList();
         //getting the corresponding event
         Event event = currentDaysEvents.get(indexToModify);
-        //setting the new Description
-        event.setTitle(description);
-        //setting the change into the DB
-        eventTableManager.manipulateEvent(event.getEvent_Id(),description);
+        if(checkAvailableEvent(title,currentDate,1)){
+            //setting the new Description
+            event.setTitle(title);
+            //setting the change into the DB
+            eventTableManager.manipulateEvent(event.getEvent_Id(),title);
+        }
+
     }
 
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
         //converting string to Enum
         Label eventLabel = null;
-        switch (label){
-            case "sport" : eventLabel = Label.sport; break;
-            case "free time activity": eventLabel = Label.free_time_activity; break;
-            case "travel": eventLabel = Label.travel; break;
-            case "study": eventLabel = study;
+        if(checkAvailableEvent(title,currentDate,lengthOfOccurrence)){
+            switch (label){
+                case "sport" : eventLabel = Label.sport; break;
+                case "free time activity": eventLabel = Label.free_time_activity; break;
+                case "travel": eventLabel = Label.travel; break;
+                case "study": eventLabel = study;
 
-        }
-        //create new Event
-        Event event = new Event(title,description,currentDate,eventLabel);
-        System.out.println(event);
-        //add base event
-        events.add(event);
-        eventTableManager.addEventsToDB(this.db_id,
-                event.getTitle(),
-                event.getDescription(),
-                event.getDate(),
-                event.getLabel(),
-                lengthOfOccurrence);
-        //retrieve the Date fo our baseEvent but not by reference but by value
-        for (int i = 1; i <= lengthOfOccurrence; i++) {
-            Event recurring = event.clone();
-            recurring.setDate(currentDate.plusWeeks(i));
-            events.add(recurring);
+            }
+            //create new Event
+            Event event = new Event(title,description,currentDate,eventLabel);
+            System.out.println(event);
+            //add base event
+            events.add(event);
             eventTableManager.addEventsToDB(this.db_id,
-                    recurring.getTitle(),
-                    recurring.getDescription(),
-                    recurring.getDate(),
-                    recurring.getLabel(),
+                    event.getTitle(),
+                    event.getDescription(),
+                    event.getDate(),
+                    event.getLabel(),
                     lengthOfOccurrence);
+            //retrieve the Date fo our baseEvent but not by reference but by value
+            for (int i = 1; i <= lengthOfOccurrence; i++) {
+                Event recurring = event.clone();
+                recurring.setDate(currentDate.plusWeeks(i));
+                events.add(recurring);
+                eventTableManager.addEventsToDB(this.db_id,
+                        recurring.getTitle(),
+                        recurring.getDescription(),
+                        recurring.getDate(),
+                        recurring.getLabel(),
+                        lengthOfOccurrence);
+            }
         }
         //System.out.println("was inside the function");
     }
@@ -166,19 +171,25 @@ public class Calendar {
         //getting all the notes of the day
         ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
         System.out.printf("NUMBER OF NOTES: %d", currentDaysNotes.size());
-        //getting the note with the corresponding title
-        Note note = currentDaysNotes.get(indexToModify);
-        //setting the notes description int the DB
-        eventTableManager.manipulateNote(note.getDb_id(),description);
-        currentDaysNotes.get(indexToModify).setTitle(description);
+        if(checkAvailableNote(description,currentDaysNotes)){
+            //getting the note with the corresponding title
+            Note note = currentDaysNotes.get(indexToModify);
+            //setting the notes description int the DB
+            eventTableManager.manipulateNote(note.getDb_id(),description);
+            currentDaysNotes.get(indexToModify).setTitle(description);
+        }
+
     }
 
     public void addNote(String title,String text) {
         Note note = new Note(title,text,currentDate);
-        //adding note to the model and to the database
-        eventTableManager.addNote(this.db_id,title,text,  this.currentDate);
-        notes.add(note);
-        System.out.println("NOTE ADDED");
+        ArrayList <Note> currentDaysNotes = getCurrentDayNoteList();
+        if(checkAvailableNote(title,currentDaysNotes)){
+            //adding note to the model and to the database
+            eventTableManager.addNote(this.db_id,title,text,  this.currentDate);
+            notes.add(note);
+            System.out.println("NOTE ADDED");
+        }
     }
 
 
@@ -262,6 +273,32 @@ public class Calendar {
         return notes.stream()
                 .filter(n -> n.getDate().equals(date))
                 .collect(Collectors.toList());
+    }
+
+    public boolean checkAvailableNote(String title, ArrayList <Note> todayNotes){
+        for (Note note : todayNotes){
+            if(title.equals(note.getTitle())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkAvailableEvent(String title, LocalDate startDate, int recur){
+        // compare to every day the event will be inserted to
+        LocalDate dateToCheck;
+        for (int i = 0; i <recur; i++){
+            //incrementing Weeks
+           dateToCheck=  startDate.plusWeeks(i);
+           List <Event> eventsInSequence = getEventsForDate(dateToCheck);
+           //checking the corresponding days titles for overlap
+           for(Event event : eventsInSequence){
+               if(title.equals(event.getTitle())){
+                   return false;
+               }
+           }
+        }
+        return true;
     }
 
 }
