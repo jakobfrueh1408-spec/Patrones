@@ -39,26 +39,21 @@ public class DayView extends JPanel {
      */
     private void buildDay() {
         removeAll();
-
         JLabel dateLabel = new JLabel(date.toString());
         dateLabel.setFont(dateLabel.getFont().deriveFont(Font.BOLD, 16f));
         dateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(dateLabel);
-
         add(Box.createVerticalStrut(10));
-
         // Events
         List<Event> events = calendar.getEventsForDate(date);
         for (Event event : events) {
             add(createEventPanel(event));
         }
-
         // Notes
         List<Note> notes = calendar.getNotesForDate(date);
         for (Note note : notes) {
             add(createNotePanel(note));
         }
-
         revalidate();
         repaint();
     }
@@ -72,20 +67,38 @@ public class DayView extends JPanel {
     private JPanel createEventPanel(Event event) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        Color bgColor = switch (event.getLabel().toString()) {
+            case "sport" -> new Color(255, 230, 230);
+            case "study" -> new Color(230, 255, 230);
+            case "travel" -> new Color(255, 255, 230);
+            case "free_time_activity" -> new Color(230, 255, 255);
+            default -> new Color(245, 245, 245);
+        };
+
+        panel.setBackground(bgColor);
+        panel.setOpaque(true); /
+
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
 
         JLabel title = new JLabel(event.getTitle());
         title.setFont(title.getFont().deriveFont(Font.BOLD));
 
+        title.setOpaque(false);
+
         JLabel text = new JLabel("<html>" + event.getDescription() + "</html>");
+        text.setOpaque(false);
 
         panel.add(title);
+        panel.add(Box.createVerticalStrut(5));
         panel.add(text);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         return panel;
     }
-
     /**
      * Creates a stylized JPanel to display individual Note information.
      * The panel features a dashed border to distinguish it from events.
@@ -95,14 +108,24 @@ public class DayView extends JPanel {
     private JPanel createNotePanel(Note note) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createDashedBorder(Color.GRAY));
 
-        JLabel title = new JLabel(note.getTitle());
-        title.setFont(title.getFont().deriveFont(Font.BOLD));
+        panel.setBackground(Color.WHITE);
+        panel.setOpaque(true);
 
-        JLabel text = new JLabel("<html>" + note.getText() + "</html>");
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(1, 1, 3, 3, Color.LIGHT_GRAY),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+
+        JLabel title = new JLabel("📌 " + note.getTitle());
+        title.setFont(new Font("Monospaced", Font.BOLD, 13));
+        title.setForeground(Color.DARK_GRAY);
+
+        JLabel text = new JLabel("<html><i>" + note.getText() + "</i></html>");
+        text.setFont(new Font("Monospaced", Font.BOLD, 10));
 
         panel.add(title);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(text);
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
