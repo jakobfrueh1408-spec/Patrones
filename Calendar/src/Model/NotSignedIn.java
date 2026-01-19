@@ -58,36 +58,6 @@ public class NotSignedIn extends State <UserTableManager>{
         model.getUserPool().addUser(user);
         System.out.println("Users in the userpool"+model.getUserPool());
     } 
-    //signedInState
-    @Override
-    public void signOut(){}
-    @Override
-    public void zoomIn(int year, int month, int day){}
-    @Override
-    public void addEvent(String  title, String description, String label, int lengthOfOccurrence){}
-    @Override
-    public void addNote(String title,String text){}
-    @Override
-    public void removeEvent(int indexToRemove){}
-    @Override 
-    public void removeNote(int indexToRemove){}
-
-    //editing still has some problems (can we only edit the text or also the date and the kind of the event)
-    @Override
-    public void modifyNote(int indexToModify, String description){}
-    @Override
-    public void modifyEvent(int indexToModify, String description){}
-    @Override
-    public void loadCalendar(int indexToLoad){}
-    @Override
-    public void removeCalendar(int indexToRemove){}
-    @Override
-    public void addCalendar( String name,int length, String season,int year){}
-    
-
-    //ZoomedInState
-    @Override
-    public void zoomOut(){}
 
     //all States
     @Override

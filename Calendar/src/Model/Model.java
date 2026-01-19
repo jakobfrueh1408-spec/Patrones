@@ -67,9 +67,6 @@ public class Model {
         state.zoomIn(year, month, day);
     }
 
-    public void loadCalendar(int indexToLoad) {
-        state.loadCalendar(indexToLoad);
-    }
 
     public void removeCalendar(int indexToRemove) {
         state.removeCalendar(indexToRemove);
@@ -133,12 +130,6 @@ public class Model {
     public void addObserver(ModelObserver observer) {
         observers.add(observer);
     }
-
-    public void removeObserver(ModelObserver observer) {
-        observers.remove(observer);
-    }
-
-
 
     private void notifyObservers() {
         for (ModelObserver observer : observers) {
