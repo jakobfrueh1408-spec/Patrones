@@ -97,12 +97,4 @@ public class UserTableManager implements DatabaseDAO {
         return null;
     }
 
-    /**
-     * Main method for testing user registration logic independently.
-     */
-    public static void main(String[] args) {
-        User user = new User("jakot", "1234", "14.08.2004");
-        UserTableManager manager = new UserTableManager();
-        manager.register(user);
-    }
 }
