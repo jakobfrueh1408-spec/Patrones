@@ -41,42 +41,43 @@ public class NotSignedIn extends State<UserTableManager> implements signInInterf
      */
     @Override
     public void signIn(String userName, String password) throws Exception {
-        ArrayList<User> listToTraverse = model.getUserPool().getUsers();
+            ArrayList<User> listToTraverse = model.getUserPool().getUsers();
 
-        // Authenticate via Database
-        User loggedUser = getDatabase().getUserByLogin(userName, password);
-        CalendarTableManager calendarTableManager = new CalendarTableManager();
-        EventNoteTableManager eventNoteTableManager = new EventNoteTableManager();
+            // Authenticate via Database
+            User loggedUser = getDatabase().getUserByLogin(userName, password);
+            CalendarTableManager calendarTableManager = new CalendarTableManager();
+            EventNoteTableManager eventNoteTableManager = new EventNoteTableManager();
+            //set extracted user information (obtained from getUserByLogin()) into
+            // the defined data structures of the model
+            if (loggedUser != null) {
+                // Set the active user in the model
+                model.setCurrentUser(loggedUser);
 
-        if (loggedUser != null) {
-            // Set the active user in the model
-            model.setCurrentUser(loggedUser);
+                // Load user's calendars
+                ArrayList<Calendar> userCalendars = calendarTableManager.loadAllCalendarsForUser(loggedUser.getIdNumber());
+                model.getCurrentUser().getCalendarPool().setCalendars(userCalendars);
 
-            // Load user's calendars
-            ArrayList<Calendar> userCalendars = calendarTableManager.loadAllCalendarsForUser(loggedUser.getIdNumber());
-            model.getCurrentUser().getCalendarPool().setCalendars(userCalendars);
+                int numOfUserCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
 
-            int numOfUserCals = model.getCurrentUser().getCalendarPool().getCalendars().size();
+                if (numOfUserCals == 0) {
+                    // New user flow: must create a calendar first
+                    model.setState(new CreateCalendarState(model, new CalendarTableManager()));
+                } else {
+                    // Returning user flow: load existing data for the first calendar
+                    model.getCurrentUser().setCurrentCalendar(userCalendars.get(0));
 
-            if (numOfUserCals == 0) {
-                // New user flow: must create a calendar first
-                model.setState(new CreateCalendarState(model, new CalendarTableManager()));
+                    ArrayList<Event> eventCalendarList = eventNoteTableManager.fetchEvents(model.getCurrentUser().getCurrentCalendar().getDb_id());
+                    ArrayList<Note> noteCalendarList = eventNoteTableManager.fetchNotes(model.getCurrentUser().getCurrentCalendar().getDb_id());
+
+                    model.getCurrentUser().getCurrentCalendar().setEvents(eventCalendarList);
+                    model.getCurrentUser().getCurrentCalendar().setNotes(noteCalendarList);
+
+                    model.setState(new SignedIn(model, new CalendarTableManager()));
+                }
+
             } else {
-                // Returning user flow: load existing data for the first calendar
-                model.getCurrentUser().setCurrentCalendar(userCalendars.get(0));
-
-                ArrayList<Event> eventCalendarList = eventNoteTableManager.fetchEvents(model.getCurrentUser().getCurrentCalendar().getDb_id());
-                ArrayList<Note> noteCalendarList = eventNoteTableManager.fetchNotes(model.getCurrentUser().getCurrentCalendar().getDb_id());
-
-                model.getCurrentUser().getCurrentCalendar().setEvents(eventCalendarList);
-                model.getCurrentUser().getCurrentCalendar().setNotes(noteCalendarList);
-
-                model.setState(new SignedIn(model, new CalendarTableManager()));
+                throw new Exception("Not registered user!");
             }
-
-        } else {
-            throw new Exception("Not registered user!");
-        }
     }
 
     /**
