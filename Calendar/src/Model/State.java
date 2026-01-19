@@ -37,7 +37,6 @@ public abstract class State<T extends DatabaseDAO> {
 
     //both SignedInState and CreateCalendarState
     public void addCalendar(String name,int length,  String season,int year){}
-    public void loadCalendar(int indexToLoad){}
 
     //only CreateCalendarState
     public void switchToSignedIn() {}
@@ -54,4 +53,4 @@ public abstract class State<T extends DatabaseDAO> {
     //All states
     public void exit(){}
 
-} 
+}

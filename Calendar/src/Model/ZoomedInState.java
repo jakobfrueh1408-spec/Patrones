@@ -13,41 +13,6 @@ public class ZoomedInState extends State <EventNoteTableManager>{
     }
 
 
-    /**
-     NOT SIGNED IN STATE
-     */
-    @Override
-    public void signIn(String name, String password){}
-    @Override 
-    public void register(String name, String password, String  birthday){}
-
-    /**
-     SIGNED IN STATE
-     */
-    @Override
-    public void signOut(){}
-    @Override
-    public void loadCalendar(int indexToLoad){}
-    @Override
-    public void removeCalendar(int indexToRemove){}
-    @Override
-    public void zoomIn(int day, int month, int year){}
-    @Override
-    public void addCalendar( String name,int length, String season,int year){}
-    @Override
-    public void switchToSignedIn() {}
-    //all States
-    @Override
-    public void exit(){
-        model.exit();
-    }
-
-
-    /**
-    ZOOMED IN STATE
-     */
-
-
     //adding Events and Notes
     @Override
     public void addEvent(String  title, String description, String label, int lengthOfOccurrence){
