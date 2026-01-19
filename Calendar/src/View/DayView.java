@@ -77,7 +77,7 @@ public class DayView extends JPanel {
         };
 
         panel.setBackground(bgColor);
-        panel.setOpaque(true); /
+        panel.setOpaque(true);
 
         panel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY),
