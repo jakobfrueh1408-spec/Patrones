@@ -32,9 +32,6 @@ public class Note {
     public void setDate(LocalDate  date) {
         this.date = date;
     }
-    public int getCurrentDay(){
-        return date.getDayOfMonth();
-    }
     public int getDb_id() {
         return db_id;
     }
